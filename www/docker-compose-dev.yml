@@ -1,0 +1,86 @@
+version: "3"
+
+networks:
+  atsa:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.29.0.0/24
+
+services:
+  api:
+    build:
+      context: api
+      dockerfile: Dockerfile-dev
+    container_name: atsa-api-dev
+    entrypoint: 'tail -f /dev/null'
+    volumes:
+      - ./api:/workspace
+    environment:
+      - RAILS_ENV=development
+      - PORT=3000
+      - HOST=0.0.0.0
+    ports:
+      - "3000:3000"
+      - "1234:1234"
+      - "26162:26162"
+    depends_on:
+      - mysql
+    networks:
+      atsa:
+        ipv4_address: 172.29.0.11
+        aliases:
+          - backend
+          - api
+
+  www:
+    build:
+      context: www
+      dockerfile: Dockerfile-dev
+    container_name: atsa-www-dev
+    entrypoint: 'tail -f /dev/null'
+    volumes:
+      - ./www:/workspace
+    environment:
+      - PORT=5000
+      - HOST=172.29.0.12
+    ports:
+      - "5000:5000"
+    networks:
+      atsa:
+        ipv4_address: 172.29.0.12
+        aliases:
+          - frontend
+          - www
+
+  mysql:
+    build:
+      context: mysql
+      dockerfile: Dockerfile
+    container_name: atsa-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    networks:
+      atsa:
+        ipv4_address: 172.29.0.21
+        aliases:
+          - dbhost
+          - mysql
+
+  template:
+    build:
+      context: template
+      dockerfile: Dockerfile-dev
+    container_name: atsa-template-dev
+    entrypoint: 'tail -f /dev/null'
+    volumes:
+      - ./template:/workspace
+    environment:
+      - PORT=5000
+      - HOST=0.0.0.0
+    networks:
+      atsa:
+        ipv4_address: 172.29.0.51
+
+#2018-03-17

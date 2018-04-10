@@ -1,0 +1,32 @@
+<form #form="ngForm" novalidate>
+  <h4 class="stepper-legend">Players</h4>
+  <ng-template ngFor let-index="index" let-player [ngForOf]="partida.players">
+    <div class="">
+      <h2>Player {{index + 1}}</h2>
+      <div fxLayout fxLayoutGap="10px" class="mat-form-field-100">        
+        <mat-form-field>
+          <input matInput
+            name="{{'name'+index}}"
+            [(ngModel)]="player.name"
+            placeholder="nombre"
+            required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput
+            name="{{'profileType'+index}}"
+            [(ngModel)]="player.profileType"
+            placeholder="tipo (seleccionable)"
+            required>
+        </mat-form-field>
+      </div>
+    </div>
+  </ng-template>
+  <div fxLayout fxLayoutGap="10px" fxLayoutAlign="end start">
+    <mat-icon color="success" (click)="addItem()">add_circle</mat-icon>
+  </div>
+  <div fxLayout fxLayoutGap="10px" fxLayoutAlign="end start">
+    <button mat-button (click)="stepper.reset()">Cancelar</button>
+    <button mat-button matStepperPrevious color="default" fxFlex="100px">Atras</button>
+    <button mat-button (click)="submit()" color="success" fxFlex="100px">finalizar</button>
+  </div>
+</form>

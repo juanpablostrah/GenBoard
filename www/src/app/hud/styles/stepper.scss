@@ -1,0 +1,9 @@
+.hide-steps-header{
+  .mat-horizontal-stepper-header-container{
+    visibility: hidden;
+    display: none;
+  }
+  .stepper-legend{
+    margin-top: 50px;
+  }
+}

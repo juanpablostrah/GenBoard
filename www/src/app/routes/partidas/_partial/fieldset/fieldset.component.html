@@ -1,0 +1,15 @@
+<mat-horizontal-stepper #stepper="matHorizontalStepper" class="hide-steps-header" linear>
+  <mat-step [stepControl]="datosPartidaForm">
+    <app-partidas-datos-partida
+      #datosPartida
+      [partida]="partida" >
+    </app-partidas-datos-partida>
+  </mat-step>
+  <mat-step [stepControl]="playersForm">
+    <app-partidas-players
+      #players
+      [partida]="partida"
+      (onFinish)="onFinishCallback()">
+    </app-partidas-players>
+  </mat-step>
+</mat-horizontal-stepper>

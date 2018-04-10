@@ -1,0 +1,32 @@
+<form #form="ngForm" novalidate>
+  <h4 class="stepper-legend">Datos del Partida</h4>
+  <div fxLayout fxLayoutGap="10px" class="mat-form-field-100">
+    <mat-form-field>
+      <input matInput
+        name="nombre"
+        [(ngModel)]="partida.nombre"
+        placeholder="nombre"
+        required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+        name="historia"
+        [(ngModel)]="partida.historia"
+        placeholder="historia"
+        required>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <h3>Comentarios</h3>
+    <div fxLayout class="mat-form-field-100">
+      <mat-form-field>
+        <textarea matInput placeholder="..." ></textarea>
+      </mat-form-field>
+    </div>
+  </div>
+  <div fxLayout fxLayoutGap="10px" fxLayoutAlign="end start">
+    <button mat-button matStepperNext color="success" fxFlex="100px">Siguiente</button>
+  </div>
+
+</form>

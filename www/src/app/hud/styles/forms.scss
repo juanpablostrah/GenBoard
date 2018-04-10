@@ -1,0 +1,17 @@
+.mat-form-field-100{
+  .mat-form-field{
+    width: 100%;
+  }
+}
+
+.mat-button{
+  &.mat-success{
+    border: 2px solid #3C3;
+    &:hover{
+      background-color: rgba(63,255,63,0.5);
+    }
+  }
+  &.mat-default{
+    border: 2px solid #DDD;
+  }
+}

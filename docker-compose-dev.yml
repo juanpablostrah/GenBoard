@@ -1,0 +1,42 @@
+version: "3"
+
+networks:
+  genboard:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.30.0.0/24
+
+services:
+
+  www:
+    build:
+      context: www
+      dockerfile: Dockerfile-dev
+    container_name: genboard-www-dev
+    entrypoint: 'tail -f /dev/null'
+    volumes:
+      - ./www:/workspace
+    environment:
+      - PORT=5000
+      - HOST=172.30.0.12
+    networks:
+      genboard:
+        ipv4_address: 172.30.0.12
+
+  mysql:
+    build:
+      context: mysql
+      dockerfile: Dockerfile
+    container_name: genboard-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    networks:
+      genboard:
+        ipv4_address: 172.30.0.21
+
+
+
+
+#2018-04-07

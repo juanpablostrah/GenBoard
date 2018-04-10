@@ -1,0 +1,103 @@
+*:focus {
+    outline: none;
+}
+
+.sidenav{
+  background-color: #252d22;
+  .sidenav-header{
+    text-align: center;
+    background-color:#183b0b;
+    color: #FFF;
+    padding-bottom: 12px;
+    img{
+      width: 50%;
+      max-width: 90px;
+      margin: 20px 0px;
+    }
+    .brand{
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .email{
+      margin-top: 5px;
+      font-size: 12px;
+    }
+  }
+  .sidenav-content{
+    padding: 0px;
+    .mat-expansion-panel{
+      box-shadow: none;
+      color: #FFF;
+      background-color: #252d22;
+      .mat-expansion-panel-content {
+        background: #3b4039;
+        .mat-list-item{
+          height: auto;
+          padding-top: 10px;
+          min-height: 30px;
+          color: #b0b0b0;
+          font-size: 12px;
+        }
+      }
+      .mat-expansion-panel-body{
+        padding: 5px;
+        .mat-list-item{
+          text-decoration: none;
+        }
+      }
+      .mat-expansion-panel-header {
+        padding: 0 5px 0 15px;
+        background: #1d281a;
+        border-bottom: 1px solid #555;
+        .mat-expansion-panel-header-title {
+          color: #b0b0b0;
+          font-size: 14px;
+          display : flex;
+          align-items : center;
+        }
+        .mat-icon{
+          font-size: 19px;
+        }
+        .mat-line{
+          text-decoration: none;
+          margin-left: 2px;
+        }
+        &.simple-item{
+          height: 48px;
+        }
+        &:hover {
+          color: #588c42;
+        }
+        &.active,
+        &.mat-expanded{
+          border-bottom: 1px solid #507e3e;
+          .mat-expansion-panel-header-title{
+            color: #fff;
+          }
+        }
+      }
+
+    }
+  }
+  .sidenav-footer{
+    width:100%;
+    .sidenav-footer-top{
+      box-sizing: border-box;
+      text-align: center;
+      padding: 10px 10px 10px 0;
+      width:100%;
+      background-color: #183b0b;
+      img{
+        width: 120px;
+      }
+    }
+    .sidenav-footer-bottom{
+      width:100%;
+      padding: 8px 10px 10px 0;
+      box-sizing: border-box;
+      color:  #d0d0d0;
+      text-align: center;
+      font-size: 12px;
+    }
+  }
+}

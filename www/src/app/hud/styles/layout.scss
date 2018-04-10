@@ -1,0 +1,56 @@
+$header-heigth: 64px;
+
+.page-container{
+  height: 100vh;
+  .sidenav-container{
+    .sidenav{
+      width: 200px;
+      overflow: hidden;
+      //position: absolute;
+      .sidenav-header,
+      .sidenav-content,
+      .sidenav-footer{
+      }
+      .sidenav-header{
+      }
+      .sidenav-content{
+      }
+      .sidenav-footer{
+        bottom: 0;
+        position: absolute;
+        overflow: hidden;
+        .sidenav-footer-top{
+
+        }
+        .sidenav-footer-bottom{
+
+        }
+      }
+    }
+  }
+  .mat-sidenav-content{
+    position: relative;
+    height: 100vh;
+    .page-header{
+      position: absolute;
+      z-index: 2;
+      .header-title{
+        order: 2;
+        margin-left: auto;
+      }
+      .header-menu{
+        order: 3;
+        margin-left: auto;
+      }
+    }
+    .page-content{
+      position: absolute;
+      top:0px;
+      padding: 0px;
+      width: 100%;
+      height: 100vh;
+      padding-top: $header-heigth;
+      box-sizing: border-box;
+    }
+  }
+}

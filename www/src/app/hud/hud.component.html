@@ -1,0 +1,57 @@
+<div class="page-container" (window:resize)="onResize($event)">
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav class="sidenav" mode="side" opened="push" #sidenav>
+      <div class="sidenav-header">
+        <img src="./assets/images/user/icon.svg" alt="">
+        <p class="brand">Info GenBoard</p>
+        <p class="email">info@genboard.com.ar</p>
+      </div>
+      <mat-list class="sidenav-content">
+        <ng-template ngFor let-item [ngForOf]="menuList">
+          <mat-expansion-panel *ngIf="item.sublist && item.sublist.length" [expanded]="step == item.title" (opened)="setStep(item.title)" hideToggle="true">
+            <mat-expansion-panel-header [ngClass]="{'active': step === item.title}">
+              <mat-panel-title [ngClass]="{'active': step === item.title}">
+                <mat-icon matListIcon>{{item.icon}}</mat-icon>
+                <h3 matLine> {{item.title}} </h3>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <a mat-list-item *ngFor="let subitem of item.sublist" routerLink="{{subitem.link}}" routerLinkActive="active" (click)="hideSide()">
+              <h3 matLine>{{subitem.title}}</h3>
+            </a>
+          </mat-expansion-panel>
+          <div class="mat-expansion-panel" *ngIf="!item.sublist || !item.sublist.length" routerLink="{{item.link}}">
+            <div class="mat-expansion-panel-header simple-item">
+              <mat-panel-title routerLinkActive="active">
+                <mat-icon matListIcon>{{item.icon}}</mat-icon>
+                <h3> {{item.title}} </h3>
+              </mat-panel-title>
+            </div>
+          </div>
+        </ng-template>
+      </mat-list>
+      <div class="sidenav-footer">
+        <div class="sidenav-footer-top">
+          <img src="./assets/images/logo/sistema.png" alt="">
+        </div>
+        <div class="sidenav-footer-bottom">
+          por JuAndPablo
+        </div>
+      </div>
+    </mat-sidenav>
+    <mat-toolbar class="page-header">
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>dehaze</mat-icon>
+      </button>
+      <span class="header-title">GenBoard title</span>
+      <button mat-icon-button [mat-menu-trigger-for]="menu" class="header-menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </mat-toolbar>
+    <mat-menu class="account-menu" x-position="after" y-position="after" #menu="matMenu">
+      <button mat-menu-item (click)="logout()">Cerrar Sesión</button>
+    </mat-menu>
+    <mat-card class="page-content">
+      <router-outlet></router-outlet>
+    </mat-card>
+  </mat-sidenav-container>
+</div>
