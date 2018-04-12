@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ViewChild } from '@angular/core';
+import { Output } from '@angular/core';
+import { Input } from '@angular/core';
+import { EventEmitter } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-roller-control',
@@ -7,9 +12,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RollerControlComponent implements OnInit {
 
-  constructor() { }
+  @Input()
+  dataSet: [{}]
 
-  ngOnInit() {
+  @Output()
+  onRoll: EventEmitter<void>
+
+  @ViewChild(NgForm)
+  form:NgForm
+
+  constructor() {
+    this.onRoll = new EventEmitter();
   }
+
+  ngOnInit(){}
+
+  onSubmit():void{
+    if(!this.form.valid){
+      return
+    }
+    this.onRoll.emit();
+  }
+
+
 
 }

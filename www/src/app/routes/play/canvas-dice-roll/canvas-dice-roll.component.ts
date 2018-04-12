@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { AfterViewInit } from '@angular/core';
+import { ViewChild } from '@angular/core';
+import { ElementRef } from '@angular/core';
 import * as THREE from 'three';
 import * as CANNON from 'cannon';
-import { DiceManager, DiceD6, DiceD20 } from 'threejs-dice'
+import { DiceManager, DiceD6, DiceD20, DiceD4, DiceD8, DiceD10, DiceD12 } from 'threejs-dice'
 import { OrbitControls } from 'three-orbitcontrols-ts';
 
 
@@ -10,16 +13,96 @@ import { OrbitControls } from 'three-orbitcontrols-ts';
   templateUrl: './canvas-dice-roll.component.html',
   styleUrls: ['./canvas-dice-roll.component.css']
 })
-export class CanvasDiceRollComponent implements OnInit {
+export class CanvasDiceRollComponent implements AfterViewInit {
 
-  constructor() { }
+  @ViewChild('renderContainer')
+  renderContainerElem:ElementRef;
 
-  ngOnInit() {
-    var container, scene, camera, renderer, controls, world, dice = [];
+  scene: any
+  dice: any
+  constructor() {
+    this.dice = []
+  }
+
+  doRoll(dataSet: [any]){
+    for (var i = 0; i < this.dice.length; i++) {
+        this.scene.remove(this.dice[i].getObject());
+    }
+    this.dice.length = 0;
+    var colors = ['#ff0000', '#ffff00', '#00ff00', '#0000ff', '#ff00ff', '#ff005f'];
+
+    for (var i = 0; i < dataSet.length; i++) {
+      var dataSetItem = dataSet[i];
+      for (var j = 0; j < dataSetItem.value; j++) {
+
+        switch(dataSetItem.descriptor ){
+          case 4:
+              var die = new DiceD4({size: 1.5, backColor: colors[0]});
+              break;
+          case 6:
+              var die = new DiceD6({size: 1.5, backColor: colors[1]});
+              break;
+          case 8:
+              var die = new DiceD8({size: 1.5, backColor: colors[2]});
+              break;
+          case 10:
+              var die = new DiceD10({size: 1.5, backColor: colors[3]});
+              break;
+          case 12:
+              var die = new DiceD12({size: 1.5, backColor: colors[4]});
+              break;
+          case 20:
+              var die = new DiceD20({size: 1.5, backColor: colors[5]});
+              break;
+          default:
+              continue;
+        }
+        this.scene.add(die.getObject());
+        this.dice.push(die);
+      }
+    }
+
+    // for (var i = 0; i < 5; i++) {
+    //
+    //     var die = new DiceD6({size: 1.5, backColor: colors[i]});
+    //     this.scene.add(die.getObject());
+    //     this.scene.remove();
+    //     this.dice.push(die);
+    // }
+    //
+    // var die20 = new DiceD20({size: 1.5, backColor: '#ffffff'});
+    // this.scene.add(die20.getObject());
+    // this.dice.push(die20);
+
+    var diceValues = [];
+    for (var i = 0; i < this.dice.length; i++) {
+      let diceI = this.dice[i];
+      let yRand = Math.random() * 20
+      diceI.getObject().position.x = -15 - (i % 3) * 1.5;
+      diceI.getObject().position.y = 2 + Math.floor(i / 3) * 1.5;
+      diceI.getObject().position.z = -15 + (i % 3) * 1.5;
+      diceI.getObject().quaternion.x = (Math.random()*90-45) * Math.PI / 180;
+      diceI.getObject().quaternion.z = (Math.random()*90-45) * Math.PI / 180;
+      diceI.updateBodyFromMesh();
+      let rand = Math.random() * 5;
+      diceI.getObject().body.velocity.set(25 + rand, 40 + yRand, 15 + rand);
+      diceI.getObject().body.angularVelocity.set(20 * Math.random() -10, 20 * Math.random() -10, 20 * Math.random() -10);
+
+      diceValues.push({dice: diceI, value: i + 1});
+    }
+
+    DiceManager.prepareValues(diceValues);
+  }
+
+  ngAfterViewInit() {
+    var container, scene, camera, renderer, controls, world;
+    var dice = this.dice;
     // SCENE
-  	scene = new THREE.Scene();
+  	this.scene = scene = new THREE.Scene();
   	// CAMERA
-  	var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
+  	//var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
+    var SCREEN_WIDTH = 200;
+    var SCREEN_HEIGHT = 200;
   	var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.01, FAR = 20000;
   	camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
   	scene.add(camera);
@@ -30,7 +113,8 @@ export class CanvasDiceRollComponent implements OnInit {
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-  	container = document.getElementById( 'ThreeJS' );
+  	//container = document.getElementById( 'renderContainer' );
+    container = this.renderContainerElem.nativeElement;
   	container.appendChild( renderer.domElement );
   	// EVENTS
   	// CONTROLS
@@ -90,42 +174,9 @@ export class CanvasDiceRollComponent implements OnInit {
     floorBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
     world.add(floorBody);
 
+
+
     //Walls
-
-    var colors = ['#ff0000', '#ffff00', '#00ff00', '#0000ff', '#ff00ff'];
-    for (var i = 0; i < 5; i++) {
-        var die = new DiceD6({size: 1.5, backColor: colors[i]});
-        scene.add(die.getObject());
-        dice.push(die);
-    }
-
-    var die20 = new DiceD20({size: 1.5, backColor: '#ffffff'});
-    scene.add(die20.getObject());
-    dice.push(die20);
-
-    function randomDiceThrow() {
-        var diceValues = [];
-
-        for (var i = 0; i < dice.length; i++) {
-            let yRand = Math.random() * 20
-            dice[i].getObject().position.x = -15 - (i % 3) * 1.5;
-            dice[i].getObject().position.y = 2 + Math.floor(i / 3) * 1.5;
-            dice[i].getObject().position.z = -15 + (i % 3) * 1.5;
-            dice[i].getObject().quaternion.x = (Math.random()*90-45) * Math.PI / 180;
-            dice[i].getObject().quaternion.z = (Math.random()*90-45) * Math.PI / 180;
-            dice[i].updateBodyFromMesh();
-            let rand = Math.random() * 5;
-            dice[i].getObject().body.velocity.set(25 + rand, 40 + yRand, 15 + rand);
-            dice[i].getObject().body.angularVelocity.set(20 * Math.random() -10, 20 * Math.random() -10, 20 * Math.random() -10);
-
-            diceValues.push({dice: dice[i], value: i + 1});
-        }
-
-        DiceManager.prepareValues(diceValues);
-    }
-
-    setInterval(randomDiceThrow, 100000);
-    randomDiceThrow();
 
     function animate() {
       updatePhysics();
@@ -133,6 +184,7 @@ export class CanvasDiceRollComponent implements OnInit {
     	update();
       requestAnimationFrame( animate );
     }
+
 
     function updatePhysics() {
       world.step(1.0 / 15.0);

@@ -17,7 +17,9 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./players.component.scss']
 })
 export class PlayersComponent {
-  @Input() partida: any
+  
+  @Input()
+  partida: any
 
   @ViewChild(NgForm)
   form:NgForm

@@ -1,3 +1,12 @@
-<p>
-  roller-control works!
-</p>
+<form #form="ngForm" (ngSubmit)="onSubmit()" novalidate>
+  <p>roller-control works!</p>
+  <ng-template ngFor let-index="index" let-dice [ngForOf]="dataSet">
+    <span>Dice of {{dice.descriptor}}*</span>
+    <input
+      type="number"
+      [(ngModel)]="dice.value"
+      name="diceOf{{dice.descriptor}}"
+      min="0">
+  </ng-template>
+  <button type="submit" class="btn btn-success">Roll</button>
+</form>

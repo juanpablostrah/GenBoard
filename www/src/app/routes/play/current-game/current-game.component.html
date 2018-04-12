@@ -1,3 +1,14 @@
-<app-roller-control></app-roller-control>
-<app-canvas-dice-roll></app-canvas-dice-roll>
+
+<div fxLayout="row">
+  <div fxLayout="col" fxFlex="200px">
+    <app-roller-control
+      [dataSet]="dataSet"
+      (onRoll)="doRoll()">
+    </app-roller-control>
+  </div>
+  <div fxLayout="col">
+    <app-canvas-dice-roll #diceRoller>
+    </app-canvas-dice-roll>
+  </div>
+</div>
 <app-game-log></app-game-log>

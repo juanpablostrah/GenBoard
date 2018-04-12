@@ -21,6 +21,7 @@ import { AppComponent } from 'app/app.component';
 import { RoutesModule } from 'app/routes/routes.module';
 import { MaterialModule } from 'app/shared/modules/material.module';
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { PlayModule } from 'app/routes/play/play.module';
 
 @NgModule({
   imports: [

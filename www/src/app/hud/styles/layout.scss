@@ -45,12 +45,17 @@ $header-heigth: 64px;
     }
     .page-content{
       position: absolute;
-      top:0px;
+      top:0;
       padding: 0px;
       width: 100%;
       height: 100vh;
-      padding-top: $header-heigth;
+      overflow-x: hidden;
       box-sizing: border-box;
+      .page-viewport{
+        position: relative;
+        width: 100%;
+        padding-top: $header-heigth;
+      }
     }
   }
 }

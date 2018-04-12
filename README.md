@@ -53,5 +53,5 @@ Empaquetar aplicación
 
 ### api    
 
-El servidor de datos es una aplicación Rails
+El servidor de datos es una aplicación Java
 TODO: completar
