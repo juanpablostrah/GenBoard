@@ -88,7 +88,8 @@ export class CanvasDiceRollComponent implements AfterViewInit {
       diceI.getObject().body.velocity.set(25 + rand, 40 + yRand, 15 + rand);
       diceI.getObject().body.angularVelocity.set(20 * Math.random() -10, 20 * Math.random() -10, 20 * Math.random() -10);
 
-      diceValues.push({dice: diceI, value: i + 1});
+      let value =  Math.floor(Math.random() * (diceI.values - 1 + 1)) + 1;
+      diceValues.push({dice: diceI, value: value});
     }
 
     DiceManager.prepareValues(diceValues);
@@ -101,8 +102,8 @@ export class CanvasDiceRollComponent implements AfterViewInit {
   	this.scene = scene = new THREE.Scene();
   	// CAMERA
   	//var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
-    var SCREEN_WIDTH = 200;
-    var SCREEN_HEIGHT = 200;
+    var SCREEN_WIDTH = 300;
+    var SCREEN_HEIGHT = 300;
   	var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.01, FAR = 20000;
   	camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
   	scene.add(camera);
