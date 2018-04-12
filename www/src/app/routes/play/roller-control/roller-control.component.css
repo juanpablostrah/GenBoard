@@ -1,0 +1,36 @@
+.inputContainer {
+    width: 90px;
+    margin-top: 5px;
+}
+.inputContainer label {
+    float: right;
+    //margin-left: 5px;
+    padding: 2px;
+
+    //background: #ccc
+}
+.inputContainer div {
+    overflow: hidden;
+}
+.inputContainer input {
+    width: 55px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    display: block
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+
+  opacity: 1;
+
+}
+
+.rollButtonContainer{
+  margin-top: 10px;
+}
+
+.paddingForm{
+  padding: 5px;
+}

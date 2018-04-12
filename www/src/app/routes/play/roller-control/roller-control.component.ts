@@ -4,6 +4,7 @@ import { Output } from '@angular/core';
 import { Input } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-roller-control',
@@ -34,6 +35,12 @@ export class RollerControlComponent implements OnInit {
     this.onRoll.emit();
   }
 
+  public resetDice(){
+    if (this.form.valid) {
+      console.log("Form Submitted!");
+      this.form.reset();
+    }
+  }
 
 
 }

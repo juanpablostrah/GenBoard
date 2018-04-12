@@ -9,6 +9,7 @@ import { CanvasDiceRollComponent } from './canvas-dice-roll/canvas-dice-roll.com
 import { GameLogComponent } from './game-log/game-log.component';
 import { CurrentGameComponent } from './current-game/current-game.component';
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { MaterialModule } from 'app/shared/modules/material.module';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     PlayRoutingModule,
     FlexLayoutModule,
     CommonModule,
-    FormsModule
+    FormsModule,
+    MaterialModule
   ],
   exports: [
 

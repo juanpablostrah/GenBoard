@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { AfterViewInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
 import { ElementRef } from '@angular/core';
@@ -102,8 +103,8 @@ export class CanvasDiceRollComponent implements AfterViewInit {
   	this.scene = scene = new THREE.Scene();
   	// CAMERA
   	//var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
-    var SCREEN_WIDTH = 300;
-    var SCREEN_HEIGHT = 300;
+    var SCREEN_WIDTH = 500;
+    var SCREEN_HEIGHT = 500;
   	var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.01, FAR = 20000;
   	camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
   	scene.add(camera);
@@ -203,7 +204,6 @@ export class CanvasDiceRollComponent implements AfterViewInit {
     }
 
     requestAnimationFrame( animate );
-
   }
-
+  
 }

@@ -15,7 +15,7 @@ module.exports = function (config) {
       clearContext: false
     },
     files: [
-      {pattern: './node_modules/@angular/material/prebuilt-themes/indigo-pink.css', included: true, watched: true},
+      {pattern: './node_modules/@angular/material/prebuilt-themes/purple-green.css', included: true, watched: true},
       {pattern: './src/test.ts', watched: false}
     ],
     preprocessors: {

@@ -1,12 +1,18 @@
-<form #form="ngForm" (ngSubmit)="onSubmit()" novalidate>
-  <p>roller-control works!</p>
-  <ng-template ngFor let-index="index" let-dice [ngForOf]="dataSet">
-    <span>Dice of {{dice.descriptor}}*</span>
-    <input
-      type="number"
-      [(ngModel)]="dice.value"
-      name="diceOf{{dice.descriptor}}"
-      min="0">
-  </ng-template>
-  <button type="submit" class="btn btn-success">Roll</button>
-</form>
+<div class="paddingForm">
+  <form #form="ngForm" (ngSubmit)="onSubmit()" novalidate>
+    <ng-template ngFor let-index="index" let-dice [ngForOf]="dataSet">
+      <div class="inputContainer">
+        <label>d{{dice.descriptor}}</label>
+        <div><input
+          type="number"
+          [(ngModel)]="dice.value"
+          name="diceOf{{dice.descriptor}}"
+          min="0"></div>
+      </div>
+    </ng-template>
+    <div>
+      <button type="submit" mat-raised-button color="primary" class="rollButtonContainer">Roll</button>
+      <button (click)="resetDice()" mat-raised-button color="warn">Clear Die</button>
+    </div>
+  </form>
+</div>
