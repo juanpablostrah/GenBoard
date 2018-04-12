@@ -8,7 +8,10 @@
           [(ngModel)]="dice.value"
           name="diceOf{{dice.descriptor}}"
           min="0"></div>
+        <label>modifier</label>
+        <input type="number">
       </div>
+
     </ng-template>
     <div>
       <button type="submit" mat-raised-button color="primary" class="rollButtonContainer">Roll</button>
