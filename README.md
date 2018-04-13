@@ -5,7 +5,7 @@ tablero generico para juegos de rol.
 
 Proyecto para TIP de la UNQ, de Juan Pablo Strah y Loiacono Pablo, que consiste en un tablero que permite a jugadores de juegos de rol, poder jugar de manera online sin necesidad de tener que reunirse todos en un mismo sitio. Esta Necesidad surgio a traves de un amigo que posee una casa de videojuegos y organiza partidas de rol, y siempre se encontraba con la dificultad de juntar a todos los jugadores en un mismo lugar a causa de la distancias en las que vivian. Con esta aplicacion se busca solucionar esta dificultad y permitir a los jugadores poder jugar desde sus casas.
 
-![Wiki del proyecto](https://github.com/juanpablostrah/GenBoard/wiki)
+[Wiki del proyecto](https://github.com/juanpablostrah/GenBoard/wiki)
 
 
 ### development
