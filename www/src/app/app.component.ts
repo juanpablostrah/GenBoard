@@ -28,7 +28,7 @@ export class AppComponent {
     this.translateService = translateService;
     this.translateService.setDefaultLang('es');
     this.translateService.use('es');
-    this.title.setTitle('GenBoard Contabilidad');
+    this.title.setTitle('GenBoard');
     this.checkBrowserFeatures();
   }
 

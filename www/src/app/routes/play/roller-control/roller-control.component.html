@@ -1,21 +1,53 @@
 <div class="paddingForm">
   <form #form="ngForm" (ngSubmit)="onSubmit()" novalidate>
-    <ng-template ngFor let-index="index" let-dice [ngForOf]="dataSet">
-      <div class="inputContainer">
-        <label>d{{dice.descriptor}}</label>
-        <div><input
-          type="number"
-          [(ngModel)]="dice.value"
-          name="diceOf{{dice.descriptor}}"
-          min="0"></div>
-        <label>modifier</label>
-        <input type="number">
+    <div fxLayout="row" fxLayoutGap="5px" class="inputContainer">
+      <div fxLayout="column"  fxFlex="80px">
+        Cantidad
       </div>
+      <div fxLayout="column"  fxFlex="80px">
+        Modificadores
+      </div>
+    </div>
+    <div fxLayout="row">
+      <div fxLayout="column" fxLayoutGap="5px" fxFlex="100px">
+        <ng-template ngFor let-index="index" let-dice [ngForOf]="dataSet">
+          <div fxLayout="row" fxLayoutGap="5px" class="inputContainer">
+            <div fxLayout="column"  fxFlex="40px">
+              <input
+                type="number"
+                [(ngModel)]="dice.value"
+                name="diceOf{{dice.descriptor}}"
+                min="0"
+                class="amount">
+            </div>
+            <div fxLayout="column"  fxFlex="40px">
+              <label>d{{dice.descriptor}}</label>
+            </div>
+            <!-- <input type="number" class="modifier"> -->
+          </div>
 
-    </ng-template>
-    <div>
-      <button type="submit" mat-raised-button color="primary" class="rollButtonContainer">Roll</button>
-      <button (click)="resetDice()" mat-raised-button color="warn">Clear Die</button>
+        </ng-template>
+      </div>
+      <div fxLayout="column" fxLayoutGap="5px">
+        <ng-template ngFor let-index="index" let-dice [ngForOf]="dataSet">
+          <div fxLayout="row" fxLayoutGap="5px" class="inputContainer">
+            <div fxLayout="column"  fxFlex="40px">
+              <input
+                type="number"
+                [(ngModel)]="dice.modifier"
+                name="modifierOf{{dice.descriptor}}"
+                class="modifier">
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <div fxLayout="row">
+      <div>
+        <button type="submit" mat-raised-button color="primary" class="rollButtonContainer">Roll</button>
+        <button (click)="resetDice()" mat-raised-button color="warn">Clear Die</button>
+      </div>
     </div>
   </form>
 </div>

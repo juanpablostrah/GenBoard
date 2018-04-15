@@ -27,7 +27,7 @@ export class CanvasDiceRollComponent implements AfterViewInit {
 
   doRoll(dataSet: [any]){
     for (var i = 0; i < this.dice.length; i++) {
-        this.scene.remove(this.dice[i].getObject());
+        this.scene.remove(this.dice[i].die.getObject());
     }
     this.dice.length = 0;
     var colors = ['#ff0000', '#ffff00', '#00ff00', '#0000ff', '#ff00ff', '#ff005f'];
@@ -59,25 +59,15 @@ export class CanvasDiceRollComponent implements AfterViewInit {
               continue;
         }
         this.scene.add(die.getObject());
-        this.dice.push(die);
+        this.dice.push({die: die, value:dataSetItem.results[j]});
+
       }
     }
 
-    // for (var i = 0; i < 5; i++) {
-    //
-    //     var die = new DiceD6({size: 1.5, backColor: colors[i]});
-    //     this.scene.add(die.getObject());
-    //     this.scene.remove();
-    //     this.dice.push(die);
-    // }
-    //
-    // var die20 = new DiceD20({size: 1.5, backColor: '#ffffff'});
-    // this.scene.add(die20.getObject());
-    // this.dice.push(die20);
-
     var diceValues = [];
     for (var i = 0; i < this.dice.length; i++) {
-      let diceI = this.dice[i];
+      let diceI = this.dice[i].die;
+      let value =  this.dice[i].value;
       let yRand = Math.random() * 20
       diceI.getObject().position.x = -15 - (i % 3) * 1.5;
       diceI.getObject().position.y = 2 + Math.floor(i / 3) * 1.5;
@@ -88,15 +78,16 @@ export class CanvasDiceRollComponent implements AfterViewInit {
       let rand = Math.random() * 5;
       diceI.getObject().body.velocity.set(25 + rand, 40 + yRand, 15 + rand);
       diceI.getObject().body.angularVelocity.set(20 * Math.random() -10, 20 * Math.random() -10, 20 * Math.random() -10);
-
-      let value =  Math.floor(Math.random() * (diceI.values - 1 + 1)) + 1;
+      console.log(value, diceI)
       diceValues.push({dice: diceI, value: value});
     }
 
     DiceManager.prepareValues(diceValues);
+
   }
 
   ngAfterViewInit() {
+    requestAnimationFrame( animate );
     var container, scene, camera, renderer, controls, world;
     var dice = this.dice;
     // SCENE
@@ -153,7 +144,7 @@ export class CanvasDiceRollComponent implements AfterViewInit {
   	var skyBoxGeometry = new THREE.CubeGeometry( 10000, 10000, 10000 );
   	var skyBoxMaterial = new THREE.MeshPhongMaterial( { color: 0x9999ff, side: THREE.BackSide } );
   	var skyBox = new THREE.Mesh( skyBoxGeometry, skyBoxMaterial );
-  	scene.add(skyBox);
+  	//scene.add(skyBox);
   	scene.fog = new THREE.FogExp2( 0x9999ff, 0.00025 );
 
   	////////////
@@ -189,9 +180,9 @@ export class CanvasDiceRollComponent implements AfterViewInit {
 
 
     function updatePhysics() {
-      world.step(1.0 / 15.0);
+      world.step(1.0 / 60.0);
       for (var i in dice) {
-          dice[i].updateMeshFromBody();
+          dice[i].die.updateMeshFromBody();
       }
     }
 
@@ -203,7 +194,7 @@ export class CanvasDiceRollComponent implements AfterViewInit {
     	renderer.render( scene, camera );
     }
 
-    requestAnimationFrame( animate );
+     requestAnimationFrame( animate );
   }
-  
+
 }

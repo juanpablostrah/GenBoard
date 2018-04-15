@@ -5,6 +5,7 @@ import { ViewChild } from '@angular/core';
 // import { RollerControlComponent }  from './roller-control/roller-control';
 
 import { CanvasDiceRollComponent } from '../canvas-dice-roll/canvas-dice-roll.component';
+import { GameLogComponent } from '../game-log/game-log.component';
 
 @Component({
   selector: 'app-current-game',
@@ -15,35 +16,56 @@ export class CurrentGameComponent implements OnInit {
 
   constructor() { }
 
-  dataSet: [{}]
+  dataSet: [{value,descriptor,modifier,results}]
 
   @ViewChild('diceRoller')
   diceRoller: CanvasDiceRollComponent
 
+  @ViewChild('gameLogger')
+  gameLogger: GameLogComponent
+
   ngOnInit() {
     this.dataSet = [{
       descriptor: 4,
-      value: 0
+      value: 0,
+      modifier:0,
+      results:[]
     },{
       descriptor: 6,
-      value: 0
+      value: 0,
+      modifier:0,
+      results:[]
     },{
       descriptor: 8,
-      value: 0
+      value: 0,
+      modifier:0,
+      results:[]
     },{
       descriptor: 10,
-      value: 0
+      value: 0,
+      modifier:0,
+      results:[]
     },{
       descriptor: 12,
-      value: 0
+      value: 0,
+      modifier:0,
+      results:[]
     },{
       descriptor: 20,
-      value: 0
+      value: 0,
+      modifier:0,
+      results:[]
     }]
   }
 
   doRoll(){
+    this.dataSet.map( dice => {
+      dice.results = Array.from(Array(dice.value).keys()).map(val => {
+        return Math.floor(Math.random() * (dice.descriptor)) + 1;
+      })
+    })
     this.diceRoller.doRoll(this.dataSet);
+    this.gameLogger.doLog(this.dataSet);
   }
 
 }

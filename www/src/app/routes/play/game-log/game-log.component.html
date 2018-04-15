@@ -1,5 +1,5 @@
 <div class="logComponent">
-  <textarea name="log" rows="8" cols="80">
-    lalalalqq
-  </textarea>
+  <ng-template ngFor let-index="index" let-logentry [ngForOf]="log">
+    <p>{{ logentry }}</p>
+  </ng-template>
 </div>

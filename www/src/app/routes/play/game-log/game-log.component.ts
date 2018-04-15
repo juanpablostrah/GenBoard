@@ -14,18 +14,34 @@ export class GameLogComponent implements OnInit {
   @Input()
   dataSet: [{}]
 
-  @Output()
-  onRoll: EventEmitter<void>
+  log: String[]
 
   constructor() {
-    this.onRoll = new EventEmitter();
-  }
-
-  doLog(dataSet: [any]){
-    
   }
 
   ngOnInit() {
+    this.log = []
+  }
+
+  doLog(dataSet: [any]){
+    var sum = 0
+    var log = ""
+    dataSet.map((dicetype)=> {
+      if (dicetype.value !== 0) {
+        sum += dicetype.results.reduce((sum, x) => sum + x , 0) + dicetype.modifier
+        log += dicetype.value+'d'+dicetype.descriptor+'('+dicetype.results.toString()+')'
+        if (dicetype.modifier > 0) {
+          log += '+' + dicetype.modifier
+        } else if (dicetype.modifier < 0) {
+          log += dicetype.modifier
+        }
+        log += '+'
+      }
+    })
+    log = log.slice(0, -1);
+    log += '= '+sum
+    console.log(log)
+    this.log.push(log)
   }
 
 }
