@@ -46,7 +46,7 @@
     "three-orbit-controls": "^82.1.0",
     "three-orbitcontrols-ts": "^0.1.2",
     "three.js": "^0.77.1",
-    "threejs-dice": "github:facundomainere/threejs-dice",
+    "threejs-dice": "github:FacundoMainere/threejs-dice",
     "web-animations-js": "^2.3.1",
     "zone.js": "0.8.20"
   },
