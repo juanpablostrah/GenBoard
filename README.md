@@ -45,6 +45,9 @@ Conectarse al container docker
 Instalar dependencias en modo desarrollo  
 > npm install     
 
+Copiar esta Linea en la consola para solucionar error en la clase app
+cp src/app/config/app.config.ts.example src/app/config/app.config.ts
+
 Ejecutar aplicaciónes API/SPA en modo desarrollo  
 > npm start     
 
