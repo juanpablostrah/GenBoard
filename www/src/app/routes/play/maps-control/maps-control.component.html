@@ -1,0 +1,17 @@
+<div class="">
+    <p>
+      Maps
+    </p>
+    <ul>
+    <ng-template ngFor let-index="index" let-map [ngForOf]="maps">
+      <div class="">
+        <a (click)="load">{{ map.name }} </a>
+      </div>
+    </ng-template>
+  </ul>
+    <input
+      style="display: none"
+      type="file" (change)="saveMap($event)"
+      #fileInput>
+    <button (click)="fileInput.click()">Load Map</button>
+</div>

@@ -42,5 +42,4 @@ export class RollerControlComponent implements OnInit {
     }
   }
 
-
 }

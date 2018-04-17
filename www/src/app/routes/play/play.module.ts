@@ -10,6 +10,7 @@ import { GameLogComponent } from './game-log/game-log.component';
 import { CurrentGameComponent } from './current-game/current-game.component';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { MaterialModule } from 'app/shared/modules/material.module';
+import { MapsControlComponent } from './maps-control/maps-control.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { MaterialModule } from 'app/shared/modules/material.module';
     CanvasDiceRollComponent,
     CurrentGameComponent,
     GameLogComponent,
-    PlayComponent
+    PlayComponent,
+    MapsControlComponent
   ],
   providers: [
 

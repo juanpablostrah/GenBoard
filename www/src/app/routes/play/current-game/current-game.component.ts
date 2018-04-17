@@ -66,6 +66,7 @@ export class CurrentGameComponent implements OnInit {
     })
     this.diceRoller.doRoll(this.dataSet);
     this.gameLogger.doLog(this.dataSet);
+    console.log("LOG");
   }
 
 }
