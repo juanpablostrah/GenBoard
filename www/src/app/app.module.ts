@@ -23,6 +23,7 @@ import { MaterialModule } from 'app/shared/modules/material.module';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { PlayModule } from 'app/routes/play/play.module';
 
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -44,7 +45,7 @@ import { PlayModule } from 'app/routes/play/play.module';
     ServicesModule
   ],
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   providers: [{
    provide: APP_CONFIG,

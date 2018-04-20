@@ -27,8 +27,15 @@ export class CanvasDiceRollComponent implements AfterViewInit {
   dice: any
   lastUpdate: any
   controls: any
+  map: any;
+
   constructor() {
     this.dice = []
+    this.map = "../assets/images/castle.jpg";
+  }
+
+  setMap(newMap : any){
+    this.map = newMap;
   }
 
   doRoll(dataSet: [any]){
@@ -157,10 +164,25 @@ export class CanvasDiceRollComponent implements AfterViewInit {
     light.shadow.mapSize.height = 1024;
     scene.add(light);
 
+    	// PARA CARGARLE UNA IMAGEN SOLA
+    //var texturePainting1 = new THREE.TextureLoader().load( "../assets/images/dashboard.jpg", );
+
+	// PAR CARGARLE UNA IMAGEN Y REPETIRLA
+	var texturePainting1 = new THREE.TextureLoader().load(this.map,
+  function( texture ) {
+				// texture.wrapS = THREE.RepeatWrapping;
+				// texture.wrapT = THREE.RepeatWrapping;
+				// texture.repeat.set( 20, 20 );
+	} );
+
+  var image = texturePainting1.image;
+
 
     // FLOOR
-    var floorMaterial = new THREE.MeshPhongMaterial( { color: '#00aa00', side: THREE.DoubleSide } );
-    var floorGeometry = new THREE.PlaneGeometry(30, 30, 10, 10);
+    // var floorMaterial = new THREE.MeshPhongMaterial( { color: '#00aa00', side: THREE.DoubleSide } );
+    // var floorGeometry = new THREE.PlaneGeometry(30, 30, 10, 10);
+    var floorMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff, map: texturePainting1,side: THREE.DoubleSide } );
+  	var floorGeometry = new THREE.PlaneGeometry(60, 60, 10, 10);
     var floor = new THREE.Mesh(floorGeometry, floorMaterial);
     floor.receiveShadow  = true;
     floor.rotation.x = Math.PI / 2;

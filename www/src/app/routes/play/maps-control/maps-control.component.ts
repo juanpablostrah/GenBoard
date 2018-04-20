@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ViewChild } from '@angular/core';
+import { EventEmitter } from '@angular/core';
+import { Output } from '@angular/core';
+import { MapComponent } from '../map/map.component';
 
 @Component({
   selector: 'app-maps-control',
@@ -10,16 +14,26 @@ export class MapsControlComponent implements OnInit {
   maps : File[];
   selectedFile: File;
 
+  @Output()
+  onSetMap: EventEmitter<void>
+
+  @ViewChild('map')
+  mapToShow: MapComponent;
+
   constructor() {
     this.maps = [];
+    this.onSetMap = new EventEmitter();
   }
 
   ngOnInit() {
-    
+
   }
 
-  public load(){
-    console.log("load");
+  public setMap(){
+    console.log("setting Map");
+    this.onSetMap.emit();
+    // this.mapToShow.setMap(this.selectedFile);
+
   }
 
   public saveMap(event) {

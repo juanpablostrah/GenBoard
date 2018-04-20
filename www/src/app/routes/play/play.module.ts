@@ -11,6 +11,7 @@ import { CurrentGameComponent } from './current-game/current-game.component';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { MaterialModule } from 'app/shared/modules/material.module';
 import { MapsControlComponent } from './maps-control/maps-control.component';
+import { MapComponent } from './map/map.component';
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import { MapsControlComponent } from './maps-control/maps-control.component';
     CurrentGameComponent,
     GameLogComponent,
     PlayComponent,
-    MapsControlComponent
+    MapsControlComponent,
+    MapComponent
   ],
   providers: [
 

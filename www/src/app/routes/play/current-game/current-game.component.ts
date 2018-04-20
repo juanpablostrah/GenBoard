@@ -6,6 +6,7 @@ import { ViewChild } from '@angular/core';
 
 import { CanvasDiceRollComponent } from '../canvas-dice-roll/canvas-dice-roll.component';
 import { GameLogComponent } from '../game-log/game-log.component';
+import { MapComponent } from '../map/map.component';
 
 @Component({
   selector: 'app-current-game',
@@ -18,11 +19,14 @@ export class CurrentGameComponent implements OnInit {
 
   dataSet: [{value,descriptor,modifier,results}]
 
+  map: any;
+
   @ViewChild('diceRoller')
   diceRoller: CanvasDiceRollComponent
 
   @ViewChild('gameLogger')
   gameLogger: GameLogComponent
+
 
   ngOnInit() {
     this.dataSet = [{
@@ -69,4 +73,7 @@ export class CurrentGameComponent implements OnInit {
     console.log("LOG");
   }
 
+  doSetMap(){
+    this.diceRoller.setMap(this.map);
+  }
 }
