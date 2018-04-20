@@ -31,12 +31,12 @@ export class CanvasDiceRollComponent implements AfterViewInit {
 
   constructor() {
     this.dice = []
-    this.map = "../assets/images/castle.jpg";
+    //this.map = "../assets/images/castle.jpg";
   }
 
-  setMap(newMap : any){
-    this.map = newMap;
-  }
+    // setMap(newMap : any){
+    //   this.map = newMap;
+    // }
 
   doRoll(dataSet: [any]){
     var colors = ['#ff0000', '#ffff00', '#00ff00', '#0000ff', '#ff00ff', '#ff005f'];
@@ -126,12 +126,13 @@ export class CanvasDiceRollComponent implements AfterViewInit {
     this.scene = scene = new THREE.Scene();
     // CAMERA
     //var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
-    var SCREEN_WIDTH = 500;
-    var SCREEN_HEIGHT = 500;
-    var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.01, FAR = 20000;
+    var SCREEN_WIDTH = 800;
+    var SCREEN_HEIGHT = 550;
+    var VIEW_ANGLE = 20, ASPECT = 1, NEAR = 0.01, FAR = 20000;
+    // var VIEW_ANGLE = 20, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.01, FAR = 20000;
     this.camera = camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
     scene.add(camera);
-    camera.position.set(0,30,30);
+    camera.position.set(0,180,0);
     // RENDERER
     this.renderer = renderer = new THREE.WebGLRenderer( {antialias:true} );
     renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -165,18 +166,18 @@ export class CanvasDiceRollComponent implements AfterViewInit {
     scene.add(light);
 
     	// PARA CARGARLE UNA IMAGEN SOLA
-    //var texturePainting1 = new THREE.TextureLoader().load( "../assets/images/dashboard.jpg", );
+    var texturePainting1 = new THREE.TextureLoader().load( "../assets/images/castle.jpg", );
 
 	// PAR CARGARLE UNA IMAGEN Y REPETIRLA
-	var texturePainting1 = new THREE.TextureLoader().load(this.map,
-  function( texture ) {
+  	// var texturePainting1 = new THREE.TextureLoader().load(this.map,
+    // function( texture ) {
 				// texture.wrapS = THREE.RepeatWrapping;
 				// texture.wrapT = THREE.RepeatWrapping;
 				// texture.repeat.set( 20, 20 );
-	} );
+	// } );
 
-  var image = texturePainting1.image;
-
+    // var image = texturePainting1.image;
+    //
 
     // FLOOR
     // var floorMaterial = new THREE.MeshPhongMaterial( { color: '#00aa00', side: THREE.DoubleSide } );
@@ -188,10 +189,10 @@ export class CanvasDiceRollComponent implements AfterViewInit {
     floor.rotation.x = Math.PI / 2;
     scene.add(floor);
     // SKYBOX/FOG
-    var skyBoxGeometry = new THREE.CubeGeometry( 10000, 10000, 10000 );
-    var skyBoxMaterial = new THREE.MeshPhongMaterial( { color: 0x9999ff, side: THREE.BackSide } );
-    var skyBox = new THREE.Mesh( skyBoxGeometry, skyBoxMaterial );
-    //scene.add(skyBox);
+    // var skyBoxGeometry = new THREE.CubeGeometry( 10000, 10000, 10000 );
+    // var skyBoxMaterial = new THREE.MeshPhongMaterial( { color: 0x9999ff, side: THREE.BackSide } );
+    // var skyBox = new THREE.Mesh( skyBoxGeometry, skyBoxMaterial );
+    // scene.add(skyBox);
     scene.fog = new THREE.FogExp2( 0x9999ff, 0.00025 );
 
     ////////////

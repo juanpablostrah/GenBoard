@@ -73,7 +73,7 @@ export class CurrentGameComponent implements OnInit {
     console.log("LOG");
   }
 
-  doSetMap(){
-    this.diceRoller.setMap(this.map);
-  }
+  // doSetMap(){
+  //   this.diceRoller.setMap(this.map);
+  // }
 }
