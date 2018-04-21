@@ -14,6 +14,6 @@
   </div>
 </div>
 <div fxLayout="col">
-  <app-maps-control></app-maps-control>
+  <app-maps-control (onSetMap)="handleSetMap($event)"></app-maps-control>
 </div>
 <app-game-log #gameLogger></app-game-log>

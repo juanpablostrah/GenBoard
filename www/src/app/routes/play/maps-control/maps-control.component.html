@@ -4,7 +4,7 @@
     </div>
       <ng-template ngFor let-index="index" let-map [ngForOf]="maps">
         <div class="">
-          <a (click)="setMap()">{{ map.name }} </a>
+          <a (click)="setMap(map)">{{ map.name }} </a>
         </div>
       </ng-template>
     <ul>

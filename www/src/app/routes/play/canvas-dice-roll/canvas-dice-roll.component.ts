@@ -7,6 +7,7 @@ import * as THREE from 'three';
 import * as CANNON from 'cannon';
 import { DiceManager, DiceD6, DiceD20, DiceD4, DiceD8, DiceD10, DiceD12 } from 'threejs-dice'
 import { OrbitControls } from 'three-orbitcontrols-ts';
+import { MeshBasicMaterial } from 'three';
 
 var diceIndex = 0;
 
@@ -16,6 +17,7 @@ var diceIndex = 0;
   styleUrls: ['./canvas-dice-roll.component.css']
 })
 export class CanvasDiceRollComponent implements AfterViewInit {
+
 
   @ViewChild('renderContainer')
   renderContainerElem:ElementRef;
@@ -28,15 +30,23 @@ export class CanvasDiceRollComponent implements AfterViewInit {
   lastUpdate: any
   controls: any
   map: any;
+  floorMaterial: any;
 
   constructor() {
     this.dice = []
     //this.map = "../assets/images/castle.jpg";
   }
 
-    // setMap(newMap : any){
-    //   this.map = newMap;
-    // }
+    setMap(map : File){
+      var reader = new FileReader();
+      reader.onload = (evnt :any) => {
+        var content : string = evnt.target.result
+        var texturePainting1 : any = THREE.ImageUtils.loadTexture(content );
+        this.floorMaterial.map = texturePainting1;
+      }
+      console.log("mapita");
+      reader.readAsDataURL(map);
+    }
 
   doRoll(dataSet: [any]){
     var colors = ['#ff0000', '#ffff00', '#00ff00', '#0000ff', '#ff00ff', '#ff005f'];
@@ -182,8 +192,9 @@ export class CanvasDiceRollComponent implements AfterViewInit {
     // FLOOR
     // var floorMaterial = new THREE.MeshPhongMaterial( { color: '#00aa00', side: THREE.DoubleSide } );
     // var floorGeometry = new THREE.PlaneGeometry(30, 30, 10, 10);
-    var floorMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff, map: texturePainting1,side: THREE.DoubleSide } );
-  	var floorGeometry = new THREE.PlaneGeometry(60, 60, 10, 10);
+    var floorMaterial = this.floorMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff, map: texturePainting1,side: THREE.DoubleSide } );
+
+    var floorGeometry = new THREE.PlaneGeometry(60, 60, 10, 10);
     var floor = new THREE.Mesh(floorGeometry, floorMaterial);
     floor.receiveShadow  = true;
     floor.rotation.x = Math.PI / 2;

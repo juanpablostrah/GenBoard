@@ -19,7 +19,7 @@ export class CurrentGameComponent implements OnInit {
 
   dataSet: [{value,descriptor,modifier,results}]
 
-  map: any;
+  map: File;
 
   @ViewChild('diceRoller')
   diceRoller: CanvasDiceRollComponent
@@ -60,6 +60,13 @@ export class CurrentGameComponent implements OnInit {
       modifier:0,
       results:[]
     }]
+  }
+
+  public handleSetMap(map:File){
+
+    console.log("12345678");
+    console.log(map);
+    this.diceRoller.setMap(map);
   }
 
   doRoll(){

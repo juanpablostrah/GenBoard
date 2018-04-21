@@ -15,7 +15,7 @@ export class MapsControlComponent implements OnInit {
   selectedFile: File;
 
   @Output()
-  onSetMap: EventEmitter<void>
+  onSetMap: EventEmitter<File>
 
   @ViewChild('map')
   mapToShow: MapComponent;
@@ -29,9 +29,9 @@ export class MapsControlComponent implements OnInit {
 
   }
 
-  public setMap(){
+  public setMap(map :File){
     console.log("setting Map");
-    this.onSetMap.emit();
+    this.onSetMap.emit(map);
     // this.mapToShow.setMap(this.selectedFile);
 
   }
@@ -43,8 +43,8 @@ export class MapsControlComponent implements OnInit {
       // this.changeMap(this.selectedFile);
     }
 
-    public changeMap(map : File){
 
-    }
+
+
 
 }

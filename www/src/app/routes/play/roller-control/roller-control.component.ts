@@ -37,7 +37,6 @@ export class RollerControlComponent implements OnInit {
 
   public resetDice(){
     if (this.form.valid) {
-      console.log("Form Submitted!");
       this.form.reset();
     }
   }
