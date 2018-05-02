@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog-ext
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="root (generated)" id="1525021429736-7">
+      <createTable tableName="game_set_guest">
+        <column name="player_id" type="BIGINT">
+          <constraints nullable="false"/>
+        </column>
+        <column name="game_set_id" type="BIGINT">
+          <constraints nullable="false"/>
+        </column>
+      </createTable>
+    </changeSet>
+
+    <changeSet author="root (generated)" id="1525021429736-8">
+      <addForeignKeyConstraint
+        baseColumnNames="game_set_id"
+        baseTableName="game_set_guest"
+        constraintName="FKaxfjoq7p4emc1dynate1dlre0"
+        deferrable="false"
+        initiallyDeferred="false"
+        referencedColumnNames="id"
+        referencedTableName="game_set"/>
+    </changeSet>
+    <changeSet author="root (generated)" id="1525021429736-9">
+      <addForeignKeyConstraint
+        baseColumnNames="player_id"
+        baseTableName="game_set_guest"
+        constraintName="FKqfue9epovcx2lgv2w7fqkstu5"
+        deferrable="false"
+        initiallyDeferred="false"
+        referencedColumnNames="id"
+        referencedTableName="player"/>
+    </changeSet>
+
+</databaseChangeLog>

@@ -25,32 +25,16 @@ services:
       genboard:
         ipv4_address: 172.30.0.12
 
-  api:
-    build:
-      context: api
-      dockerfile: Dockerfile-dev
-    container_name: genboard-api-dev
-    entrypoint: 'tail -f /dev/null'
-    volumes:
-      - ./api:/workspace
-      - ~/.m2/repository:/root/.m2/repository
-    environment:
-      - PORT=5000
-      - HOST=172.30.0.21
-    networks:
-      genboard:
-        ipv4_address: 172.30.0.21
-
   mysql:
     build:
       context: mysql
       dockerfile: Dockerfile
-    container_name: genboard-mysql-dev
+    container_name: genboard-mysql
     environment:
       - MYSQL_ROOT_PASSWORD=root
     networks:
       genboard:
-        ipv4_address: 172.30.0.31
+        ipv4_address: 172.30.0.21
 
 
 

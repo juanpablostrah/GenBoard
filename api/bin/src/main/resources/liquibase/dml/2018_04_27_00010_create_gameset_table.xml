@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog-ext
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="root (generated)" id="1525021429736-5">
+      <createTable tableName="game_set">
+        <column autoIncrement="true" name="id" type="BIGINT">
+          <constraints primaryKey="true" primaryKeyName="game_set_pk"/>
+        </column>
+        <column name="name" type="VARCHAR(255)"/>
+        <column name="since" type="date"/>
+        <column name="owner_id" type="BIGINT"/>
+      </createTable>
+    </changeSet>
+
+    <changeSet author="root (generated)" id="1525021429736-6">
+      <addForeignKeyConstraint
+        baseColumnNames="owner_id"
+        baseTableName="game_set"
+        constraintName="FK4as4v5luiilf3iounvaytvfb7"
+        deferrable="false"
+        initiallyDeferred="false"
+        referencedColumnNames="id"
+        referencedTableName="player"/>
+    </changeSet>
+
+</databaseChangeLog>

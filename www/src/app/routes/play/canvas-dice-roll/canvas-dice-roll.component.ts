@@ -51,10 +51,11 @@ export class CanvasDiceRollComponent implements AfterViewInit {
   doRoll(dataSet: [any]){
     var colors = ['#ff0000', '#ffff00', '#00ff00', '#0000ff', '#ff00ff', '#ff005f'];
     for (var i = 0; i < this.dice.length; i++) {
-        this.scene.remove(this.dice[i].object3D);
+        this.scene.remove(this.dice[i].object3D); //removiendo los objetos 3d y los cuerpos de los dados
         this.world.remove(this.dice[i].object3D.body);
     }
     this.dice.length = 0;
+    //tiro los dados correspondiente de acuerdo a los dados elegidos y la cantidad
     for (var i = 0; i < dataSet.length; i++) {
       var dataSetItem = dataSet[i];
       for (var j = 0; j < dataSetItem.value; j++) {
@@ -107,6 +108,7 @@ export class CanvasDiceRollComponent implements AfterViewInit {
       let rand = Math.random() * 5;
       diceI.getObject().body.velocity.set(25 + rand, 40 + yRand, 15 + rand);
       diceI.getObject().body.angularVelocity.set(20 * Math.random() -10, 20 * Math.random() -10, 20 * Math.random() -10);
+      //agrego al dado a la lista con el valor que debe mostrar
       diceValues.push({dice: diceI, value: value});
     }
 

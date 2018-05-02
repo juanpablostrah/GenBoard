@@ -32,15 +32,12 @@ export class MapsControlComponent implements OnInit {
   public setMap(map :File){
     console.log("setting Map");
     this.onSetMap.emit(map);
-    // this.mapToShow.setMap(this.selectedFile);
-
   }
 
   public saveMap(event) {
       this.selectedFile = event.target.files[0]
       console.log(this.selectedFile);
       this.maps.push(this.selectedFile);
-      // this.changeMap(this.selectedFile);
     }
 
 

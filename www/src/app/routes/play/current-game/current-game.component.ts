@@ -63,9 +63,6 @@ export class CurrentGameComponent implements OnInit {
   }
 
   public handleSetMap(map:File){
-
-    console.log("12345678");
-    console.log(map);
     this.diceRoller.setMap(map);
   }
 
@@ -79,8 +76,4 @@ export class CurrentGameComponent implements OnInit {
     this.gameLogger.doLog(this.dataSet);
     console.log("LOG");
   }
-
-  // doSetMap(){
-  //   this.diceRoller.setMap(this.map);
-  // }
 }

@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { Error404Component } from 'app/routes/error-404/error-404.component';
+import { CreateComponent } from 'app/routes/partidas/create/create.component';
 
 export const routes: Routes = [{
   path: '',
@@ -13,4 +14,5 @@ export const routes: Routes = [{
 },{
   path: 'partidas',
   loadChildren: 'app/routes/partidas/partidas.module#PartidasModule'
-}];
+}  
+];

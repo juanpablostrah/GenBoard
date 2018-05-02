@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog-ext
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="root (generated)" id="1525021429736-3">
+        <createTable tableName="player">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="player_pk"/>
+            </column>
+            <column name="address" type="VARCHAR(255)"/>
+            <column name="birthday" type="date"/>
+            <column name="player_state" type="VARCHAR(255)"/>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="full_name" type="VARCHAR(255)"/>
+            <column name="home_phone" type="VARCHAR(255)"/>
+            <column name="mobile_phone" type="VARCHAR(255)"/>
+            <column name="disabling_reason" type="VARCHAR(255)"/>
+            <column name="since" type="date"/>
+            <column name="user_account_username" type="VARCHAR(50)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="root (generated)" id="1525021429736-4">
+        <addForeignKeyConstraint
+          baseColumnNames="user_account_username"
+          baseTableName="player"
+          constraintName="FK6xv1ikwgo40wvvv29gk3c79cn"
+          deferrable="false"
+          initiallyDeferred="false"
+          referencedColumnNames="username"
+          referencedTableName="user_account"/>
+    </changeSet>
+
+</databaseChangeLog>
