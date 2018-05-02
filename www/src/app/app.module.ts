@@ -22,12 +22,18 @@ import { RoutesModule } from 'app/routes/routes.module';
 import { MaterialModule } from 'app/shared/modules/material.module';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { PlayModule } from 'app/routes/play/play.module';
-
+import { AngularFireModule } from 'angularfire2';
+import { environment } from '../environments/environment';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AuthService } from 'app/services/auth/auth.service';
 
 @NgModule({
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    AngularFireModule.initializeApp(environment.firebase, 'GenBoard'),
+    AngularFireAuthModule,
     FormsModule,
     MaterialModule,
     HttpClientModule,
@@ -50,7 +56,8 @@ import { PlayModule } from 'app/routes/play/play.module';
   providers: [{
    provide: APP_CONFIG,
    useValue: AppConfig
-  }
+ },
+  AuthService
   , {
     provide: HTTP_INTERCEPTORS,
     useClass: ProgressInterceptor,

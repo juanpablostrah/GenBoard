@@ -1,28 +1,70 @@
-import { Component, ViewChild } from '@angular/core';
-import { Credentials } from 'app/services/auth/credentials.model';
-import { AuthService } from 'app/services/auth/auth.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-// import { AppConfig } from 'app/config/app.config';
-import { LoggerService } from 'app/core/logger.service';
+import { AuthService } from 'app/services/auth/auth.service';
 
 @Component({
-  selector: 'app-auth-login',
+  selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
-  @ViewChild('form') myNgForm; // just to call resetForm method
+export class LoginComponent implements OnInit {
 
-  constructor(
-    private authService: AuthService,
-    private dialog: MatDialog,
-    private router: Router,
-    private formBuilder: FormBuilder
-  ) {
+  user = {
+    email: '',
+    password: ''
+  };
 
+  constructor(private authService: AuthService, private router: Router) {
   }
 
+
+   // signInWithTwitter() {
+   //    this.authService.signInWithTwitter()
+   //    .then((res) => {
+   //        this.router.navigate(['dashboard'])
+   //      })
+   //    .catch((err) => console.log(err));
+   //  }
+
+
+    signInWithFacebook() {
+      this.authService.signInWithFacebook()
+      .then((res) => {
+          this.router.navigate(['play'])
+        })
+      .catch((err) => console.log(err));
+    }
+
+
+    signInWithGoogle() {
+      this.authService.signInWithGoogle()
+      .then((res) => {
+          this.router.navigate(['play'])
+        })
+      .catch((err) => console.log(err));
+    }
+
+    // signInWithGithub() {
+    //   this.authService.signInWithGithub()
+    //   .then((res) => {
+    //       this.router.navigate(['dashboard'])
+    //     })
+    //   .catch((err) => console.log(err));
+    // }
+    //
+    // signInWithEmail() {
+    //
+    //   this.authService.signInRegular(this.user.email, this.user.password)
+    //     .then((res) => {
+    //       console.log(res);
+    //       this.router.navigate(['dashboard']);
+    //     })
+    //     .catch((err) => console.log('error: ' + err));
+    // }
+    //
+    //
+
+  ngOnInit() {
+  }
 
 }

@@ -1,31 +1,25 @@
-import {async, TestBed} from '@angular/core/testing';
-import {APP_BASE_HREF} from '@angular/common';
-import {AuthModule} from '../auth.module';
-import {TestsModule} from '../../../shared/modules/tests.module';
-import {TranslateModule} from '@ngx-translate/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { LoginComponent } from './login.component';
 
-describe('HeroListComponent', () => {
-  let fixture;
-  let component;
+describe('LoginComponent', () => {
+  let component: LoginComponent;
+  let fixture: ComponentFixture<LoginComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        TestsModule,
-        TranslateModule.forRoot()
-      ],
-      providers: [
-        {provide: APP_BASE_HREF, useValue: '/'}
-      ],
-    }).compileComponents();
+      declarations: [ LoginComponent ]
+    })
+    .compileComponents();
+  }));
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(LoginComponent);
+    component = fixture.componentInstance;
     fixture.detectChanges();
-    component = fixture.debugElement.componentInstance;
-  }));
+  });
 
-  it('should create hero list component', (() => {
+  it('should be created', () => {
     expect(component).toBeTruthy();
-  }));
+  });
 });
