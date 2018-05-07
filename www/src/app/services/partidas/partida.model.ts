@@ -1,6 +1,6 @@
 export interface Partida {
     id?: number;
-    nombre: string;
+    name: string;
     historia: string;
     operaciones: number;
 }

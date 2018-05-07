@@ -31,6 +31,7 @@
     "@angular/platform-browser": "5.2.3",
     "@angular/platform-browser-dynamic": "5.2.3",
     "@angular/router": "5.2.3",
+    "angular4-material-table": "^0.2.0",
     "apollo-angular": "^1.0.1",
     "apollo-angular-link-http": "^1.0.1",
     "apollo-cache-inmemory": "^1.1.9",

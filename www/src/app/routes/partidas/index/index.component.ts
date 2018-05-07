@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { Partida } from 'app/services/partidas/partida.model';
 import { PartidasService } from 'app/services/partidas/partidas.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -12,8 +12,13 @@ import { LoggerService } from 'app/core/logger.service';
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.scss']
 })
-export class IndexComponent {
-  @ViewChild('form') myNgForm; // just to call resetForm method
+export class IndexComponent implements OnInit{
+
+  //
+  partidas : Partida[];
+
+  @ViewChild('form')
+  myNgForm; // just to call resetForm method
 
   constructor(
     private partidasService: PartidasService,
@@ -21,8 +26,18 @@ export class IndexComponent {
     private router: Router,
     private formBuilder: FormBuilder
   ) {
-
+    this.partidas = [];
   }
 
+  ngOnInit(): void {
+    var promise: Promise<Partida[]> = this.partidasService.getPartidas();
+    var afterThenPromise: Promise<void> = promise.then((partidas) => {
+      this.partidas = partidas;
+    });
+  }
+
+  connect(){
+    
+  }
 
 }

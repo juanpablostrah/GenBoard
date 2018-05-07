@@ -26,6 +26,10 @@ public class GameSet {
     @Size(min = 3, max=50)
     private String name;
 
+    @NotNull
+    @Size(min = 5, max=500)
+    private String history;
+    
 	@Temporal(javax.persistence.TemporalType.DATE)
     private Date since = new Date(System.currentTimeMillis());
     

@@ -1,2 +1,16 @@
-index
-listado de partidas paginado y mecanismo de busqueda
+<div class="">
+    <div class="">
+      <h1>Partidas</h1>
+    </div>
+    <ul>
+      <li *ngFor="let partida of partidas">
+        <a>{{ partida.name }}</a>
+        <button (click)="connect()" mat-raised-button color="primary">Join</button>
+      </li>
+    </ul>
+    <!-- <input
+      style="display: none"
+      type="file" (change)="saveMap($event)"
+      #fileInput>
+    <button (click)="fileInput.click()" mat-raised-button color="primary">Load Map</button> -->
+</div>

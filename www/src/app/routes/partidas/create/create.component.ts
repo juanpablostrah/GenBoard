@@ -7,17 +7,18 @@ import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { AppConfig } from 'app/config/app.config';
 import { LoggerService } from 'app/core/logger.service';
-
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss']
 })
-export class CreateComponent /*implements OnInit*/ {
+export class CreateComponent {
 
   partida: any;
 
-  constructor() {
+  constructor(private partidasService: PartidasService, private route: ActivatedRoute, private router: Router)
+  {
     this.partida = {
       players: [{}]
     };
@@ -25,6 +26,11 @@ export class CreateComponent /*implements OnInit*/ {
 
   save():void{
     console.log(this.partida)
+    this.partidasService.save(this.partida).then((data) => {
+      console.log(data)
+  })
+
+
   }
 
 }
