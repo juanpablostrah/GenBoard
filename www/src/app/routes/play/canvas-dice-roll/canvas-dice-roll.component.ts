@@ -36,7 +36,6 @@ export class CanvasDiceRollComponent implements AfterViewInit {
     this.dice = []
     //this.map = "../assets/images/castle.jpg";
   }
-
     setMap(map : File){
       var reader = new FileReader();
       reader.onload = (evnt :any) => {
@@ -49,39 +48,27 @@ export class CanvasDiceRollComponent implements AfterViewInit {
     }
 
   doRoll(dataSet: [any]){
-    var colors = ['#ff0000', '#ffff00', '#00ff00', '#0000ff', '#ff00ff', '#ff005f'];
+    var colors = {4:'#ff0000', 6:'#ffff00', 8:'#00ff00', 10:'#0000ff', 12:'#ff00ff', 20:'#ff005f'};
     for (var i = 0; i < this.dice.length; i++) {
         this.scene.remove(this.dice[i].object3D); //removiendo los objetos 3d y los cuerpos de los dados
         this.world.remove(this.dice[i].object3D.body);
     }
+    var diceType = {
+      4: DiceD4,
+      6: DiceD6,
+      8: DiceD8,
+      10: DiceD10,
+      12: DiceD12,
+      20: DiceD20,
+      }
     this.dice.length = 0;
+
     //tiro los dados correspondiente de acuerdo a los dados elegidos y la cantidad
     for (var i = 0; i < dataSet.length; i++) {
       var dataSetItem = dataSet[i];
       for (var j = 0; j < dataSetItem.value; j++) {
         var die:any;
-        switch(dataSetItem.descriptor ){
-          case 4:
-              die = new DiceD4({size: 1.5, backColor: colors[0]});
-              break;
-          case 6:
-              die = new DiceD6({size: 1.5, backColor: colors[1]});
-              break;
-          case 8:
-              die = new DiceD8({size: 1.5, backColor: colors[2]});
-              break;
-          case 10:
-              die = new DiceD10({size: 1.5, backColor: colors[3]});
-              break;
-          case 12:
-              die = new DiceD12({size: 1.5, backColor: colors[4]});
-              break;
-          case 20:
-              die = new DiceD20({size: 1.5, backColor: colors[5]});
-              break;
-          default:
-              continue;
-        }
+        var die=new diceType[dataSetItem.descriptor]({size: 1.5, backColor: colors[dataSetItem.descriptor]});
         die.indiceRomanioli = diceIndex++;
         var object3D = die.getObject()
         this.scene.add(object3D);
