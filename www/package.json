@@ -37,6 +37,7 @@
     "apollo-cache-inmemory": "^1.1.9",
     "apollo-client": "^2.2.5",
     "apollo-link-http": "^1.5.2",
+    "bootstrap": "^3.3.7",
     "cannon": "^0.6.2",
     "classlist.js": "1.1.20150312",
     "core-js": "2.5.3",

@@ -1,9 +1,9 @@
 <form #form="ngForm" novalidate>
-  <h4 class="stepper-legend">Players</h4>
+  <h4 class="stepper-legend"></h4>
   <ng-template ngFor let-index="index" let-player [ngForOf]="partida.players">
     <div class="">
       <h2>Player {{index + 1}}</h2>
-      <div fxLayout fxLayoutGap="10px" class="mat-form-field-100">        
+      <div fxLayout fxLayoutGap="10px" class="mat-form-field-100">
         <mat-form-field>
           <input matInput
             name="{{'name'+index}}"

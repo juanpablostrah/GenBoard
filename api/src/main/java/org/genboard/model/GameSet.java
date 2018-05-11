@@ -28,7 +28,7 @@ public class GameSet {
 
     @NotNull
     @Size(min = 5, max=500)
-    private String history;
+    private String history;//ver porque no falla al querer guardarla
     
 	@Temporal(javax.persistence.TemporalType.DATE)
     private Date since = new Date(System.currentTimeMillis());
@@ -71,5 +71,14 @@ public class GameSet {
 	public void setGuests(List<Player> guests) {
 		this.guests = guests;
 	}
+
+	public String getHistory() {
+		return history;
+	}
+
+	public void setHistory(String history) {
+		this.history = history;
+	}
+	
 
 }

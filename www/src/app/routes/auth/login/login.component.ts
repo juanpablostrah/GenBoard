@@ -24,5 +24,8 @@ export class LoginComponent {
 
   }
 
+  login(){
+      console.log("Form Submitted!");
+  }
 
 }

@@ -14,5 +14,5 @@ export const routes: Routes = [{
 },{
   path: 'partidas',
   loadChildren: 'app/routes/partidas/partidas.module#PartidasModule'
-}  
+}
 ];

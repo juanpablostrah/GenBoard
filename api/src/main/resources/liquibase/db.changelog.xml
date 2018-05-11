@@ -13,6 +13,7 @@
   <include file="classpath:/liquibase/dml/2018_04_27_00005_create_player_table.xml"/>
   <include file="classpath:/liquibase/dml/2018_04_27_00010_create_gameset_table.xml"/>
   <include file="classpath:/liquibase/dml/2018_04_27_00015_relation_gameset_player.xml"/>
+  <include file="classpath:/liquibase/dml/2018_05_07_00001_alter_gameset_table.xml"/>
 
 
 </databaseChangeLog>

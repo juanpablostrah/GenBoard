@@ -59,5 +59,4 @@ public class GameSetRestController {
 		this.gameSetRepository = gameSetRepository;
 	}
 
-
 }

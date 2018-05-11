@@ -1,7 +1,10 @@
 package org.genboard.service;
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
+import org.genboard.model.UserAccount;
 import org.genboard.repository.UserAccountRepository;
 import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +29,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		LOGGER.debug("loading User by Username: " + username);
-		return userAccountRepository.findOneByLowerUsername(username);
+		Optional<UserAccount> found = userAccountRepository.findById(username);
+		if(found.isPresent()) {
+			return found.get();
+		}
+		throw new UsernameNotFoundException("user does not exist in database");
 	}
 
 }

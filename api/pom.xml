@@ -166,49 +166,7 @@
           <artifactId>maven-deploy-plugin</artifactId>
           <version>2.8.2</version>
         </plugin>
-        <!-- <plugin>
-	        <groupId>org.liquibase</groupId>
-	        <artifactId>liquibase-maven-plugin</artifactId>
-	        <version>3.4.1</version>
-	        <configuration>                  
-	            <propertyFile>src/main/resources/liquibase.properties</propertyFile>
-	            <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
-	        </configuration>
-	        <dependencies>
-				<dependency>
-					<groupId>org.hibernate</groupId>
-					<artifactId>hibernate-core</artifactId>
-					<version>${hibernate.version}</version>
-				</dependency>
-				<dependency>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-context</artifactId>
-					<version>${spring.version}</version>
-				</dependency>
-				<dependency>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-orm</artifactId>
-					<version>${spring.version}</version>
-				</dependency>
-				<dependency>
-				  <groupId>org.liquibase.ext</groupId>
-				  <artifactId>liquibase-hibernate5</artifactId>
-				  <version>${liquibase-hibernate5.version}</version>
-				</dependency>
-				<dependency>
-				  <groupId>org.yaml</groupId>
-				  <artifactId>snakeyaml</artifactId>
-				  <version>${snakeyaml.version}</version>
-				</dependency>
-				<dependency>
-                    <groupId>org.springframework.data</groupId>
-                    <artifactId>spring-data-jpa</artifactId>
-                    <version>${spring-data-jpa.version}</version>
-                </dependency>
-			</dependencies>
-	    </plugin> -->
-	    
-	    <plugin>
+        <plugin>
 	        <groupId>org.liquibase</groupId>
 	        <artifactId>liquibase-maven-plugin</artifactId>
 	        <version>${liquibase.version}</version>
@@ -221,24 +179,41 @@
 	                <groupId>org.liquibase.ext</groupId>
 	                <artifactId>liquibase-hibernate5</artifactId>
 	                <version>${liquibase-hibernate5.version}</version>
-	            </dependency>
+	            </dependency>	            
+	            <dependency>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-core</artifactId>
+					<version>5.1.13.Final</version>
+				</dependency>	
+				
+				<dependency>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-orm</artifactId>
+					<version>${spring.version}</version>
+				</dependency>					
+				<dependency>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-context</artifactId>
+					<version>${spring.version}</version>
+					
+				</dependency>		
+				<dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-data-jpa</artifactId>
+                    <version>${project.parent.version}</version>
+                </dependency>		
 	            <dependency>
 	                <groupId>org.springframework</groupId>
 	                <artifactId>spring-beans</artifactId>
 	                <version>${spring.version}</version>
 	            </dependency>
 	            <dependency>
-	                <groupId>org.springframework.data</groupId>
-	                <artifactId>spring-data-jpa</artifactId>
-	                <version>${spring-data-jpa.version}</version>
-	            </dependency>
-	            <dependency>
 		            <groupId>javax.validation</groupId>
 		            <artifactId>validation-api</artifactId>
 		            <version>${javax-validation.version}</version>
-				</dependency>
+				</dependency>	
 	        </dependencies>               
-	    </plugin> 
+	    </plugin>
 	    <plugin>
 	      <!-- avoid warning on line command -->
           <groupId>org.eclipse.m2e</groupId>

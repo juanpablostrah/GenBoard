@@ -3,6 +3,7 @@ import { ViewChild } from '@angular/core';
 import { AfterViewInit } from '@angular/core';
 import { ViewEncapsulation } from '@angular/core';
 import { MatSidenav } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
   templateUrl: './hud.component.html',
@@ -17,7 +18,7 @@ import { MatSidenav } from '@angular/material';
 })
 export class HUDComponent implements  AfterViewInit{
 
-  constructor() {
+  constructor(private router: Router) {
 
   }
 
@@ -26,6 +27,11 @@ export class HUDComponent implements  AfterViewInit{
   private sidenav: MatSidenav;
 
   public showMenu: boolean = false;
+
+  logout(){
+    console.log("cerrando sesion")
+    this.router.navigateByUrl('/auth')
+  }
 
   ngAfterViewInit(): void {
 

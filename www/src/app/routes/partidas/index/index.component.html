@@ -5,12 +5,8 @@
     <ul>
       <li *ngFor="let partida of partidas">
         <a>{{ partida.name }}</a>
+        <a>{{ partida.history}} </a>
         <button (click)="connect()" mat-raised-button color="primary">Join</button>
       </li>
     </ul>
-    <!-- <input
-      style="display: none"
-      type="file" (change)="saveMap($event)"
-      #fileInput>
-    <button (click)="fileInput.click()" mat-raised-button color="primary">Load Map</button> -->
 </div>

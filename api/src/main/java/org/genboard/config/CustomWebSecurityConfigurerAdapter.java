@@ -1,18 +1,32 @@
 package org.genboard.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Order(1)
 @Configuration
 @EnableWebSecurity
 public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter{
 	
+	@Autowired
+    private UserDetailsService userDetailsService;
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(genboardPasswordsEncoder());
+    }
+
     @Value("${rest.base_path}")
     private String base_path;
 
@@ -31,20 +45,22 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
         http.authorizeRequests()
             .antMatchers("/**/sessionUser/**").hasRole("ADMIN")
             .antMatchers("/**/sessionManager/**").hasAnyRole("ADMIN", "ENROLLER")
-            .antMatchers("/**/hal-browser/**").hasRole("ADMIN")
-
-            .antMatchers("/**/" + base_path + "/" + public_path + "/user/signup/**").anonymous()
-            .antMatchers("/**/" + base_path + "/" + public_path + "/user/password/recovery/**").anonymous()
-
-            .antMatchers("/**/" + base_path + "/files/**").permitAll()
-            .antMatchers("/**/" + base_path + "/images/**").permitAll()
+           
+            .antMatchers(base_path + "/gameSet/**").permitAll()
+            .antMatchers(base_path + "/player/**").authenticated()
+            .antMatchers(base_path + "/auth/**").permitAll()
             
-            .antMatchers("/**/" + base_path + "/gameSet/**").permitAll()
-            .antMatchers("/**/" + base_path + "/player/**").permitAll()
-            
-            .antMatchers("/**/" + "/player/**").permitAll()
+            .antMatchers("player/**").authenticated()
             
             .anyRequest().authenticated()
             .and().httpBasic();
-    	}
+        
+    }
+    
+    
+    @Bean
+    public PasswordEncoder genboardPasswordsEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
 }
