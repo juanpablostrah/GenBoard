@@ -24,7 +24,7 @@ public class SecurityController {
     
     @RequestMapping(value = "/sessionPlayer", method = RequestMethod.GET)
     public SessionPlayerDTO sessionPlayer() {
-        LOGGER.debug("returning current session developer");
+        LOGGER.debug("returning current session player");
         Player player = developerRepository.findByUsername(securityService.getLoggedUsername());
         if(player == null){
             throw new PlayerNotFountException();

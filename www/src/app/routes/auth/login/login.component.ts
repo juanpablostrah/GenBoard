@@ -4,7 +4,7 @@ import { AuthService } from 'app/services/auth/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
-// import { AppConfig } from 'app/config/app.config';
+import { AppConfig } from 'app/config/app.config';
 import { LoggerService } from 'app/core/logger.service';
 
 @Component({
@@ -13,7 +13,11 @@ import { LoggerService } from 'app/core/logger.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  @ViewChild('form') myNgForm; // just to call resetForm method
+
+  @ViewChild('form')
+  authForm;
+
+  credentials:Credentials
 
   constructor(
     private authService: AuthService,
@@ -21,11 +25,20 @@ export class LoginComponent {
     private router: Router,
     private formBuilder: FormBuilder
   ) {
-
+    this.credentials = {
+      username: '',
+      password: '',
+    }
   }
 
   login(){
-      console.log("Form Submitted!");
+    this.credentials.username = 'carabonita'
+    this.credentials.password = '12345678'
+    this.authService.logIn(this.credentials)
+    .then(()=>this.router.navigate(['']))
+    .catch(()=>{
+      //handle invalid credentials
+    })
   }
 
 }
