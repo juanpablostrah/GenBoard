@@ -8,12 +8,19 @@ import 'rxjs/add/operator/toPromise';
 export class PartidasService {
 	private partidasRestUrl = 'http://localhost:8080/api/v1/gameSet';  // path del controller
 
-	constructor(private http: HttpClient) {}
+	localStorage: Storage;
+
+	constructor(private http: HttpClient) {
+		this.localStorage = window.localStorage;
+	}
 
   save(partida: Partida): Promise<Response> { //service para crear una partida
+
 		console.log('guardando partida ' + JSON.stringify(partida));
 		console.log(`${this.partidasRestUrl}`)
-		return this.http.post(`${this.partidasRestUrl}`, JSON.stringify(partida), { headers: this.getHeaders() }).toPromise()
+		return this.http.post(`${this.partidasRestUrl}`,
+			JSON.stringify(partida),
+			{ headers: this.getHeaders() }).toPromise()
 			.then(response =>response)
 			.catch(this.handleError);
   }
@@ -26,7 +33,7 @@ export class PartidasService {
   }
 
   getPartidas(): Promise<Partida[]> { //service para traer todas las partidas
-    return this.http.get(`${this.partidasRestUrl}/getAll`)
+    return this.http.get(`${this.partidasRestUrl}/getAll`, { headers: this.getHeaders() })
               .toPromise()
               .then(response => response as Partida[])
               .catch(this.handleError);
@@ -34,13 +41,16 @@ export class PartidasService {
 
   update(partida: Partida): Promise<Response> { //metodo para editar una partida
 		console.log('editando partida ' + JSON.stringify(partida));
-		return this.http.put(`${this.partidasRestUrl}/edit`, JSON.stringify(partida)).toPromise()
+		return this.http.put(`${this.partidasRestUrl}/edit`, JSON.stringify(partida), { headers: this.getHeaders() }).toPromise()
 			.then(response => response)
 			.catch(this.handleError);;
 	}
 
 	private getHeaders() {
-		return new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
+		return new HttpHeaders({
+			'Content-Type': 'application/json',
+			'Authorization': 'Basic ' + this.localStorage.getItem('AUTH_TOKEN')
+		})
 	}
 
 	private handleError(error: any): Promise<any> {

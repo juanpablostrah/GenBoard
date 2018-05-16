@@ -38,12 +38,12 @@ public class PlayersRestController {
         LOGGER.info("create player: " + player.getUserAccount().getUsername());
     }
 
-	public PlayerRepository getPlayerRepository() {
-		return playerRepository;
-	}
-
-	public void setPlayerRepository(PlayerRepository playerRepository) {
-		this.playerRepository = playerRepository;
-	}
+//	public PlayerRepository getPlayerRepository() {
+//		return playerRepository;
+//	}
+//
+//	public void setPlayerRepository(PlayerRepository playerRepository) {
+//		this.playerRepository = playerRepository;
+//	}
 
 }

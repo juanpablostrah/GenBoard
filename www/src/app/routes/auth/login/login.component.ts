@@ -6,6 +6,8 @@ import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { AppConfig } from 'app/config/app.config';
 import { LoggerService } from 'app/core/logger.service';
+import { FormsModule }   from '@angular/forms';
+import { PasswordField } from 'material-ui-password-field'
 
 @Component({
   selector: 'app-auth-login',
@@ -32,8 +34,8 @@ export class LoginComponent {
   }
 
   login(){
-    this.credentials.username = 'carabonita'
-    this.credentials.password = '12345678'
+    // this.credentials.username = 'carabonita'
+    // this.credentials.password = '12345678'
     this.authService.logIn(this.credentials)
     .then(()=>this.router.navigate(['']))
     .catch(()=>{
