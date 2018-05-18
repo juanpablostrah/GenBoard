@@ -52,9 +52,10 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
             .antMatchers(base_path + "/player/**").authenticated()
             .antMatchers(base_path + "/auth/**").permitAll()
             
-            .antMatchers("player/**").authenticated()
+            //.antMatchers("**/player/**").permitAll()
+            //.antMatchers("**/gameSet/**").permitAll()
             
-            .anyRequest().authenticated()
+            .anyRequest().permitAll()
             .and().httpBasic();
         
     }

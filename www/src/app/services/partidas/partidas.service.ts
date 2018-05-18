@@ -3,10 +3,12 @@ import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Partida } from './partida.model';
 import 'rxjs/add/operator/toPromise';
+import { Player } from 'app/routes/player/player';
 
 @Injectable()
 export class PartidasService {
 	private partidasRestUrl = 'http://localhost:8080/api/v1/gameSet';  // path del controller
+	private partidasResourceUrl = 'http://localhost:8080/gameSet';  // path del controller
 
 	localStorage: Storage;
 
@@ -45,6 +47,13 @@ export class PartidasService {
 			.then(response => response)
 			.catch(this.handleError);;
 	}
+
+	getGuest(id:any): Promise<Player[]> { 			//service para traer todos los players de una partida
+    return this.http.get<any>(`${this.partidasResourceUrl}/${id}/guests` , { headers: this.getHeaders() })
+        .toPromise()
+        .then(response => response._embedded.players as Player[])
+        .catch(this.handleError);
+  }
 
 	private getHeaders() {
 		return new HttpHeaders({

@@ -1,6 +1,7 @@
 package org.genboard.model;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -37,8 +38,8 @@ public class GameSet {
     @JoinColumn(name="owner_id")
     private Player owner;
    
-    @ManyToMany(cascade=CascadeType.ALL, mappedBy="guestGameSet")
-    private List<Player> guests;
+    @ManyToMany(mappedBy="guestGameSet")
+    private List<Player> guests = new LinkedList<Player>();
     
     public String getName() {
 		return name;

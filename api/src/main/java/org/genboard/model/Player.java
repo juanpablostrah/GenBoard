@@ -1,6 +1,7 @@
 package org.genboard.model;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -8,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -74,7 +76,7 @@ public class Player {
     @OneToMany(mappedBy = "owner", targetEntity = GameSet.class)
     private List<GameSet> ownGameSet;
     
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name = "game_set_guest", 
 	  joinColumns = @JoinColumn(name = "player_id"), 
 	  inverseJoinColumns = @JoinColumn(name = "game_set_id"))

@@ -16,6 +16,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 export class CreateComponent {
 
   partida: any;
+  players: [{}];
 
   constructor(private partidasService: PartidasService, private route: ActivatedRoute, private router: Router)
   {

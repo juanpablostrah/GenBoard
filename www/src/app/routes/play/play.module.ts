@@ -12,6 +12,8 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { MaterialModule } from 'app/shared/modules/material.module';
 import { MapsControlComponent } from './maps-control/maps-control.component';
 import { MapComponent } from './map/map.component';
+import { DmPanelComponent } from './dm-panel/dm-panel.component';
+import { DmDialogComponent } from './dm-dialog/dm-dialog.component';
 
 @NgModule({
   imports: [
@@ -23,7 +25,7 @@ import { MapComponent } from './map/map.component';
     MaterialModule
   ],
   exports: [
-
+    
   ],
   declarations: [
     RollerControlComponent,
@@ -32,11 +34,14 @@ import { MapComponent } from './map/map.component';
     GameLogComponent,
     PlayComponent,
     MapsControlComponent,
-    MapComponent
+    MapComponent,
+    DmPanelComponent,
+    DmDialogComponent
   ],
   providers: [
 
   ]
+  //entryComponents: [DialogResultExampleDialog]
 })
 export class PlayModule {
 

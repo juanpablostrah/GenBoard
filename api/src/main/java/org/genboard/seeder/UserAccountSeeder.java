@@ -7,7 +7,9 @@ import org.genboard.repository.UserAccountRepository;
 import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserAccountSeeder {
 
 	@Autowired
@@ -22,8 +24,8 @@ public class UserAccountSeeder {
 //	@PostConstruct
 //	private void run() {		
 //		LOGGER.info("ejecuto despues de la phase de inyeccion de dependencias");
-//		createUser("juampi","123456","");
-//		createUser("carabonita","12345678","");
+//		createUser("laloba","12345678","");
+//		createUser("jefe","12345678","");
 //	}
 //	
 //	private UserAccount createUser(String username, String password, String roles) {

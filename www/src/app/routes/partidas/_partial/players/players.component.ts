@@ -17,9 +17,9 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./players.component.scss']
 })
 export class PlayersComponent {
-  
+
   @Input()
-  partida: any
+  partida: Partida;
 
   @ViewChild(NgForm)
   form:NgForm
@@ -39,7 +39,7 @@ export class PlayersComponent {
   }
 
   addItem():void{
-    this.partida.players.push({})
+    this.partida.guests.push()
   }
 
 }

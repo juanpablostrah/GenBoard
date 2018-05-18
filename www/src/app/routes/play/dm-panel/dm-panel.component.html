@@ -1,0 +1,10 @@
+<p>
+  dm-panel works!
+</p>
+<div class="">
+  <ng-template ngFor let-index="index" let-player [ngForOf]="guests">
+    <div class="">
+      <button mat-raised-button (click)="openDialog()"> nombre: {{ player.username }} </button>
+    </div>
+  </ng-template>
+</div>
