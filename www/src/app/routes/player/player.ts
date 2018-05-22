@@ -1,8 +1,8 @@
-import { Partida } from '../partidas/partida';
+import { Partida } from 'app/services/partidas/partida.model';
 import { PlayerState } from '../player/player-state';
 
 export class Player  {
-	
+
 	id              : number;
 	//userAccount     : UserAccount;
   fullName        : String;

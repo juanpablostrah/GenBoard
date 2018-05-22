@@ -25,7 +25,7 @@ import { DmDialogComponent } from './dm-dialog/dm-dialog.component';
     MaterialModule
   ],
   exports: [
-    
+
   ],
   declarations: [
     RollerControlComponent,
@@ -40,8 +40,8 @@ import { DmDialogComponent } from './dm-dialog/dm-dialog.component';
   ],
   providers: [
 
-  ]
-  //entryComponents: [DialogResultExampleDialog]
+  ],
+  entryComponents: [DmDialogComponent]
 })
 export class PlayModule {
 

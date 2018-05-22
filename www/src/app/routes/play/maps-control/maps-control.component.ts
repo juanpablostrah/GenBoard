@@ -38,10 +38,6 @@ export class MapsControlComponent implements OnInit {
       this.selectedFile = event.target.files[0]
       console.log(this.selectedFile);
       this.maps.push(this.selectedFile);
-    }
-
-
-
-
+  }
 
 }

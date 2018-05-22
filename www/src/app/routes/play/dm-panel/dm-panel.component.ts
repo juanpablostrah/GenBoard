@@ -7,6 +7,7 @@ import { FormBuilder } from '@angular/forms';
 import { Inject} from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { DmDialogComponent } from '../dm-dialog/dm-dialog.component';
+import { Actor } from 'app/routes/actor/actor';
 
 
 @Component({
@@ -17,6 +18,7 @@ import { DmDialogComponent } from '../dm-dialog/dm-dialog.component';
 export class DmPanelComponent implements OnInit {
 
   guests : Player[];
+  actors : Actor[];
   private subscription: any;
 
   constructor(
@@ -26,6 +28,7 @@ export class DmPanelComponent implements OnInit {
     private formBuilder: FormBuilder,
   ) {
     this.guests = [];
+    this.actors = [];
   }
 
   openDialog(): void {
@@ -33,16 +36,22 @@ export class DmPanelComponent implements OnInit {
       width: '600px',
       data: 'This text is passed into the dialog!'
     });
+    dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+    });
   }
+
+
+
 
   ngOnInit(): void {
     this.subscription = this.route.params.subscribe(params => {
     var partidaId = params['id']
     console.log('obteniendo partida: '+ partidaId);
-      var promise: Promise<Player[]> = this.partidasService.getGuest(partidaId);
-      var afterThenPromise: Promise<void> = promise.then((guests) => {
-        console.log(guests);
-        this.guests = guests;
+      var promise: Promise<Actor[]> = this.partidasService.getActors(partidaId);
+      var afterThenPromise: Promise<void> = promise.then((actors) => {
+        console.log(actors);
+        this.actors = actors;
       });
     });
   }

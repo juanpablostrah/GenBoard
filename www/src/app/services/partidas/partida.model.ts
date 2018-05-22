@@ -1,4 +1,5 @@
 import { Player } from "app/routes/player/player";
+import { Actor } from "app/routes/actor/actor";
 
 export interface Partida {
     id?: number;
@@ -6,4 +7,5 @@ export interface Partida {
     history: string;
     operaciones: number;
     guests: Player[];
+    actors: Actor[];
 }

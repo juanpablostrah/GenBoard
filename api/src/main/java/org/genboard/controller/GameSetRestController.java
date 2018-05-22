@@ -3,6 +3,7 @@ package org.genboard.controller;
 
 import java.util.List;
 
+import org.genboard.model.Actor;
 import org.genboard.model.GameSet;
 import org.genboard.model.Player;
 import org.genboard.repository.GameSetRepository;
@@ -61,6 +62,7 @@ public class GameSetRestController {
 	        LOGGER.info("obteniendo invitados");
 			return getGameSetRepository().findById(id).get().getGuests();
 	    }
+
 
 	public GameSetRepository getGameSetRepository() {
 		return gameSetRepository;

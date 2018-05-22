@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Partida } from './partida.model';
 import 'rxjs/add/operator/toPromise';
 import { Player } from 'app/routes/player/player';
+import { Actor } from 'app/routes/actor/actor';
 
 @Injectable()
 export class PartidasService {
@@ -52,6 +53,13 @@ export class PartidasService {
     return this.http.get<any>(`${this.partidasResourceUrl}/${id}/guests` , { headers: this.getHeaders() })
         .toPromise()
         .then(response => response._embedded.players as Player[])
+        .catch(this.handleError);
+  }
+
+	getActors(id:any): Promise<Actor[]> { 			//service para traer todos los actores de una partida
+    return this.http.get<any>(`${this.partidasResourceUrl}/${id}/actors` , { headers: this.getHeaders() })
+        .toPromise()
+        .then(response => response._embedded.actors as Actor[])
         .catch(this.handleError);
   }
 

@@ -1,10 +1,13 @@
-<p>
-  dm-panel works!
-</p>
 <div class="">
-  <ng-template ngFor let-index="index" let-player [ngForOf]="guests">
+  <ng-template ngFor let-index="index" let-actor [ngForOf]="actors">
     <div class="">
-      <button mat-raised-button (click)="openDialog()"> nombre: {{ player.username }} </button>
+      <button mat-raised-button (click)="openDialog()"> nombre: {{ actor.name }} </button>
     </div>
   </ng-template>
+  <button mat-raised-button (click)="iniciative()">Iniciativa</button>
+  <button mat-raised-button (click)="modoCombate()">Modo Combate</button>
+  <button mat-raised-button (click)="historia()">Historia</button>
+  <button mat-raised-button (click)="darTurno()">Dar Turno</button>
+  <!-- <button mat-raised-button (click)="ponerFicha()">Poner Ficha</button> -->
+
 </div>

@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -40,6 +42,9 @@ public class GameSet {
    
     @ManyToMany(mappedBy="guestGameSet")
     private List<Player> guests = new LinkedList<Player>();
+    
+    @OneToMany(mappedBy = "gameSet", targetEntity = Actor.class)
+    private List<Actor> actors;
     
     public String getName() {
 		return name;
@@ -80,6 +85,23 @@ public class GameSet {
 	public void setHistory(String history) {
 		this.history = history;
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public List<Actor> getActors() {
+		return actors;
+	}
+
+	public void setActors(List<Actor> actors) {
+		this.actors = actors;
+	}
+	
 	
 
 }

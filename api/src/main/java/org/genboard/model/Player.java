@@ -1,10 +1,8 @@
 package org.genboard.model;
 
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -84,6 +82,9 @@ public class Player {
 
     @Enumerated(value = EnumType.STRING)
     private PlayerState playerState = PlayerState.NEW;
+    
+    @OneToMany
+    private List<Actor> actors;
     
     private String disablingReason;
     
