@@ -13,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -43,7 +42,7 @@ public class GameSet {
     @ManyToMany(mappedBy="guestGameSet")
     private List<Player> guests = new LinkedList<Player>();
     
-    @OneToMany(mappedBy = "gameSet", targetEntity = Actor.class)
+    @OneToMany(mappedBy = "gameSet")
     private List<Actor> actors;
     
     public String getName() {

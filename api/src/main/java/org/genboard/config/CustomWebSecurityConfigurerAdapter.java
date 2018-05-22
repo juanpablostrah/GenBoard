@@ -50,6 +50,7 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
            
             .antMatchers(base_path + "/gameSet/**").permitAll()
             .antMatchers(base_path + "/player/**").authenticated()
+            .antMatchers(base_path + "/actor/**").permitAll()
             .antMatchers(base_path + "/auth/**").permitAll()
             
             //.antMatchers("**/player/**").permitAll()

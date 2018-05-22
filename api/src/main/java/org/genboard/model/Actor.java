@@ -42,7 +42,7 @@ public class Actor {
     private String damage;
     
     @ManyToOne
-    @JoinColumn(name="game_set_id")
+    //@JoinColumn(name="game_set_id")
     private GameSet gameSet;
     
     private int ultimaIniciativa;
