@@ -1,0 +1,56 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="root (generated)" id="1527082122294-1">
+        <createTable tableName="game_set_status">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="game_set_statusPK"/>
+            </column>
+            <column name="game_set_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="root (generated)" id="1527082122294-2">
+        <createTable tableName="game_set_status_initiative">
+            <column name="game_set_status_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="initiative_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="root (generated)" id="1527082122294-3">
+        <createTable tableName="initiative">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="initiativePK"/>
+            </column>
+            <column name="actual_initiative" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="canplay" type="BIT"/>
+            <column name="actor_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="root (generated)" id="1527082122294-4">
+        <addColumn tableName="game_set">
+            <column name="game_set_status_id" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="root (generated)" id="1527082122294-5">
+        <addUniqueConstraint columnNames="initiative_id" constraintName="UK_3aqtsm5wko8495w8ltxmod2b0" tableName="game_set_status_initiative"/>
+    </changeSet>
+    <changeSet author="root (generated)" id="1527082122294-6">
+        <addForeignKeyConstraint baseColumnNames="game_set_status_id" baseTableName="game_set_status_initiative" constraintName="FK2wicte8mfmrgmywf9iabhwpr9" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="game_set_status"/>
+    </changeSet>
+    <changeSet author="root (generated)" id="1527082122294-7">
+        <addForeignKeyConstraint baseColumnNames="initiative_id" baseTableName="game_set_status_initiative" constraintName="FK82e76lx4sb0a2nxdqbfjbnvpk" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="initiative"/>
+    </changeSet>
+    <changeSet author="root (generated)" id="1527082122294-8">
+        <addForeignKeyConstraint baseColumnNames="game_set_status_id" baseTableName="game_set" constraintName="FK8rf31tykr7hqdd75y42ifcvab" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="game_set_status"/>
+    </changeSet>
+    <changeSet author="root (generated)" id="1527082122294-9">
+        <addForeignKeyConstraint baseColumnNames="game_set_id" baseTableName="game_set_status" constraintName="FK9hqug1t2di1i9gtpaywecrjmi" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="game_set"/>
+    </changeSet>
+    <changeSet author="root (generated)" id="1527082122294-10">
+        <addForeignKeyConstraint baseColumnNames="actor_id" baseTableName="initiative" constraintName="FKceeenmicidvpax3cw51tcx1e6" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="actor"/>
+    </changeSet>
+</databaseChangeLog>

@@ -15,6 +15,7 @@
   <include file="classpath:/liquibase/dml/2018_04_27_00015_relation_gameset_player.xml"/>
   <include file="classpath:/liquibase/dml/2018_05_07_00001_alter_gameset_table.xml"/>
   <include file="classpath:/liquibase/dml/2018_05_20_00001_create_actor_table.xml"/>
+  <include file="classpath:/liquibase/dml/2018_05_23_00001_create_game_set_status_table.xml"/>
 
 
 </databaseChangeLog>

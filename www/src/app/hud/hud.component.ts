@@ -64,15 +64,5 @@ export class HUDComponent implements  AfterViewInit{
       link:   '/partidas',
       title:  'Listado Partidas'
     }]
-  },{
-    icon:     'business',
-    title:    'Entidades2',
-    sublist:  [{
-      link:   '/entidad3',
-      title:  'Entidad3'
-    },{
-      link:   '/entidad4',
-      title:  'Entidad4'
-    }]
   }]
 }

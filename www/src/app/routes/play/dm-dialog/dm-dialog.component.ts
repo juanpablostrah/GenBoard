@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Actor } from 'app/routes/actor/actor';
 
 @Component({
   selector: 'app-dm-dialog',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DmDialogComponent implements OnInit {
 
-  constructor() { }
+  @Input()
+  actors : Actor[];
+
+  constructor() {
+    this.actors = [];
+  }
 
   ngOnInit() {
+  }
+
+  setActors(actor:any){
+    console.log("actores a mostrar")
+    this.actors = actor
   }
 
 }

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class GameSetSeeder {
 	
-	private static final org.jboss.logging.Logger LOGGER = LoggerFactory.logger(PlayerSeeder.class);
+	private static final org.jboss.logging.Logger LOGGER = LoggerFactory.logger(GameSetSeeder.class);
 	
 	@Autowired
 	PlayerRepository playerRepository;

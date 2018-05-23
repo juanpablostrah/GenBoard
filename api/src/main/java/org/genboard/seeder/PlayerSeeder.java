@@ -10,17 +10,17 @@ import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
-public class PlayerSeeder {
-	
-	private static final org.jboss.logging.Logger LOGGER = LoggerFactory.logger(PlayerSeeder.class);
-	
-	@Autowired
-	PlayerRepository playerRepository;
-	
-	@Autowired
-	UserAccountRepository userAccountRepository;
-
+//@Component
+//public class PlayerSeeder {
+//	
+//	private static final org.jboss.logging.Logger LOGGER = LoggerFactory.logger(PlayerSeeder.class);
+//	
+//	@Autowired
+//	PlayerRepository playerRepository;
+//	
+//	@Autowired
+//	UserAccountRepository userAccountRepository;
+//
 //	@PostConstruct
 //	private void run() {		
 //		LOGGER.info("ejecuto despues de la phase de inyeccion de dependencias");
@@ -49,4 +49,4 @@ public class PlayerSeeder {
 //		return player;
 //	}
 
-}
+//}

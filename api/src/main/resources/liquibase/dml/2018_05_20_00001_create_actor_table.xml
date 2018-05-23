@@ -1,6 +1,15 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
-    <changeSet author="root (generated)" id="1526830471679-1">
+<databaseChangeLog 
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog-ext 
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd 
+    http://www.liquibase.org/xml/ns/dbchangelog 
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+  
+    <changeSet author="root (generated)" id="1526960221139-1">
         <createTable tableName="actor">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints primaryKey="true" primaryKeyName="actorPK"/>
@@ -19,29 +28,11 @@
             <column name="player_id" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet author="root (generated)" id="1526830471679-2">
-        <createTable tableName="player_actors">
-            <column name="player_id" type="BIGINT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="actors_id" type="BIGINT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="root (generated)" id="1526830471679-3">
-        <addUniqueConstraint columnNames="actors_id" constraintName="UK_kilw3xwrbxi9alu3xbcws3i9h" tableName="player_actors"/>
-    </changeSet>
-    <changeSet author="root (generated)" id="1526830471679-4">
+    <changeSet author="root (generated)" id="1526960221139-2">
         <addForeignKeyConstraint baseColumnNames="player_id" baseTableName="actor" constraintName="FK7ng5256m5h9gnj9wdrqab2yl9" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="player"/>
     </changeSet>
-    <changeSet author="root (generated)" id="1526830471679-5">
-        <addForeignKeyConstraint baseColumnNames="actors_id" baseTableName="player_actors" constraintName="FKcrplm73sbcl79kx2sk8eo46tl" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="actor"/>
-    </changeSet>
-    <changeSet author="root (generated)" id="1526830471679-6">
+    <changeSet author="root (generated)" id="1526960221139-3">
         <addForeignKeyConstraint baseColumnNames="game_set_id" baseTableName="actor" constraintName="FKihfokudkbnjx9u9soqgdjmxw" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="game_set"/>
     </changeSet>
-    <changeSet author="root (generated)" id="1526830471679-7">
-        <addForeignKeyConstraint baseColumnNames="player_id" baseTableName="player_actors" constraintName="FKnnqm3v2xuycj3uix2vl7yxm3v" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="player"/>
-    </changeSet>
+    
 </databaseChangeLog>

@@ -12,7 +12,7 @@
     </app-canvas-dice-roll>
   </div>
   <div fxLayout="col" fxFlex="200px">
-    <app-dm-panel></app-dm-panel>
+    <app-dm-panel #dmPanel (onSetActors)="handleSetActors($event)"></app-dm-panel>
   </div>
 </div>
 <div fxLayout="col">

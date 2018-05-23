@@ -19,7 +19,7 @@ public class UserAccountSeeder {
 	UserAccountRepository userAccountRepository;
 
 
-	private static final org.jboss.logging.Logger LOGGER = LoggerFactory.logger(PlayerSeeder.class);
+	//private static final org.jboss.logging.Logger LOGGER = LoggerFactory.logger(PlayerSeeder.class);
 
 //	@PostConstruct
 //	private void run() {		

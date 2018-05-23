@@ -83,7 +83,7 @@ public class Player {
     @Enumerated(value = EnumType.STRING)
     private PlayerState playerState = PlayerState.NEW;
     
-    @OneToMany
+    @OneToMany(mappedBy = "player", targetEntity = Actor.class)
     private List<Actor> actors;
     
     private String disablingReason;

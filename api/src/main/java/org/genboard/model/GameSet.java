@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -39,11 +40,14 @@ public class GameSet {
     @JoinColumn(name="owner_id")
     private Player owner;
    
-    @ManyToMany(mappedBy="guestGameSet")
+    @ManyToMany(mappedBy="guestGameSet", targetEntity = Player.class)
     private List<Player> guests = new LinkedList<Player>();
     
-    @OneToMany(mappedBy = "gameSet")
+    @OneToMany(mappedBy = "gameSet", targetEntity = Actor.class)
     private List<Actor> actors;
+    
+    @OneToOne
+    private GameSetStatus gameSetStatus;
     
     public String getName() {
 		return name;
@@ -100,6 +104,15 @@ public class GameSet {
 	public void setActors(List<Actor> actors) {
 		this.actors = actors;
 	}
+
+	public GameSetStatus getGameSetStatus() {
+		return gameSetStatus;
+	}
+
+	public void setGameSetStatus(GameSetStatus gameSetStatus) {
+		this.gameSetStatus = gameSetStatus;
+	}
+	
 	
 	
 

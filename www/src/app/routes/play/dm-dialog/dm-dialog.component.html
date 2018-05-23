@@ -1,7 +1,11 @@
-<h2 mat-dialog-title>Elige una de las opciones</h2>
-<mat-dialog-content>
+<div #dmDialog>
+  <h2 mat-dialog-title>Elige uno</h2>
+  <mat-dialog-content>
+    <ng-template ngFor let-index="index" let-actor [ngForOf]="actors">
+      <div class="">
+        <button mat-raised-button (click)="setTurno()"> nombre: {{ actor.name }} </button>
+      </div>
+    </ng-template>
+  </mat-dialog-content>
 
-</mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="darTurno" cdkFocusInitial>Dar Turno</button>
-</mat-dialog-actions>
+</div>

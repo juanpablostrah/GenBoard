@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Player } from 'app/routes/player/player';
 import { PartidasService } from 'app/services/partidas/partidas.service';
 import { MatDialog } from '@angular/material';
@@ -8,6 +8,7 @@ import { Inject} from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { DmDialogComponent } from '../dm-dialog/dm-dialog.component';
 import { Actor } from 'app/routes/actor/actor';
+import { EventEmitter } from '@angular/core';
 
 
 @Component({
@@ -18,7 +19,16 @@ import { Actor } from 'app/routes/actor/actor';
 export class DmPanelComponent implements OnInit {
 
   guests : Player[];
+
+  @Input()
   actors : Actor[];
+
+  @Input()
+  onSetActors: EventEmitter<Actor[]>
+
+  @ViewChild('dmDialog')
+  dmDialog: DmDialogComponent
+
   private subscription: any;
 
   constructor(
@@ -29,6 +39,7 @@ export class DmPanelComponent implements OnInit {
   ) {
     this.guests = [];
     this.actors = [];
+    this.onSetActors = new EventEmitter();
   }
 
   openDialog(): void {
@@ -41,8 +52,10 @@ export class DmPanelComponent implements OnInit {
     });
   }
 
-
-
+  public handleSetMap(actors:Actor[]){
+    console.log("setting actors")
+    this.dmDialog.setActors(actors);
+  }
 
   ngOnInit(): void {
     this.subscription = this.route.params.subscribe(params => {
@@ -54,10 +67,12 @@ export class DmPanelComponent implements OnInit {
         this.actors = actors;
       });
     });
+    console.log("AAAAA");
+    //this.onSetActors.emit(this.actors);
   }
 
-  showPopUp(){
-
+  darTurno(){
+    this.openDialog();
   }
 
 }
