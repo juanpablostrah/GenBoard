@@ -63,6 +63,13 @@ export class PartidasService {
         .catch(this.handleError);
   }
 
+	setGameSetInitiaive(id:any): Promise<Actor[]> { 			//service para setear todos los puedeJugar de los actores en true
+    return this.http.post<any>(`${this.partidasResourceUrl}/${id}/actors/set` , { headers: this.getHeaders() })
+        .toPromise()
+        .then(response => response._embedded.actors as Actor[])
+        .catch(this.handleError);
+  }
+
 	private getHeaders() {
 		return new HttpHeaders({
 			'Content-Type': 'application/json',

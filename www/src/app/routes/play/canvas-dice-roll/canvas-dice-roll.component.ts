@@ -77,7 +77,6 @@ export class CanvasDiceRollComponent implements AfterViewInit {
           object3D,
           value:dataSetItem.results[j]
         });
-
       }
     }
 

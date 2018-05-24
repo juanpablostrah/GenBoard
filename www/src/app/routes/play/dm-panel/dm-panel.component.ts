@@ -45,7 +45,7 @@ export class DmPanelComponent implements OnInit {
   openDialog(): void {
     let dialogRef = this.dialog.open(DmDialogComponent, {
       width: '600px',
-      data: 'This text is passed into the dialog!'
+      data: this.actors
     });
     dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
@@ -65,7 +65,9 @@ export class DmPanelComponent implements OnInit {
       var afterThenPromise: Promise<void> = promise.then((actors) => {
         console.log(actors);
         this.actors = actors;
+        //this.dmDialog.setActors(actors);
       });
+
     });
     console.log("AAAAA");
     //this.onSetActors.emit(this.actors);

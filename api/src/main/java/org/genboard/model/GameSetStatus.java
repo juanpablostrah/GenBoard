@@ -22,6 +22,8 @@ public class GameSetStatus {
 	@OneToMany
     private List<Initiative> initiative;
 
+	@OneToOne
+	private GameSetState gameState;
     
 	public GameSetStatus() {
 		super();
@@ -42,6 +44,23 @@ public class GameSetStatus {
 	public void setIniciative(List<Initiative> initiative) {
 		this.initiative = initiative;
 	}
+
+	public List<Initiative> getInitiative() {
+		return initiative;
+	}
+
+	public void setInitiative(List<Initiative> initiative) {
+		this.initiative = initiative;
+	}
+
+	public GameSetState getGameState() {
+		return gameState;
+	}
+
+	public void setGameState(GameSetState gameState) {
+		this.gameState = gameState;
+	}
+
     
     
 }
