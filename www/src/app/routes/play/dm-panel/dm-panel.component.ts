@@ -40,12 +40,13 @@ export class DmPanelComponent implements OnInit {
     this.guests = [];
     this.actors = [];
     this.onSetActors = new EventEmitter();
+
   }
 
   openDialog(): void {
     let dialogRef = this.dialog.open(DmDialogComponent, {
       width: '600px',
-      data: this.actors
+      data: { actors: this.actors }
     });
     dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
@@ -54,7 +55,7 @@ export class DmPanelComponent implements OnInit {
 
   public handleSetMap(actors:Actor[]){
     console.log("setting actors")
-    this.dmDialog.setActors(actors);
+    //this.dmDialog.setActors(actors);
   }
 
   ngOnInit(): void {
@@ -67,10 +68,7 @@ export class DmPanelComponent implements OnInit {
         this.actors = actors;
         //this.dmDialog.setActors(actors);
       });
-
     });
-    console.log("AAAAA");
-    //this.onSetActors.emit(this.actors);
   }
 
   darTurno(){

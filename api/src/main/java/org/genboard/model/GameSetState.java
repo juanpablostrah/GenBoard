@@ -8,11 +8,11 @@ public abstract class GameSetState {
 	
 	public abstract void finishTurn(Actor actor);
 	
-	public abstract void startInitiativeMode();
+	public abstract void startInitiativeMode(GameSetStatus gameSetStatus);
 	
-	public abstract void startHistoryMode();
+	public abstract void startHistoryMode(GameSetStatus gameSetStatus);
 	
-	public abstract void startCheckMode();
+	public abstract void startCheckMode(GameSetStatus gameSetStatus);
 	
 	
 }

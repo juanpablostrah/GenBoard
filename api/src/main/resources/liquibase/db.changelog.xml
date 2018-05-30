@@ -16,6 +16,8 @@
   <include file="classpath:/liquibase/dml/2018_05_07_00001_alter_gameset_table.xml"/>
   <include file="classpath:/liquibase/dml/2018_05_20_00001_create_actor_table.xml"/>
   <include file="classpath:/liquibase/dml/2018_05_23_00001_create_game_set_status_table.xml"/>
+  <include file="classpath:/liquibase/dml/2018_05_30_00001_add_cant_player.xml"/>
+  <include file="classpath:/liquibase/dml/2018_05_30_00002_modify_cant_player.xml"/>
 
 
 </databaseChangeLog>

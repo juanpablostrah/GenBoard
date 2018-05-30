@@ -20,6 +20,7 @@
 									[(ngModel)]="credentials.username"
 									placeholder="nombre de usuario"
 									required>
+									<mat-error *ngIf="nameControl.invalid">{{getNameErrorMessage()}}</mat-error>
 							</mat-form-field>
 						</div>
 						<div class="p-t-13 p-b-9 center">
@@ -48,9 +49,6 @@
   						</div>
 							<div class="center">
       					<button mat-button (click)="login()" color="success" fxFlex="100px">Login</button>
-							</div>
-							<div class="center">
-      					<button mat-button (click)="register()" color="success" fxFlex="100px">Login</button>
 							</div>
 						</div>
 					</div>

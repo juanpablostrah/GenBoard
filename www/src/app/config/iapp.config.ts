@@ -1,6 +1,8 @@
 
 export interface IAppConfig {
-  endpoints: any;
+  endpoints: {
+    api: string;
+  }
   votesLimit: number;
   topHeroesLimit: number;
   snackBarDuration: number;

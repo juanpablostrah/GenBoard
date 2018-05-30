@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,6 +18,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Range;
 
 @Entity
 public class GameSet {
@@ -40,7 +43,7 @@ public class GameSet {
     @JoinColumn(name="owner_id")
     private Player owner;
    
-    @ManyToMany(mappedBy="guestGameSet", targetEntity = Player.class)
+    @ManyToMany(fetch=FetchType.LAZY ,mappedBy="guestGameSet", targetEntity = Player.class )
     private List<Player> guests = new LinkedList<Player>();
     
     @OneToMany(mappedBy = "gameSet", targetEntity = Actor.class)
@@ -48,6 +51,10 @@ public class GameSet {
     
     @OneToOne
     private GameSetStatus gameSetStatus;
+    
+//    @NotNull
+    @Range(min = 2,max = 20)
+    private Integer cantPlayersMax;
     
     public String getName() {
 		return name;
@@ -112,8 +119,14 @@ public class GameSet {
 	public void setGameSetStatus(GameSetStatus gameSetStatus) {
 		this.gameSetStatus = gameSetStatus;
 	}
-	
-	
+
+	public Integer getCantPlayersMax() {
+		return cantPlayersMax;
+	}
+
+	public void setCantPlayersMax(Integer cantPlayersMax) {
+		this.cantPlayersMax = cantPlayersMax;
+	}
 	
 
 }

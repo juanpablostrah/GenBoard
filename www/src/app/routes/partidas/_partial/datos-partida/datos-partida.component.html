@@ -6,7 +6,9 @@
         name="nombre"
         [(ngModel)]="partida.name"
         placeholder="nombre"
+        [formControl]="nameControl"
         required>
+        <mat-error *ngIf="nameControl.invalid">{{getNameErrorMessage()}}</mat-error>
     </mat-form-field>
     <mat-form-field>
       <input matInput
@@ -14,6 +16,7 @@
         [(ngModel)]="partida.history"
         placeholder="historia"
         required>
+        <mat-error *ngIf="historyControl.invalid">{{getHistoryErrorMessage()}}</mat-error>
     </mat-form-field>
   </div>
 
@@ -28,5 +31,4 @@
   <div fxLayout fxLayoutGap="10px" fxLayoutAlign="end start">
     <button mat-button matStepperNext color="success" fxFlex="100px">Siguiente</button>
   </div>
-
 </form>

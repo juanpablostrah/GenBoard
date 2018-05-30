@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { AppConfig } from 'app/config/app.config';
 import { LoggerService } from 'app/core/logger.service';
+import { MatSort , MatSortable, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-partidas-index',
@@ -14,7 +15,11 @@ import { LoggerService } from 'app/core/logger.service';
 })
 export class IndexComponent implements OnInit{
 
-  //
+  @ViewChild('MatSort')
+  dataSource : any;
+
+  displayedColumns : String[];
+
   partidas : Partida[];
 
   @ViewChild('form')
@@ -26,7 +31,8 @@ export class IndexComponent implements OnInit{
     private router: Router,
     private formBuilder: FormBuilder
   ) {
-    this.partidas = [];
+    this.displayedColumns = ['name', 'history', 'cant-players', 'join']
+    this.dataSource = new MatTableDataSource(this.partidas);
   }
 
   ngOnInit(): void {
@@ -37,7 +43,7 @@ export class IndexComponent implements OnInit{
   }
 
   connect(){
-    
+
   }
 
 }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PartidasRoutingModule } from './partidas-routing.module';
 import { PartidasComponent } from './partidas.component';
 import { IndexComponent } from './index/index.component';
@@ -11,6 +11,7 @@ import { DatosPartidaComponent } from './_partial/datos-partida/datos-partida.co
 import { PlayersComponent } from './_partial/players/players.component';
 import { MaterialModule } from 'app/shared/modules/material.module';
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { CreateActorComponent } from './create-actor/create-actor.component';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     CommonModule,
     PartidasRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     MaterialModule,
     FlexLayoutModule
   ],
@@ -28,7 +30,8 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     EditComponent,
     FieldsetComponent,
     DatosPartidaComponent,
-    PlayersComponent
+    PlayersComponent,
+    CreateActorComponent
   ],
   entryComponents: [],
   providers: []

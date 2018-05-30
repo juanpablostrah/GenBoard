@@ -37,13 +37,4 @@ public class PlayersRestController {
     public void create(@RequestBody Player player) {		
         LOGGER.info("create player: " + player.getUserAccount().getUsername());
     }
-
-//	public PlayerRepository getPlayerRepository() {
-//		return playerRepository;
-//	}
-//
-//	public void setPlayerRepository(PlayerRepository playerRepository) {
-//		this.playerRepository = playerRepository;
-//	}
-
 }

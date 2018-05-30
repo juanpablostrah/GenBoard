@@ -19,12 +19,6 @@ export class AuthService {
     this.localStorage = window.localStorage;
   }
 
-  isAuthenticated(): boolean {
-    //TODO: use javascript variable
-    const token: string = localStorage.getItem(AUTH_TOKEN);
-    return !!token;
-  }
-
   logIn(credentials: Credentials): Promise<any> {
     var token = btoa(credentials.username + ':' + credentials.password);
     var headers = new HttpHeaders({
@@ -41,5 +35,13 @@ export class AuthService {
       localStorage.setItem(AUTH_TOKEN, token);
     });
   }
+
+
+  isAuthenticated(): boolean {
+    //TODO: use javascript variable
+    const token: string = localStorage.getItem(AUTH_TOKEN);
+    return !!token;
+  }
+
 
 }

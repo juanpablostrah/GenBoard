@@ -1,11 +1,10 @@
 <div #dmDialog>
-  <h2 mat-dialog-title>Elige uno</h2>
+  <h2 mat-dialog-title>A quien le toca?</h2>
   <mat-dialog-content>
     <ng-template ngFor let-index="index" let-actor [ngForOf]="actors">
       <div class="">
-        <button mat-raised-button (click)="setTurno()"> nombre: {{ actor.name }} </button>
+        <button mat-raised-button (click)="setTurno()" class="actorButton">{{ actor.name }} </button>
       </div>
     </ng-template>
   </mat-dialog-content>
-
 </div>

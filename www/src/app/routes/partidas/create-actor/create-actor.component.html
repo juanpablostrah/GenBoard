@@ -1,0 +1,15 @@
+<form #form="ngForm" novalidate>
+  <h4 class="stepper-legend">Creacion del Personaje</h4>
+  <div fxLayout fxLayoutGap="10px" class="mat-form-field-100">
+    <mat-form-field>
+      <input matInput
+        name="nombre"
+        [(ngModel)]="actor.name"
+        placeholder="nombre"
+        required>
+    </mat-form-field>
+  </div>
+  <div fxLayout fxLayoutGap="10px" fxLayoutAlign="end start">
+    <button mat-button (click)="submit()" type="submit" color="success" fxFlex="100px">finalizar</button>
+  </div>
+</form>

@@ -17,20 +17,20 @@ public class InitiativeMode extends GameSetState {
 	}
 
 	@Override
-	public void startInitiativeMode() {
+	public void startInitiativeMode(GameSetStatus gameSetStatus) {
+		gameSetStatus.setStateType(StateType.INITIATIVE);
+		
+	}
+
+	@Override
+	public void startHistoryMode(GameSetStatus gameSetStatus) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void startHistoryMode() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void startCheckMode() {
-		// TODO Auto-generated method stub
+	public void startCheckMode(GameSetStatus gameSetStatus) {
+		gameSetStatus.setStateType(StateType.CHECK);
 		
 	}
 

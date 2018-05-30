@@ -13,3 +13,7 @@ input[type=number]::-webkit-outer-spin-button {
 .paddingForm{
   padding: 5px;
 }
+
+.backColor{
+  background-color: #e8eef7;
+}

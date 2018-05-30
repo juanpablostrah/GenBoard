@@ -3,6 +3,8 @@ package org.genboard.model;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,8 +24,8 @@ public class GameSetStatus {
 	@OneToMany
     private List<Initiative> initiative;
 
-	@OneToOne
-	private GameSetState gameState;
+	@Enumerated(value = EnumType.STRING)
+	private StateType stateType;
     
 	public GameSetStatus() {
 		super();
@@ -37,14 +39,6 @@ public class GameSetStatus {
 		this.gameSet = gameSet;
 	}
 
-	public List<Initiative> getIniciative() {
-		return initiative;
-	}
-
-	public void setIniciative(List<Initiative> initiative) {
-		this.initiative = initiative;
-	}
-
 	public List<Initiative> getInitiative() {
 		return initiative;
 	}
@@ -53,14 +47,13 @@ public class GameSetStatus {
 		this.initiative = initiative;
 	}
 
-	public GameSetState getGameState() {
-		return gameState;
+	public StateType getStateType() {
+		return stateType;
 	}
 
-	public void setGameState(GameSetState gameState) {
-		this.gameState = gameState;
+	public void setStateType(StateType stateType) {
+		this.stateType = stateType;
 	}
-
-    
+	
     
 }

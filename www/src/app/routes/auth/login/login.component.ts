@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Credentials } from 'app/services/auth/credentials.model';
 import { AuthService } from 'app/services/auth/auth.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { AppConfig } from 'app/config/app.config';
@@ -21,11 +21,14 @@ export class LoginComponent {
 
   credentials:Credentials
 
+  nameControl = new FormControl('', [Validators.required]);
+
   constructor(
     private authService: AuthService,
     private dialog: MatDialog,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    // private alertService: AlertService
   ) {
     this.credentials = {
       username: '',
@@ -41,6 +44,11 @@ export class LoginComponent {
     .catch(()=>{
       //handle invalid credentials
     })
+  }
+
+  getNameErrorMessage(){
+    return this.nameControl.hasError('required') ? 'Ingresa el nombre de usuario' :
+            '';
   }
 
   register(){

@@ -5,6 +5,8 @@ import { ViewEncapsulation } from '@angular/core';
 import { MatSidenav } from '@angular/material';
 import { Router } from '@angular/router';
 
+const AUTH_TOKEN = 'AUTH_TOKEN';
+
 @Component({
   templateUrl: './hud.component.html',
   styleUrls: [
@@ -16,20 +18,19 @@ import { Router } from '@angular/router';
   ],
   encapsulation: ViewEncapsulation.None
 })
+
 export class HUDComponent implements  AfterViewInit{
 
-  constructor(private router: Router) {
-
-  }
+  constructor(private router: Router) {}
 
   @ViewChild('sidenav')
-
   private sidenav: MatSidenav;
 
   public showMenu: boolean = false;
 
   logout(){
     console.log("cerrando sesion")
+    localStorage.removeItem(AUTH_TOKEN);
     this.router.navigateByUrl('/auth')
   }
 

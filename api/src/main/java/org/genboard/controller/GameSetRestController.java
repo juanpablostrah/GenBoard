@@ -3,7 +3,6 @@ package org.genboard.controller;
 
 import java.util.List;
 
-import org.genboard.model.Actor;
 import org.genboard.model.GameSet;
 import org.genboard.model.Player;
 import org.genboard.repository.GameSetRepository;
@@ -41,7 +40,7 @@ public class GameSetRestController {
 		value = "", 
 		method = RequestMethod.POST)
     public void create(@RequestBody GameSet gameSet) {
-		getGameSetRepository().save(gameSet);
+		gameSetRepository.save(gameSet);
         LOGGER.info("partida creada" + gameSet.getName());
     }
 	
@@ -51,7 +50,7 @@ public class GameSetRestController {
 			method = RequestMethod.GET)
 	    public List<GameSet> getAllGameSet() {
 	        LOGGER.info("obteniendo partidas");
-			return getGameSetRepository().findAll();
+			return gameSetRepository.findAll();
 	    }
 	
 	@ResponseBody
@@ -60,16 +59,7 @@ public class GameSetRestController {
 			method = RequestMethod.GET)
 	    public List<Player> getAllGuest(@PathVariable("id") long id) {
 	        LOGGER.info("obteniendo invitados");
-			return getGameSetRepository().findById(id).get().getGuests();
+			return gameSetRepository.findById(id).get().getGuests();
 	    }
-
-
-	public GameSetRepository getGameSetRepository() {
-		return gameSetRepository;
-	}
-
-	public void setGameSetRepository(GameSetRepository gameSetRepository) {
-		this.gameSetRepository = gameSetRepository;
-	}
 
 }

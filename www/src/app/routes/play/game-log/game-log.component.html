@@ -1,5 +1,12 @@
-<div class="logComponent">
-  <ng-template ngFor let-index="index" let-logentry [ngForOf]="log">
-    <p>Tirada: {{ logentry }}</p>
-  </ng-template>
-</div>
+<mat-accordion>
+  <mat-expansion-panel class="backColor">
+    <mat-expansion-panel-header>
+      Tirada
+    </mat-expansion-panel-header>
+    <div class="logComponent">
+      <ng-template ngFor let-index="index" let-logentry [ngForOf]="log">
+        <p>Tirada: {{ logentry }}</p>
+      </ng-template>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>

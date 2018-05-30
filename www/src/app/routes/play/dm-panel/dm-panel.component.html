@@ -1,13 +1,18 @@
-<div class="">
-  <ng-template ngFor let-index="index" let-actor [ngForOf]="actors">
-    <div class="">
-      <button mat-raised-button (click)="openDialog()"> nombre: {{ actor.name }} </button>
-    </div>
-  </ng-template>
-  <button mat-raised-button (click)="iniciative()">Iniciativa</button>
-  <button mat-raised-button (click)="modoCombate()">Modo Combate</button>
-  <button mat-raised-button (click)="historia()">Historia</button>
-  <button mat-raised-button (click)="darTurno()">Dar Turno</button>
-  <!-- <button mat-raised-button (click)="ponerFicha()">Poner Ficha</button> -->
-
-</div>
+<mat-accordion>
+  <mat-expansion-panel class="backColor">
+    <mat-expansion-panel-header>
+      DM Panel
+    </mat-expansion-panel-header>
+      <div class="">
+        <ng-template ngFor let-index="index" let-actor [ngForOf]="actors">
+          <!-- <div class="">
+            <button mat-raised-button (click)="openDialog()"> nombre: {{ actor.name }} </button>
+          </div> -->
+        </ng-template>
+        <button mat-raised-button (click)="iniciative()" class="btnPanel">Iniciativa</button>
+        <button mat-raised-button (click)="modoCombate()" class="btnPanel">Modo Combate</button>
+        <button mat-raised-button (click)="historia()" class="btnPanel">Historia</button>
+        <button mat-raised-button (click)="darTurno()" class="btnPanel">Dar Turno</button>
+      </div>
+    </mat-expansion-panel>
+</mat-accordion>
