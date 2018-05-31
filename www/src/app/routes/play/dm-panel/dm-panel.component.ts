@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output } from '@angular/core';
 import { Player } from 'app/routes/player/player';
 import { PartidasService } from 'app/services/partidas/partidas.service';
 import { MatDialog } from '@angular/material';
@@ -29,6 +29,9 @@ export class DmPanelComponent implements OnInit {
   @ViewChild('dmDialog')
   dmDialog: DmDialogComponent
 
+  @Output()
+  onSetMap: EventEmitter<File>
+
   private subscription: any;
 
   constructor(
@@ -40,7 +43,7 @@ export class DmPanelComponent implements OnInit {
     this.guests = [];
     this.actors = [];
     this.onSetActors = new EventEmitter();
-
+    this.onSetMap = new EventEmitter();
   }
 
   openDialog(): void {
@@ -73,6 +76,11 @@ export class DmPanelComponent implements OnInit {
 
   darTurno(){
     this.openDialog();
+  }
+
+  public setMap(map :File){
+    console.log("setting Map");
+    this.onSetMap.emit(map);
   }
 
 }

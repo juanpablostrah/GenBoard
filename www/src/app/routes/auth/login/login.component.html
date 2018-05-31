@@ -24,29 +24,29 @@
 							</mat-form-field>
 						</div>
 						<div class="p-t-13 p-b-9 center">
-							<!-- <mat-form-field>
-							    <input matInput placeholder="Enter your password" [type]="hide ? 'password' : 'text'"
+							<mat-form-field>
+							    <input matInput placeholder="Enter your password" [type]="hide ? 'text' : 'password'"
 									name="password"
 									[(ngModel)]="credentials.password"
 									placeholder="password"
 									required>
-							    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-			  			</mat-form-field> -->
-							<span class="txt1">
+							    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+			  			</mat-form-field>
+							<!-- <span class="txt1">
 								Contraseña
 							</span>
 							<div id="form-login-password" class="form-group">
       					<input id="passwd" class="form-control" [(ngModel)]="credentials.password" name="password" type="password" size="18" alt="password" required>
 					      <span class="form-highlight"></span>
 					      <span class="form-bar"></span>
-       <!-- <label for="password" class="float-label txt1">Password</label> -->
+
   						</div>
 							<div id="form-login-remember" class="form-group">
       					<div class="checkbox checkbox-default">
 				          <input id="remember" type="checkbox" value="yes" alt="Remember me" class="">
 				          <label class="txt1" for="remember">Recordarme</label>
       					</div>
-  						</div>
+  						</div> -->
 							<div class="center">
       					<button mat-button (click)="login()" color="success" fxFlex="100px">Login</button>
 							</div>

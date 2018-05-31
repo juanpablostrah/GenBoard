@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script type="text/javascript">
+      var websocketurl = "http://172.30.0.21:8080/api/v1/socket/gameset";
+      var sock = new SockJS(websocketurl);
+      var data = {
+        partidaId: 2,
+        actorId: 1
+      };
+      sock.onopen = function() {
+        console.log('open');
+        sock.send(JSON.stringify({
+          tag: 'authorize',
+          //data: btoa('player1:123456')
+          data: data
+        }));
+      };
+      sock.onmessage = function(e) {
+        var outputContainer = document.getElementById("output");
+        console.log('message', e.data);
+        outputContainer.innerHTML += e.data + '<br/>';
+        //sock.close();
+      };
+      sock.onclose = function() {
+        console.log('close');
+      };
+      window.enviar = function(){
+        var message = document.getElementById("mensaje").value;
+        console.log(message);
+        sock.send(JSON.stringify({
+          tag: 'action',
+          //data: btoa('player1:123456')
+          data: message
+        }));
+      }
+    </script>
+  </head>
+  <body>
+    <input type="text" id="mensaje">
+    <button type="button" onclick="enviar()">Enviar</button>
+    <div id="output" style="clear: both">
+
+    </div>
+  </body>
+</html>

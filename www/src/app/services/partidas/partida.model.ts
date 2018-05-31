@@ -8,4 +8,5 @@ export interface Partida {
     operaciones: number;
     guests: Player[];
     actors: Actor[];
+    cantPlayersMax: number;
 }

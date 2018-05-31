@@ -125,6 +125,19 @@
       <artifactId>activation</artifactId>
       <version>1.1.1</version>
     </dependency>
+    
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-websocket</artifactId>
+    </dependency>
+    
+	    <!-- https://mvnrepository.com/artifact/org.json/json -->
+	<dependency>
+	    <groupId>org.json</groupId>
+	    <artifactId>json</artifactId>
+	    <version>20131018</version>
+	</dependency>
+    
 
   </dependencies>
 

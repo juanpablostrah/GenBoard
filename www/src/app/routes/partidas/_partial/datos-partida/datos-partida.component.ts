@@ -21,6 +21,7 @@ export class DatosPartidaComponent {
 
   nameControl = new FormControl('', [Validators.required, Validators.minLength(3)]);
   historyControl = new FormControl('', [Validators.required, Validators.minLength(5)]);
+  cantPlayerControl = new FormControl('', [Validators.required, Validators.min(2), Validators.max(20)]);
 
   @ViewChild(NgForm)
   form:NgForm
@@ -36,6 +37,13 @@ export class DatosPartidaComponent {
   getHistoryErrorMessage(){
     return this.historyControl.hasError('required') ? 'Ingresa un nombre para la historia' :
            this.historyControl.hasError('minlength') ? 'Debes ingresar al menos 5 caracteres' :
+            '';
+  }
+
+  getCantPlayerErrorMessage(){
+    return this.cantPlayerControl.hasError('required') ? 'Ingresa la cantidad maxima de jugadores' :
+           this.cantPlayerControl.hasError('min') ? 'La cantidad maxima debe ser mayor a 1' :
+           this.cantPlayerControl.hasError('max') ? 'La cantidad maxima debe ser menor a 20' :
             '';
   }
 

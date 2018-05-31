@@ -22,6 +22,7 @@ import { RoutesModule } from 'app/routes/routes.module';
 import { MaterialModule } from 'app/shared/modules/material.module';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { PlayModule } from 'app/routes/play/play.module';
+import { WebsocketService } from 'app/sockjsNew/socketjs.service';
 
 
 @NgModule({
@@ -47,7 +48,9 @@ import { PlayModule } from 'app/routes/play/play.module';
   declarations: [
     AppComponent,
   ],
-  providers: [{
+  providers: [
+    WebsocketService,
+    {
    provide: APP_CONFIG,
    useValue: AppConfig
   }

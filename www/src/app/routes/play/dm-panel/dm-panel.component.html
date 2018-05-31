@@ -13,6 +13,8 @@
         <button mat-raised-button (click)="modoCombate()" class="btnPanel">Modo Combate</button>
         <button mat-raised-button (click)="historia()" class="btnPanel">Historia</button>
         <button mat-raised-button (click)="darTurno()" class="btnPanel">Dar Turno</button>
+        <input style="display: none" type="file" (change)="saveMap($event)" #fileInput>
+        <button mat-raised-button (click)="fileInput.click()" class="btnPanel">Cargar Mapa</button>
       </div>
     </mat-expansion-panel>
 </mat-accordion>

@@ -1,23 +1,24 @@
-<div class="">
-    <div class="">
+<div class="paddingForm">
+    <!-- <div class="">
       <h1>Partidas</h1>
-    </div>
+    </div> -->
 
-    <mat-table *ngIf='partidas' [dataSource]="partidas">
+    <mat-table *ngIf='partidas' [dataSource]="partidas"
+    matSort class="mat-elevation-z8" class="table-color">
         <ng-container matColumnDef="name">
-            <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>
             <mat-cell *matCellDef="let partida" > {{ partida.name }} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="history">
-            <mat-header-cell *matHeaderCellDef> Historia </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Historia </mat-header-cell>
             <mat-cell *matCellDef="let partida"> {{ partida.history }} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="cant-players">
-            <mat-header-cell *matHeaderCellDef> Cant.Jugadores </mat-header-cell>
-            <mat-cell *matCellDef="let partida"> {{ partida.guests }} </mat-cell>
+            <mat-header-cell *matHeaderCellDef> Cant.Max.Jug </mat-header-cell>
+            <mat-cell *matCellDef="let partida" class="text-align"> {{ partida.cantPlayersMax }} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="join">
-            <mat-header-cell *matHeaderCellDef> Boton </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
           <mat-cell *matCellDef="let partida">
               <button (click)="connect()" mat-raised-button color="primary">Join</button>
               <i class="material-icons">input</i>
@@ -29,11 +30,6 @@
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
-    <!-- <ul>
-      <li *ngFor="let partida of partidas">
-        <a>{{ partida.name }}</a>
-        <a>{{ partida.history}} </a>
-        <button (click)="connect()" mat-raised-button color="primary">Join</button>
-      </li>
-    </ul> -->
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
 </div>

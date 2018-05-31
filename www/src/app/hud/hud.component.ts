@@ -31,7 +31,8 @@ export class HUDComponent implements  AfterViewInit{
   logout(){
     console.log("cerrando sesion")
     localStorage.removeItem(AUTH_TOKEN);
-    this.router.navigateByUrl('/auth')
+    window.location.reload();
+    //this.router.navigateByUrl('/auth')
   }
 
   ngAfterViewInit(): void {

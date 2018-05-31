@@ -2,7 +2,7 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { Partida } from 'app/services/partidas/partida.model';
 import { PartidasService } from 'app/services/partidas/partidas.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatPaginator } from '@angular/material';
 import { Router } from '@angular/router';
 import { AppConfig } from 'app/config/app.config';
 import { LoggerService } from 'app/core/logger.service';
@@ -16,7 +16,7 @@ import { MatSort , MatSortable, MatTableDataSource } from '@angular/material';
 export class IndexComponent implements OnInit{
 
   @ViewChild('MatSort')
-  dataSource : any;
+  dataSource : MatTableDataSource<Partida>;
 
   displayedColumns : String[];
 
@@ -24,6 +24,12 @@ export class IndexComponent implements OnInit{
 
   @ViewChild('form')
   myNgForm; // just to call resetForm method
+
+  @ViewChild(MatPaginator)
+  paginator: MatPaginator;
+
+  @ViewChild(MatSort)
+  sort: MatSort;
 
   constructor(
     private partidasService: PartidasService,
@@ -33,6 +39,8 @@ export class IndexComponent implements OnInit{
   ) {
     this.displayedColumns = ['name', 'history', 'cant-players', 'join']
     this.dataSource = new MatTableDataSource(this.partidas);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   ngOnInit(): void {

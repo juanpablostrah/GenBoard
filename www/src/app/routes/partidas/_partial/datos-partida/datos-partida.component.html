@@ -15,8 +15,18 @@
         name="historia"
         [(ngModel)]="partida.history"
         placeholder="historia"
+        [formControl]="historyControl"
         required>
         <mat-error *ngIf="historyControl.invalid">{{getHistoryErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+        name="cantidad jugadores"
+        [(ngModel)]="partida.cantPlayersMax"
+        placeholder="cantidad jugadores"
+        [formControl]="cantPlayerControl"
+        required>
+        <mat-error *ngIf="cantPlayerControl.invalid">{{getCantPlayerErrorMessage()}}</mat-error>
     </mat-form-field>
   </div>
 
