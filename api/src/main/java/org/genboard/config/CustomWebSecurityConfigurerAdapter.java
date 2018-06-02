@@ -42,6 +42,7 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
         // do not create jsessionID cookie
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
+        http.cors();
         // Seguridad http
         http.authorizeRequests()
             .antMatchers(HttpMethod.OPTIONS, "**").permitAll()

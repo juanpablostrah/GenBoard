@@ -6,10 +6,12 @@
     <mat-table *ngIf='partidas' [dataSource]="partidas"
     matSort class="mat-elevation-z8" class="table-color">
         <ng-container matColumnDef="name">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>
+            <!-- <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell> -->
+            <mat-header-cell *matHeaderCellDef > Nombre </mat-header-cell>
             <mat-cell *matCellDef="let partida" > {{ partida.name }} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="history">
+            <!-- <mat-header-cell *matHeaderCellDef mat-sort-header> Historia </mat-header-cell> -->
             <mat-header-cell *matHeaderCellDef mat-sort-header> Historia </mat-header-cell>
             <mat-cell *matCellDef="let partida"> {{ partida.history }} </mat-cell>
         </ng-container>
@@ -30,6 +32,6 @@
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->
 
 </div>

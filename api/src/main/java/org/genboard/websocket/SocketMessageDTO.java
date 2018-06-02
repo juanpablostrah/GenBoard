@@ -11,9 +11,9 @@ public class SocketMessageDTO {
 	
 	public JSONObject payload;
 	
-	public SocketMessageDTO(String payload) {		
+	public SocketMessageDTO(String data) {		
 		try {
-			JSONObject jsonObj = new JSONObject(payload);
+			JSONObject jsonObj = new JSONObject(data);
 			this.tag = jsonObj.getString("tag");
 			try {
 				this.payload = jsonObj.getJSONObject("data");	
@@ -25,6 +25,10 @@ public class SocketMessageDTO {
 			//all fields remains null
 			e.printStackTrace();
 		}		
+	}
+	
+	public SocketMessageDTO(String tag, JSONObject payload) {		
+		this.data = "{ tag: " + tag + ", data:" + payload.toString()+ " }";
 	}
 	
 	

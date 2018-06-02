@@ -3,6 +3,7 @@ package org.genboard.websocket;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.genboard.model.ThrowDice;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,8 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 @Component
 public class GameSetTextWebSocketHandler extends TextWebSocketHandler {
+	
+	private ThrowDice throwDice;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(GameSetTextWebSocketHandler.class);
 	
@@ -25,18 +28,32 @@ public class GameSetTextWebSocketHandler extends TextWebSocketHandler {
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {	
 		
 		SocketMessageDTO messageDTO = new SocketMessageDTO(message.getPayload());
-		if("authorize".equals(messageDTO.tag)) {
-			JSONObject jsonObj = messageDTO.payload;
-			Integer partidaId = jsonObj.getInt("partidaId");
-			Integer actorId = jsonObj.getInt("actorId");			
-			session.getAttributes().put("partidaId", partidaId);
-			session.getAttributes().put("actorId", actorId);
-			PartidaSocket<WebSocketSession> partidaSocket = partidas.get(partidaId);
-			if(partidaSocket == null) {
-				partidaSocket = new PartidaSocket<WebSocketSession>();
-				partidas.put(partidaId, partidaSocket);
-			}
-			partidaSocket.addSession(session);
+			if("authorize".equals(messageDTO.tag)) {
+				JSONObject jsonObj = messageDTO.payload;
+				Integer partidaId = jsonObj.getInt("partidaId");
+				Integer actorId = jsonObj.getInt("actorId");			
+				session.getAttributes().put("partidaId", partidaId);
+				session.getAttributes().put("actorId", actorId);
+				PartidaSocket<WebSocketSession> partidaSocket = partidas.get(partidaId);
+				if(partidaSocket == null) {
+					partidaSocket = new PartidaSocket<WebSocketSession>();
+					partidas.put(partidaId, partidaSocket);
+				}
+				partidaSocket.addSession(session);
+				switch (messageDTO.tag) {
+				case "throw":
+					for (WebSocketSession webSocketSession : partidaSocket.getSessions()) {
+						String broadcastMssage = "Resultado tirada: " + "20";
+						JSONObject result = this.throwDice.buildThrow(messageDTO.data);
+						SocketMessageDTO socketMessageDTOResult = new SocketMessageDTO("throwResult", result);
+						webSocketSession.sendMessage(new TextMessage(socketMessageDTOResult.data));
+					}
+					break;
+
+				default:
+					break;
+				}
+
 			for (WebSocketSession webSocketSession : partidaSocket.getSessions()) {
 				String broadcastMssage = "Usuario conectado: " + actorId;
 				webSocketSession.sendMessage(new TextMessage(broadcastMssage));
