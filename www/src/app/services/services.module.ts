@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { HeroService } from './hero/hero.service';
 import { AuthService } from './auth/auth.service';
 import { PartidasService } from './partidas/partidas.service';
+import { PartidasSocketService } from './partidas/partidas-socket.service';
 import { ActorService } from './actor/actor.service';
+import { WebSocketService } from './webSocket/webSocket.service';
 
 @NgModule({
   imports: [
@@ -13,7 +15,9 @@ import { ActorService } from './actor/actor.service';
     HeroService,
     AuthService,
     PartidasService,
-    ActorService
+    ActorService,
+    WebSocketService,
+    PartidasSocketService
   ]
 })
 export class ServicesModule {

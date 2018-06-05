@@ -63,7 +63,7 @@ export class DmPanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscription = this.route.params.subscribe(params => {
-    var partidaId = params['id']
+    var partidaId = params['partidaId']
     console.log('obteniendo partida: '+ partidaId);
       var promise: Promise<Actor[]> = this.partidasService.getActors(partidaId);
       var afterThenPromise: Promise<void> = promise.then((actors) => {

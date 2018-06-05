@@ -6,11 +6,14 @@ import org.json.JSONObject;
 
 public class ThrowDice {
 
-	public JSONObject buildThrow(String dataSet){
-		JSONArray jsonArray = null;
+	public JSONObject buildThrow(String dataSet) throws JSONException{
+//		JSONArray jsonArray = null;
+		JSONArray jsonArray = new JSONArray(dataSet);
+		System.out.println("jjejejje");
 		JSONObject result = new JSONObject();
 		try {
-			jsonArray = new JSONArray(dataSet);
+			System.out.println("entro al 1er try");
+			
 			for (int i = 0; i < jsonArray.length(); i++) {
 			    JSONObject json = jsonArray.getJSONObject(i);
 			    JSONArray results = json.getJSONArray("results");

@@ -6,8 +6,8 @@ import { Actor } from 'app/routes/actor/actor';
 
 @Injectable()
 export class ActorService {
-	private actorRestUrl = 'http://localhost:8080/api/v1/gameSet';  // path del controller
-	private actorResourceUrl = 'http://localhost:8080/gameSet';  // path del controller
+	private actorRestUrl = 'http://localhost:8080/api/v1/actor';  // path del controller
+	private actorResourceUrl = 'http://localhost:8080/actor';  // path del controller
 
 	localStorage: Storage;
 
@@ -15,16 +15,16 @@ export class ActorService {
 		this.localStorage = window.localStorage;
 	}
 
-  // save(actor: Actor): Promise<Response> { //service para crear un actor
-  //
-	// 	console.log('creando actor ' + JSON.stringify(actor));
-	// 	console.log(`${this.partidasRestUrl}`)
-	// 	return this.http.post(`${this.partidasRestUrl}`,
-	// 		JSON.stringify(actor),
-	// 		{ headers: this.getHeaders() }).toPromise()
-	// 		.then(response =>response)
-	// 		.catch(this.handleError);
-  // }
+  save(actor: Actor): Promise<Response> { //service para crear un actor
+
+		console.log('creando actor ' + JSON.stringify(actor));
+		console.log(`${this.actorRestUrl}`)
+		return this.http.post(`${this.actorRestUrl}`,
+			JSON.stringify(actor),
+			{ headers: this.getHeaders() }).toPromise()
+			.then(response =>response)
+			.catch(this.handleError);
+  }
   //
   // get(id:any): Promise<Partida> { //service para traer una partida
   //   return this.http.get(`${this.partidasRestUrl}/getById/`+ id)
@@ -54,16 +54,16 @@ export class ActorService {
   //       .catch(this.handleError);
   // }
   //
-	// private getHeaders() {
-	// 	return new HttpHeaders({
-	// 		'Content-Type': 'application/json',
-	// 		'Authorization': 'Basic ' + this.localStorage.getItem('AUTH_TOKEN')
-	// 	})
-	// }
-  //
-	// private handleError(error: any): Promise<any> {
-	// 	console.error('An error occurred', error);
-	// 	return Promise.reject(error.message || error);
-	// }
+	private getHeaders() {
+		return new HttpHeaders({
+			'Content-Type': 'application/json',
+			'Authorization': 'Basic ' + this.localStorage.getItem('AUTH_TOKEN')
+		})
+	}
+
+	private handleError(error: any): Promise<any> {
+		console.error('An error occurred', error);
+		return Promise.reject(error.message || error);
+	}
 
 }

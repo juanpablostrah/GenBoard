@@ -8,6 +8,8 @@ import { AppConfig } from 'app/config/app.config';
 import { LoggerService } from 'app/core/logger.service';
 import { MatSort , MatSortable, MatTableDataSource } from '@angular/material';
 
+const PARTIDA_ID = 'PARTIDA_ID';
+
 @Component({
   selector: 'app-partidas-index',
   templateUrl: './index.component.html',
@@ -18,9 +20,10 @@ export class IndexComponent implements OnInit{
   @ViewChild('MatSort')
   dataSource : MatTableDataSource<Partida>;
 
+  localStorage: Storage;
   displayedColumns : String[];
-
   partidas : Partida[];
+  partida : Partida;
 
   @ViewChild('form')
   myNgForm; // just to call resetForm method
@@ -41,6 +44,7 @@ export class IndexComponent implements OnInit{
     this.dataSource = new MatTableDataSource(this.partidas);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.localStorage = window.localStorage;
   }
 
   ngOnInit(): void {
@@ -51,7 +55,10 @@ export class IndexComponent implements OnInit{
   }
 
   connect(){
-
+    console.log(this.partida);
+    //this.localStorage.setItem(PARTIDA_ID, this.partida.id.toString())
+    this.localStorage.setItem(PARTIDA_ID, "2")
+    this.router.navigateByUrl('/partidas/create-actor')
   }
 
 }

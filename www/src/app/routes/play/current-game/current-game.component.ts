@@ -8,6 +8,7 @@ import { CanvasDiceRollComponent } from '../canvas-dice-roll/canvas-dice-roll.co
 import { GameLogComponent } from '../game-log/game-log.component';
 import { MapComponent } from '../map/map.component';
 import * as SockJS from 'sockjs-client';
+import { PartidasSocketService } from 'app/services/partidas/partidas-socket.service';
 
 
 @Component({
@@ -16,6 +17,9 @@ import * as SockJS from 'sockjs-client';
   styleUrls: ['./current-game.component.css']
 })
 export class CurrentGameComponent implements OnInit {
+
+  client: any;
+  localStorage: Storage;
 
   dataSet: [{value,descriptor,modifier,results}]
 
@@ -27,21 +31,35 @@ export class CurrentGameComponent implements OnInit {
   @ViewChild('gameLogger')
   gameLogger: GameLogComponent
 
-  sock : any;
-
   data : any;
 
-  constructor() {
-    var websocketurl = "http://localhost:8080/api/v1/socket/gameset";
-    this.sock = new SockJS(websocketurl);
+  constructor(private partidasSocketService: PartidasSocketService) {
+    this.localStorage = window.localStorage;
   }
 
   ngOnInit() {
-    this.data = {
-      partidaId: 2,
-      actorId: 1,
-      dataSet: this.dataSet
-    };
+    var partidaId = Number(this.localStorage.getItem("PARTIDA_ID"));
+    //var actorId = Number(this.localStorage.getItem("ACTOR_ID"));
+    var actorId = 1
+    console.log("conectado al socket")
+
+    this.partidasSocketService
+    .connect(partidaId, actorId)
+    .subscribe((client)=>{
+      this.client = client;
+      console.log("client:",client)
+      client.onMessage((message)=>{
+        this.handle(message);
+      })
+    })
+
+
+    //
+    // this.data = {
+    //   partidaId: 2,
+    //   actorId: 1,
+    //   dataSet: this.dataSet
+    // };
     // this.sock.onopen = function() {
     //   console.log('open');
     //   this.sock.send(JSON.stringify({
@@ -107,32 +125,34 @@ export class CurrentGameComponent implements OnInit {
     }]
   }
 
+  handle(message: any) {
+    console.log(message)
+    switch(message.tag) {
+     case "roll": {
+          this.diceRoller.doRoll(message.data);
+          this.gameLogger.doLog(message.data);
+        break;
+     }
+     case "": {
+        //statements;
+        break;
+     }
+     default: {
+        //statements;
+        break;
+     }
+   }
+
+  }
+
   public handleSetMap(map:File){
     this.diceRoller.setMap(map);
   }
 
   doRoll(){
-    // this.dataSet.map( dice => {
-    //   dice.results = Array.from(Array(dice.value).keys()).map(val => {
-    //     return Math.floor(Math.random() * (dice.descriptor)) + 1;
-    //   })
-    // })
-    // this.diceRoller.doRoll(this.dataSet);
-    // this.gameLogger.doLog(this.dataSet);
-    // console.log("LOG");
     this.data = {
-      partidaId: 2,
-      actorId: 1,
       dataSet: JSON.stringify(this.dataSet)
     };
-
-    console.log(this.dataSet)
-    console.log(this.sock)
-    this.sock.send(JSON.stringify({
-      tag: 'throw',
-      data: this.data
-    }));
-    console.log(this.data)
-
+    this.client.sendMessage('roll', this.data)
   }
 }
