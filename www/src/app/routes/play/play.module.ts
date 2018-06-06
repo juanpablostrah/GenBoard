@@ -14,6 +14,7 @@ import { MapsControlComponent } from './maps-control/maps-control.component';
 import { MapComponent } from './map/map.component';
 import { DmPanelComponent } from './dm-panel/dm-panel.component';
 import { DmDialogComponent } from './dm-dialog/dm-dialog.component';
+import { ActorListComponent } from './actor-list/actor-list.component';
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { DmDialogComponent } from './dm-dialog/dm-dialog.component';
     MapsControlComponent,
     MapComponent,
     DmPanelComponent,
-    DmDialogComponent
+    DmDialogComponent,
+    ActorListComponent
   ],
   providers: [
 

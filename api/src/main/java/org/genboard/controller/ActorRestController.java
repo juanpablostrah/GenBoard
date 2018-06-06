@@ -23,9 +23,9 @@ public class ActorRestController {
     @RequestMapping(
     		value = "", 
     		method = RequestMethod.POST)
-        public void create(@RequestBody Actor actor) {
-    	actorRepository.save(actor);
-            LOGGER.info("actor creado" + actor.getName());
+        public Actor create(@RequestBody Actor actor) {
+    		LOGGER.info("actor creado" + actor.getName());
+    		return actorRepository.save(actor);            
         }
 
 }

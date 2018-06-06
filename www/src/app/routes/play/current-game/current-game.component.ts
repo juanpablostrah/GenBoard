@@ -1,9 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { ViewChild } from '@angular/core';
-// import { CanvasDiceRollComponent }  from 'app/routes/play/canvas-dice-roll';
-// import { GameLogComponent }  from './game-log/game-log';
-// import { RollerControlComponent }  from './roller-control/roller-control';
-
 import { CanvasDiceRollComponent } from '../canvas-dice-roll/canvas-dice-roll.component';
 import { GameLogComponent } from '../game-log/game-log.component';
 import { MapComponent } from '../map/map.component';
@@ -25,6 +21,9 @@ export class CurrentGameComponent implements OnInit {
 
   map: File;
 
+  @Output()
+  onRollToParent: EventEmitter<any>
+
   @ViewChild('diceRoller')
   diceRoller: CanvasDiceRollComponent
 
@@ -35,23 +34,27 @@ export class CurrentGameComponent implements OnInit {
 
   constructor(private partidasSocketService: PartidasSocketService) {
     this.localStorage = window.localStorage;
+    this.onRollToParent = new EventEmitter();
   }
 
   ngOnInit() {
+    //tenes que passarte la instancia del socket, no podes conectarte 2 veces,
+    // al margen de la bizarreada de pasarte el partida id por el localStorage
     var partidaId = Number(this.localStorage.getItem("PARTIDA_ID"));
     //var actorId = Number(this.localStorage.getItem("ACTOR_ID"));
     var actorId = 1
     console.log("conectado al socket")
 
-    this.partidasSocketService
-    .connect(partidaId, actorId)
-    .subscribe((client)=>{
-      this.client = client;
-      console.log("client:",client)
-      client.onMessage((message)=>{
-        this.handle(message);
-      })
-    })
+    //this.partidasSocketService
+    //.connect(partidaId, actorId)
+    //.subscribe((client)=>{
+    //  this.client = client;
+    //  //no pasa por aca?
+    //  console.log("client: ",client)
+    //  client.onMessage((message)=>{
+    //    this.handle(message);
+    //  })
+    //})
 
 
     //
@@ -123,10 +126,19 @@ export class CurrentGameComponent implements OnInit {
       modifier:0,
       results:[]
     }]
+
+    this.data = {
+      dataSet: JSON.stringify(this.dataSet)
+    };
   }
 
   handle(message: any) {
     console.log(message)
+    //es mas, no deberias estar handleando
+    //mensajes aca, eso deberia hacerlo el componente padre,
+    // porque es el que administra la comunicacion entre los hijos
+    // es decir, todos le tienen que decir al padre que hay que hacer
+    // quien vendria a ser el padre? play?
     switch(message.tag) {
      case "roll": {
           this.diceRoller.doRoll(message.data);
@@ -149,10 +161,20 @@ export class CurrentGameComponent implements OnInit {
     this.diceRoller.setMap(map);
   }
 
+  // this.dataSet.map( dice => {
+  //   dice.results = Array.from(Array(dice.value).keys()).map(val => {
+  //     return Math.floor(Math.random() * (dice.descriptor)) + 1;
+  //   })
+  // })
+  // this.diceRoller.doRoll(this.dataSet);
+  // this.gameLogger.doLog(this.dataSet);
+  // console.log("LOG");
   doRoll(){
-    this.data = {
-      dataSet: JSON.stringify(this.dataSet)
-    };
-    this.client.sendMessage('roll', this.data)
+    this.onRollToParent.emit(this.data)
+
+    // this.data = {
+    //   dataSet: JSON.stringify(this.dataSet)
+    // };
+    // this.client.sendMessage('roll', this.data)
   }
 }

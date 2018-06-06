@@ -18,6 +18,10 @@
   <include file="classpath:/liquibase/dml/2018_05_23_00001_create_game_set_status_table.xml"/>
   <include file="classpath:/liquibase/dml/2018_05_30_00001_add_cant_player.xml"/>
   <include file="classpath:/liquibase/dml/2018_05_30_00002_modify_cant_player.xml"/>
-
+  <include file="classpath:/liquibase/dml/2018_06_05_00001_delete_size_anotation_game_set.xml"/>
+  <include file="classpath:/liquibase/dml/2018_06_05_00002_delete_size_annotation_player_game_set.xml"/>
+  
+  
+  
 
 </databaseChangeLog>

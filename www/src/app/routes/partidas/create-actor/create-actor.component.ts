@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Actor } from 'app/routes/actor/actor';
 import { NgForm } from '@angular/forms';
+import { ActorService } from 'app/services/actor/actor.service';
+import { ActorType } from 'app/routes/actor/actorType';
+import { Router } from '@angular/router';
 
 const ACTOR_ID = 'ACTOR_ID';
 
@@ -12,24 +15,27 @@ const ACTOR_ID = 'ACTOR_ID';
 export class CreateActorComponent implements OnInit {
 
   localStorage: Storage;
-  actorService: any;
 
   actor : Actor;
 
-  constructor() {
+  constructor(private actorService: ActorService,
+    private router: Router,) {
     this.actor = new Actor;
+    this.localStorage = window.localStorage;
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-
-  onSubmit(f: NgForm) {
-    console.log(f)
+  save() {
+    this.actor.tipoActor = ActorType.PERSONAJE;
     this.actorService.save(this.actor).then((data) =>  {
+      console.log(data)
+      console.log(this.actor.id)
       this.localStorage.setItem(ACTOR_ID, this.actor.id.toString())
-			console.log(data)
 		})
+    var partidaId = this.localStorage.getItem("PARTIDA_ID")
+    var actorId = this.localStorage.getItem("ACTOR_ID")
+    this.router.navigateByUrl('/play/'+ partidaId + actorId )
   }
 
 }

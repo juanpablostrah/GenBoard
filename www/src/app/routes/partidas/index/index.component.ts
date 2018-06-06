@@ -51,13 +51,15 @@ export class IndexComponent implements OnInit{
     var promise: Promise<Partida[]> = this.partidasService.getPartidas();
     var afterThenPromise: Promise<void> = promise.then((partidas) => {
       this.partidas = partidas;
+      console.log(this.partidas)
     });
   }
 
-  connect(){
+  join(){
     console.log(this.partida);
     //this.localStorage.setItem(PARTIDA_ID, this.partida.id.toString())
     this.localStorage.setItem(PARTIDA_ID, "2")
+    //this.partidaService.get()
     this.router.navigateByUrl('/partidas/create-actor')
   }
 

@@ -3,21 +3,22 @@ package org.genboard.websocket;
 import java.util.HashSet;
 import java.util.Set;
 
-public class PartidaSocket<T> {
+import org.springframework.web.socket.WebSocketSession;
+
+public class PartidaSocket {
 	
-	private Set<T> sessions;
+	private Set<WebSocketSession> sessions;
 	
 	public PartidaSocket() {
-		this.sessions = new HashSet<T>();
+		this.sessions = new HashSet<WebSocketSession>();
 	}
 	
-	public void addSession(T session) {
+	public void addSession(WebSocketSession session) {
 		sessions.add(session);
 	}
 
-	public Set<T> getSessions() {
+	public Set<WebSocketSession> getSessions() {
 		return sessions;
 	}
-	
 	
 }

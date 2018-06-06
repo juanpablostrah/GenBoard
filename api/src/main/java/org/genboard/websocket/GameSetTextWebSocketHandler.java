@@ -3,11 +3,13 @@ package org.genboard.websocket;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.genboard.model.ThrowDice;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.genboard.websocket.dto.ActorConnectDTO;
+import org.genboard.websocket.dto.AuthorizeDTO;
+import org.genboard.websocket.message.IncomingMessage;
+import org.genboard.websocket.message.OutcomingMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
@@ -18,121 +20,79 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 @Component
 public class GameSetTextWebSocketHandler extends TextWebSocketHandler {
 
-	private ThrowDice throwDice;
-	
-	private PartidaSocket<WebSocketSession> partidaSocket;
-
 	private static final Logger LOGGER = LoggerFactory.getLogger(GameSetTextWebSocketHandler.class);
-
-	AuthenticationProvider authenticationProvider;
-
-	Map<Integer, PartidaSocket<WebSocketSession>> partidas = new HashMap<Integer, PartidaSocket<WebSocketSession>>();
 	
-	private SocketMessageDTO socketMessageDTO;
+	@Autowired
+	GameSetSocketFlowHandler gameSetSocketFlowHandler;
+	
+	AuthenticationProvider authenticationProvider;	
+	
+	Map<Integer, PartidaSocket> partidas = new HashMap<Integer, PartidaSocket>();
 
-	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-
-		SocketMessageDTO messageDTO = new SocketMessageDTO(message.getPayload());
-		if ("AUTHORIZE".equals(messageDTO.tag)) {
-			JSONObject jsonObj = messageDTO.payload;
-			Integer partidaId = jsonObj.getInt("partidaId");
-			Integer actorId = jsonObj.getInt("actorId");
-
-			session.getAttributes().put("partidaId", partidaId);
-			session.getAttributes().put("actorId", actorId);
-			
-			PartidaSocket<WebSocketSession> partidaSocket = partidas.get(partidaId);
-			if (partidaSocket == null) {
-				partidaSocket = new PartidaSocket<WebSocketSession>();
+	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {	
+		IncomingMessage messageDTO = new IncomingMessage(message.getPayload());		
+		String tag = messageDTO.getTag();
+		
+		if("AUTHORIZE".equals(tag)) {	
+			AuthorizeDTO authorizeDTO = messageDTO.marshallize(AuthorizeDTO.class);					
+			Integer partidaId = authorizeDTO.partidaId;
+			Integer actorId = authorizeDTO.actorId;
+			session.getAttributes().put("partidaId", partidaId );
+			session.getAttributes().put("actorId", actorId);			
+			PartidaSocket partidaSocket = partidas.get(partidaId);
+			if(partidaSocket == null) {
+				partidaSocket = new PartidaSocket();
 				partidas.put(partidaId, partidaSocket);
 			}
 			partidaSocket.addSession(session);
-
-			for (WebSocketSession webSocketSession : getPartidaSocket().getSessions()) {
-				String broadcastMssage = "Usuario conectado: " + actorId;
-				webSocketSession.sendMessage(new TextMessage(broadcastMssage));
-			}
-		}else {
+			OutcomingMessage<String> response = new OutcomingMessage<String>("CONNECTION_SUCCESS");
+			TextMessage responseMessage = response.textMessage(null);
+			session.sendMessage(responseMessage);
 			
-			Integer partidaId = (Integer) session.getAttributes().get("partidaId");
-			Integer actorId = (Integer) session.getAttributes().get("actorId");
-			
-			switch (messageDTO.tag) {
-			case "throw": {
-				
-				System.out.println("entro al switch");
-				for (WebSocketSession webSocketSession : getPartidaSocket().getSessions()) {
-					String broadcastMssage = "Resultado tirada: " + "20";
-					System.out.println("antes del buildThrow");
-					JSONObject result = this.throwDice.buildThrow(messageDTO.data);
-					SocketMessageDTO socketMessageDTOResult = new SocketMessageDTO("throwResult", result);
-					webSocketSession.sendMessage(new TextMessage(socketMessageDTOResult.data));
+			OutcomingMessage<ActorConnectDTO> broadcast = new OutcomingMessage<ActorConnectDTO>("ACTOR_CONNECTION");
+			ActorConnectDTO broadcastDTO = new ActorConnectDTO();
+			broadcastDTO.actorId = actorId;
+			TextMessage broadcastMessage = broadcast.textMessage(broadcastDTO);
+			for (WebSocketSession webSocketSession : partidaSocket.getSessions()) {
+				if(webSocketSession.equals(session)) {
+					//no se envia el mensaje al jugador que se conecta
+					continue;
 				}
-				break;
-			}
-			case "giveTurn": {
-				break;
-			}
-			case "Initiative": {
-				break;
-			}
-			case "History": {
-				break;
+				webSocketSession.sendMessage(broadcastMessage);
 			}
 		}
-			
-			LOGGER.info("handling socket input" + messageDTO.tag);
-			
-			if (partidaId != null) {
-				PartidaSocket<WebSocketSession> partidaSocket = partidas.get(partidaId);
-				for (WebSocketSession webSocketSession : partidaSocket.getSessions()) {
-					String broadcastMssage = "Usuario: " + actorId + " envio: " + messageDTO.data;
-					webSocketSession.sendMessage(new TextMessage(broadcastMssage));
-				}
-			} else {
+		else {
+			LOGGER.info("handling socket input" + tag);
+			Integer partidaId = (Integer) session.getAttributes().get("partidaId");
+			if(partidaId == null) {
 				throw new RuntimeException("usuario no autorizado");
 			}
+			PartidaSocket partidaSocket = partidas.get(partidaId);			
+			gameSetSocketFlowHandler.handle(messageDTO, partidaSocket);
 		}
-
-
+	
 	}
 
-	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+	public void afterConnectionEstablished(WebSocketSession session) throws Exception {		
 		LOGGER.info("Connection established");
 	}
-
+	
+	
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		Integer partidaId = (Integer) session.getAttributes().get("partidaId");
-		if (partidaId != null) {
-			PartidaSocket<WebSocketSession> partidaSocket = partidas.get(partidaId);
+		if(partidaId != null) {
+			PartidaSocket partidaSocket = partidas.get(partidaId);
 			partidaSocket.getSessions().remove(session);
-			if (partidaSocket.getSessions().isEmpty()) {
+			if(partidaSocket.getSessions().isEmpty()) {
 				// elimino la partida del conjunto para desasociarla del arbol
 				// de referencias de java y permitir que GC la borre
 				partidas.remove(partidaId);
 			}
 		}
-		super.afterConnectionClosed(session, status);
-	}
-
-	public PartidaSocket<WebSocketSession> getPartidaSocket() {
-		return partidaSocket;
-	}
-
-	public void setPartidaSocket(PartidaSocket<WebSocketSession> partidaSocket) {
-		this.partidaSocket = partidaSocket;
-	}
-
-	public SocketMessageDTO getSocketMessageDTO() {
-		return socketMessageDTO;
-	}
-
-	public void setSocketMessageDTO(SocketMessageDTO socketMessageDTO) {
-		this.socketMessageDTO = socketMessageDTO;
+		super.afterConnectionClosed(session, status);			
 	}
 	
 	
-	
-	
-
 }
+
+

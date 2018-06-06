@@ -29,14 +29,10 @@ public class Actor {
     private String name;
 	
 	@ManyToOne
-    @Size(min = 3, max=50)
     private Player player;
 	
-    @NotNull
-    @Size(min = 3, max=50)
     private int life;
     
-    @NotNull
     private String damage;
     
     @ManyToOne

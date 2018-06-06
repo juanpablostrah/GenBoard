@@ -35,6 +35,7 @@ export class PartidasSocketService {
       sock.onmessage = (message: any)=> {
         const incommingMessage = JSON.parse(message.data)
         if(incommingMessage.tag == 'CONNECTION_SUCCESS'){
+          console.log('CONNECTION_SUCCESS')
           const callbacks = [];
           sock.onmessage = (message: any)=> {
             const incommingMessage = JSON.parse(message.data);

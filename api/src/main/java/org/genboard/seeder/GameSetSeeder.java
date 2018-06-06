@@ -28,12 +28,12 @@ public class GameSetSeeder {
 
     @EventListener
 	private void run(ApplicationReadyEvent event) {		
-		LOGGER.info("ejecuto despues de la phase de inyeccion de dependencias");
-		owner = playerRepository.findByUsername("carabonita");
-		guest1 = playerRepository.findByUsername("laloba");
-		guest2 = playerRepository.findByUsername("jefe");
-		
-		createGameSet("nuevaPartida2", "historia de vida");
+//		LOGGER.info("ejecuto despues de la phase de inyeccion de dependencias");
+//		owner = playerRepository.findByUsername("carabonita");
+//		guest1 = playerRepository.findByUsername("laloba");
+//		guest2 = playerRepository.findByUsername("jefe");
+//		
+//		createGameSet("nuevaPartida2", "historia de vida");
 	}
 
 	public GameSet createGameSet(String name, String history) {
