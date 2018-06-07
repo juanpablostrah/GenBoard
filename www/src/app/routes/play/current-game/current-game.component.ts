@@ -1,10 +1,12 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { ViewChild } from '@angular/core';
 import { CanvasDiceRollComponent } from '../canvas-dice-roll/canvas-dice-roll.component';
 import { GameLogComponent } from '../game-log/game-log.component';
 import { MapComponent } from '../map/map.component';
 import * as SockJS from 'sockjs-client';
 import { PartidasSocketService } from 'app/services/partidas/partidas-socket.service';
+import { ActorListComponent } from 'app/routes/play/actor-list/actor-list.component';
+import { Actor } from 'app/routes/actor/actor';
 
 
 @Component({
@@ -24,20 +26,31 @@ export class CurrentGameComponent implements OnInit {
   @Output()
   onRollToParent: EventEmitter<any>
 
+  @Output()
+  onChatToParent: EventEmitter<any>
+
   @ViewChild('diceRoller')
   diceRoller: CanvasDiceRollComponent
 
   @ViewChild('gameLogger')
   gameLogger: GameLogComponent
 
+  @ViewChild('actorList')
+  actorList: ActorListComponent
+
   data : any;
+
+  @Input()
+  chat : any;
 
   constructor(private partidasSocketService: PartidasSocketService) {
     this.localStorage = window.localStorage;
     this.onRollToParent = new EventEmitter();
+    this.onChatToParent = new EventEmitter();
   }
 
   ngOnInit() {
+
     //tenes que passarte la instancia del socket, no podes conectarte 2 veces,
     // al margen de la bizarreada de pasarte el partida id por el localStorage
     var partidaId = Number(this.localStorage.getItem("PARTIDA_ID"));
@@ -169,12 +182,22 @@ export class CurrentGameComponent implements OnInit {
   // this.diceRoller.doRoll(this.dataSet);
   // this.gameLogger.doLog(this.dataSet);
   // console.log("LOG");
+
+      // this.data = {
+      //   dataSet: JSON.stringify(this.dataSet)
+      // };
+      // this.client.sendMessage('roll', this.data)
+
   doRoll(){
     this.onRollToParent.emit(this.data)
+  }
 
-    // this.data = {
-    //   dataSet: JSON.stringify(this.dataSet)
-    // };
-    // this.client.sendMessage('roll', this.data)
+  doChat(){
+    console.log(this.chat)
+    this.onChatToParent.emit(this.chat)
+  }
+
+  setActor(actor : Actor){
+    this.actorList.addActor(actor)
   }
 }

@@ -3,10 +3,14 @@
     <mat-expansion-panel-header color="primary">
       Actores
     </mat-expansion-panel-header>
-    <div class="logComponent">
-      <ng-template ngFor let-index="index" let-logentry [ngForOf]="log">
-        <p>Tirada: {{ logentry }}</p>
-      </ng-template>
-    </div>
+    <ng-template ngFor let-index="index" let-actor [ngForOf]="actorList">
+      <p> {{ actor.name }}</p>
+    </ng-template>
+    <!-- <mat-chip-list>
+      <mat-chip>One fish</mat-chip>
+      <mat-chip>Two fish</mat-chip>
+      <mat-chip color="primary" selected="true">Primary fish</mat-chip>
+      <mat-chip color="accent" selected="true">Accent fish</mat-chip>
+    </mat-chip-list> -->
   </mat-expansion-panel>
 </mat-accordion>

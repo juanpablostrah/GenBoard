@@ -29,9 +29,7 @@ export class CreateComponent {
     console.log(this.partida)
     this.partidasService.save(this.partida).then((data) => {
       console.log(data)
-  })
-
-
+    })
   }
 
 }

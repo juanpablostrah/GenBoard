@@ -7,7 +7,6 @@ import { AfterViewInit } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
 import { Partida } from 'app/services/partidas/partida.model';
 import { PartidasService } from 'app/services/partidas/partidas.service';
-//import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { AppConfig } from 'app/config/app.config';

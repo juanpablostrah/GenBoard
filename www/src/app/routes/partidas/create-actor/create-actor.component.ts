@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { Actor } from 'app/routes/actor/actor';
 import { NgForm } from '@angular/forms';
 import { ActorService } from 'app/services/actor/actor.service';
 import { ActorType } from 'app/routes/actor/actorType';
 import { Router } from '@angular/router';
+import { ActorListComponent } from 'app/routes/play/actor-list/actor-list.component';
 
 const ACTOR_ID = 'ACTOR_ID';
 
@@ -18,24 +19,31 @@ export class CreateActorComponent implements OnInit {
 
   actor : Actor;
 
+  @Output()
+  onSetActor: EventEmitter<any>
+
   constructor(private actorService: ActorService,
     private router: Router,) {
     this.actor = new Actor;
     this.localStorage = window.localStorage;
+    this.onSetActor = new EventEmitter();
   }
 
   ngOnInit() {}
 
   save() {
-    this.actor.tipoActor = ActorType.PERSONAJE;
-    this.actorService.save(this.actor).then((data) =>  {
-      console.log(data)
-      console.log(this.actor.id)
-      this.localStorage.setItem(ACTOR_ID, this.actor.id.toString())
-		})
     var partidaId = this.localStorage.getItem("PARTIDA_ID")
-    var actorId = this.localStorage.getItem("ACTOR_ID")
-    this.router.navigateByUrl('/play/'+ partidaId + actorId )
+    this.actor.tipoActor = ActorType.PERSONAJE;
+
+    this.actorService.save(this.actor).then((data) =>  {
+      // console.log(data.json())
+      console.log(this.actor.id)
+      //this.localStorage.setItem(ACTOR_ID, this.actor.id.toString())
+		})
+    //var actorId = this.localStorage.getItem("ACTOR_ID")
+    console.log("envio :" + this.actor)
+    this.onSetActor.emit(this.actor)
+    this.router.navigateByUrl('/play/'+ partidaId +"/1" )
   }
 
 }

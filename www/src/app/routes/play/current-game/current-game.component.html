@@ -7,9 +7,11 @@
         [dataSet]="dataSet"
         (onRoll)="doRoll()">
       </app-roller-control>
-      <app-game-log #gameLogger>
+      <app-game-log #gameLogger
+        (onChat)="doChat($event)">
       </app-game-log>
-      <app-actor-list #actorList>
+      <app-actor-list #actorList
+        (onSetActor)="setActor($event)">
       </app-actor-list>
   </div>
   <div fxLayout="col">

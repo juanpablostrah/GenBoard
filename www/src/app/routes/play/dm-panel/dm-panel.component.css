@@ -5,3 +5,18 @@
 .backColor{
   background-color: #93a4bf;
 }
+
+.btnInitiative {
+  background-color: #1eff61;
+  margin-bottom: 5px;
+}
+
+.btnHistory {
+  background-color: #aa2020;
+  margin-bottom: 5px;
+}
+
+.btnGiveTurn {
+  background-color: #a9601f;
+  margin-bottom: 5px;
+}

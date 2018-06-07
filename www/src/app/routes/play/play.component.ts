@@ -6,6 +6,8 @@ import { PartidasSocketService } from 'app/services/partidas/partidas-socket.ser
 import { CanvasDiceRollComponent } from 'app/routes/play/canvas-dice-roll/canvas-dice-roll.component';
 import { GameLogComponent } from 'app/routes/play/game-log/game-log.component';
 import { EventEmitter } from '@angular/core';
+import { ActorListComponent } from 'app/routes/play/actor-list/actor-list.component';
+import { Actor } from 'app/routes/actor/actor';
 
 @Component({
   selector: 'app-play',
@@ -18,6 +20,7 @@ export class PlayComponent implements OnInit, OnDestroy {
   private subscription: any;
   private client: any;
   message : any;
+  currentActor : Actor;
 
   @ViewChild('diceRoller')
   diceRoller: CanvasDiceRollComponent
@@ -75,6 +78,12 @@ export class PlayComponent implements OnInit, OnDestroy {
     this.send(this.message)
   }
 
+  doChat(data : any){
+    this.message = {tag :'CHAT', data :data}
+    console.log("envio chat al backend" + this.message)
+    this.send(this.message)
+  }
+
   handle(message: { tag:any, data: any }){
     console.log(message);
     switch(message.tag) {
@@ -93,6 +102,5 @@ export class PlayComponent implements OnInit, OnDestroy {
        }
       }
     }
-
 
 }

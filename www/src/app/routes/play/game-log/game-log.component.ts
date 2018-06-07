@@ -14,13 +14,24 @@ export class GameLogComponent implements OnInit {
   @Input()
   dataSet: [{}]
 
+  @Output()
+  onChat: EventEmitter<any>
+
+  chat: String[]
+
   log: String[]
 
   constructor() {
+    this.onChat = new EventEmitter();
   }
 
   ngOnInit() {
     this.log = []
+  }
+
+  sendChat(chat : String[]){
+    console.log(this.chat)
+    this.onChat.emit(chat)
   }
 
   doLog(dataSet: [any]){

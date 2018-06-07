@@ -1,5 +1,5 @@
 <form #form="ngForm" novalidate>
-  <h4 class="stepper-legend">Datos del Partida</h4>
+  <h4 class="stepper-legend">Datos de la Partida</h4>
   <div fxLayout fxLayoutGap="10px" class="mat-form-field-100">
     <mat-form-field>
       <input matInput
@@ -39,6 +39,7 @@
     </div>
   </div>
   <div fxLayout fxLayoutGap="10px" fxLayoutAlign="end start">
-    <button mat-button matStepperNext color="success" fxFlex="100px">Siguiente</button>
+    <!-- <button mat-button matStepperNext color="success" fxFlex="100px">Siguiente</button> -->
+    <button mat-button (click)="save()" color="success" fxFlex="100px">Crear</button>
   </div>
 </form>

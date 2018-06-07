@@ -13,7 +13,6 @@ import { MaterialModule } from 'app/shared/modules/material.module';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { CreateActorComponent } from './create-actor/create-actor.component';
 
-
 @NgModule({
   imports: [
     CommonModule,
@@ -21,7 +20,7 @@ import { CreateActorComponent } from './create-actor/create-actor.component';
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
   ],
   declarations: [
     PartidasComponent,

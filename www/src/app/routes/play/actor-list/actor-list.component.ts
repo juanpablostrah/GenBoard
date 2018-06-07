@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Actor } from 'app/routes/actor/actor';
+import {MatChipsModule} from '@angular/material/chips';
 
 @Component({
   selector: 'app-actor-list',
@@ -19,6 +20,7 @@ export class ActorListComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("actores :" + this.actorList)
   }
 
 }

@@ -4,7 +4,7 @@ import { Partida } from 'app/services/partidas/partida.model';
 import { PartidasService } from 'app/services/partidas/partidas.service';
 //import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AppConfig } from 'app/config/app.config';
 import { LoggerService } from 'app/core/logger.service';
 import { NgForm } from '@angular/forms';
@@ -16,6 +16,7 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./datos-partida.component.scss']
 })
 export class DatosPartidaComponent {
+
   @Input()
   partida: any
 
@@ -26,7 +27,8 @@ export class DatosPartidaComponent {
   @ViewChild(NgForm)
   form:NgForm
 
-  constructor() {}
+  constructor(private partidasService: PartidasService,
+    private route: ActivatedRoute, private router: Router) {}
 
   getNameErrorMessage() {
     return this.nameControl.hasError('required') ? 'Ingresa un nombre para la partida' :
@@ -45,6 +47,13 @@ export class DatosPartidaComponent {
            this.cantPlayerControl.hasError('min') ? 'La cantidad maxima debe ser mayor a 1' :
            this.cantPlayerControl.hasError('max') ? 'La cantidad maxima debe ser menor a 20' :
             '';
+  }
+
+  save():void{
+    console.log(this.partida)
+    this.partidasService.save(this.partida).then((data) => {
+      console.log(data)
+    })
   }
 
 }

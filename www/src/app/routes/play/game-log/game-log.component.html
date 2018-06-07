@@ -8,5 +8,16 @@
         <p>Tirada: {{ logentry }}</p>
       </ng-template>
     </div>
+    <div class="">
+      <mat-form-field>
+        <input matInput
+          name="chat"
+          [(ngModel)]="chat">
+      </mat-form-field>
+      <button mat-raised-button (click)="sendChat()">
+        <mat-icon>send</mat-icon>
+          enviar
+      </button>
+    </div>
   </mat-expansion-panel>
 </mat-accordion>
