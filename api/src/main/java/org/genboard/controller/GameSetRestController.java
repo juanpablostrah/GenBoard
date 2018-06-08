@@ -3,6 +3,7 @@ package org.genboard.controller;
 
 import java.util.List;
 
+import org.genboard.model.Actor;
 import org.genboard.model.GameSet;
 import org.genboard.model.Player;
 import org.genboard.repository.GameSetRepository;
@@ -60,6 +61,24 @@ public class GameSetRestController {
 	    public List<Player> getAllGuest(@PathVariable("id") long id) {
 	        LOGGER.info("obteniendo invitados");
 			return gameSetRepository.findById(id).get().getGuests();
+	    }
+	
+	@ResponseBody
+	@RequestMapping(
+			value = "getAllActors/{id}", 
+			method = RequestMethod.GET)
+	    public List<Actor> getAllActors(@PathVariable("id") long id) {
+	        LOGGER.info("obteniendo actores");
+			return gameSetRepository.findById(id).get().getActors();
+	    }
+	
+	@ResponseBody
+	@RequestMapping(
+			value = "getById/{id}", 
+			method = RequestMethod.GET)
+	    public GameSet get(@PathVariable("id") long id) {
+	        LOGGER.info("obteniendo partida con el id : " + id);
+			return gameSetRepository.findById(id).get();
 	    }
 
 }

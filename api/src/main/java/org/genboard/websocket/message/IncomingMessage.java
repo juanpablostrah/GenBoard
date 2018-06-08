@@ -17,6 +17,10 @@ public class IncomingMessage {
 		return tag;
 	}
 
+	public String getData() {
+		return data;
+	}
+	
 	private String data;
 	
 	public IncomingMessage(String payload) {		
@@ -24,8 +28,6 @@ public class IncomingMessage {
 			JSONObject jsonObj = new JSONObject(payload);
 			this.tag = jsonObj.getString("tag");
 			this.data = jsonObj.get("data").toString();	
-			//el json object te permite obtener un atributo sin parsear y es lo qeu necesitamos
-			// porque no sabemos como parsearlo
 		} catch (JSONException e) {
 			//all fields remains null
 			e.printStackTrace();

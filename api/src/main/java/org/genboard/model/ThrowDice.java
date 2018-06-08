@@ -8,14 +8,12 @@ public class ThrowDice {
 
 	public JSONObject buildThrow(String dataSet) throws JSONException{
 //		JSONArray jsonArray = null;
-		JSONArray jsonArray = new JSONArray(dataSet);
-		System.out.println("jjejejje");
+		JSONObject jsonArray = new JSONObject(dataSet);
+		JSONArray array = jsonArray.getJSONArray("dataSet");
 		JSONObject result = new JSONObject();
 		try {
-			System.out.println("entro al 1er try");
-			
-			for (int i = 0; i < jsonArray.length(); i++) {
-			    JSONObject json = jsonArray.getJSONObject(i);
+			for (int i = 0; i < array.length(); i++) {
+			    JSONObject json = array.getJSONObject(i);
 			    JSONArray results = json.getJSONArray("results");
 			    for (int j = 0; j < (Integer)json.getInt("value"); j++) {
 					results.put(this.throwDice(json.getInt("descriptor")));

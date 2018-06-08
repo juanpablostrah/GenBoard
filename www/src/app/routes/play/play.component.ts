@@ -8,6 +8,7 @@ import { GameLogComponent } from 'app/routes/play/game-log/game-log.component';
 import { EventEmitter } from '@angular/core';
 import { ActorListComponent } from 'app/routes/play/actor-list/actor-list.component';
 import { Actor } from 'app/routes/actor/actor';
+import { CurrentGameComponent } from 'app/routes/play/current-game/current-game.component';
 
 @Component({
   selector: 'app-play',
@@ -22,8 +23,8 @@ export class PlayComponent implements OnInit, OnDestroy {
   message : any;
   currentActor : Actor;
 
-  @ViewChild('diceRoller')
-  diceRoller: CanvasDiceRollComponent
+  @ViewChild('currentGame')
+  currentGame: CurrentGameComponent;
 
   @ViewChild('gameLogger')
   gameLogger: GameLogComponent
@@ -54,8 +55,8 @@ export class PlayComponent implements OnInit, OnDestroy {
       .subscribe((client)=>{
         console.log('client', client);
         this.client = client;
-        client.onMessage((message)=>{
-          this.handle(message);
+        client.onMessage((tag,data)=>{
+          this.handle(tag,data);
         })
       })
     });
@@ -69,31 +70,55 @@ export class PlayComponent implements OnInit, OnDestroy {
     if(!this.client){
       console.log('trying to send message before connect');
     }
-    this.client.sendMessage(message);
+    this.client.sendMessage(message.tag, message.data);
   }
 
   doRoll(data : any){
-    this.message = {tag :'ROLL_REQUEST', data :data}
+    console.log(data)
+    this.message = {
+      tag: 'ROLL_REQUEST',
+      data: data
+    }
     console.log("envio el roll al backend")
     this.send(this.message)
   }
 
+  // logActor(data : any){
+  //   console.log(data)
+  //   this.message = {
+  //     tag: 'CONNECT_ACTOR_REQUEST',
+  //     data: data
+  //   }
+  //   console.log("se conecto un personaje")
+  //   this.send(this.message)
+  // }
+
   doChat(data : any){
-    this.message = {tag :'CHAT', data :data}
-    console.log("envio chat al backend" + this.message)
+    console.log(data)
+
+    this.message = {
+      tag: 'CHAT_REQUEST',
+      data: {chat : data}
+    }
+    console.log("se envio el mensaje")
     this.send(this.message)
   }
 
-  handle(message: { tag:any, data: any }){
-    console.log(message);
-    switch(message.tag) {
-      case "roll": {
-            this.doRoll(message.data);
-            this.gameLogger.doLog(message.data);
+  handle(tag:any, data: any ){
+    console.log('MENSAJE:',data);
+
+    switch(tag) {
+      case "ROLL_RESPONSE": {
+            this.currentGame.roll(data.result.dataSet);
+            this.currentGame.log(data.result.dataSet);
           break;
        }
-       case "": {
-          //statements;
+       case "CONNECT_ACTOR_RESPONSE": {
+            this.currentGame.populateList(data)
+          break;
+       }
+       case "CHAT_RESPONSE": {
+            this.currentGame.sendChat(data)
           break;
        }
        default: {

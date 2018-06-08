@@ -1,31 +1,25 @@
 package org.genboard.config;
 
-import org.springframework.beans.factory.ObjectFactory;
+import org.genboard.model.Actor;
+import org.genboard.model.GameSet;
+import org.genboard.model.Player;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
-import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration;
+import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapter;
 
 @Configuration
-public class CustomRepositoryRestConfiguration extends RepositoryRestMvcConfiguration {
-
-
-	public CustomRepositoryRestConfiguration(
-		ApplicationContext context,
-		ObjectFactory<ConversionService> conversionService
-	) {
-		super(context, conversionService);
-	}
-
+public class CustomRepositoryRestConfiguration extends RepositoryRestConfigurerAdapter {
+	
 	@Value("${rest.base_path}")
     private String base_path;
 
-    protected void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-    	
-//        config.exposeIdsFor(UserAccount.class);
-
-        config.setBasePath(this.base_path);
+    public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
+    	config.exposeIdsFor(Actor.class);
+    	config.exposeIdsFor(GameSet.class);
+    	config.exposeIdsFor(Player.class);
+    	//esto de aca anajo me preocupa, jajaja
+    	//despues vemos donde quedan
+        //config.setBasePath(this.base_path);
     }
 }

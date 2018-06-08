@@ -1,39 +1,45 @@
-package org.genboard.websocket.flow;
+package org.genboard.websocket;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
+import org.genboard.model.Actor;
+import org.genboard.model.GameSet;
 import org.genboard.model.ThrowDice;
-import org.genboard.websocket.PartidaSocket;
-import org.genboard.websocket.dto.RollRequestDTO;
+import org.genboard.repository.GameSetRepository;
 import org.genboard.websocket.dto.RollResponseDTO;
+import org.genboard.websocket.flow.SocketFlowHandler;
 import org.genboard.websocket.message.IncomingMessage;
 import org.genboard.websocket.message.OutcomingMessage;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
-import org.json.JSONObject;
-
-public class RollSocketFlowHandler extends SocketFlowHandler {
+public class ConnectActorSocketFlowHandler extends SocketFlowHandler {
+	
+	@Autowired
+    private GameSetRepository gameSetRepository;
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(SocketFlowHandler.class);
 
 	public void handle(IncomingMessage messageDTO, PartidaSocket partidaSocket) throws JSONException {
-		String dataSet = messageDTO.getData();
-		ThrowDice throwDice = new ThrowDice();
-		JSONObject results = throwDice.buildThrow(dataSet);
-		//RollRequestDTO rollRequestDTO = messageDTO.marshallize(RollRequestDTO.class);
-		//aca tenes que llenar el response con los resultados de los datos del request
-		// mete un servicio por favor
+		
+		String partidaId = messageDTO.getData();
+		
+		GameSet partida = gameSetRepository.findById(Long.getLong(partidaId)).get();
+		List<Actor> actorList = partida.getActors();
+		
 		RollResponseDTO rollResponseDTO = new RollResponseDTO();
 		Set<WebSocketSession> sessions = partidaSocket.getSessions();
-		//OutcomingMessage<RollResponseDTO> broadcast = new OutcomingMessage<RollResponseDTO>("ROLL_RESPONSE");
-		OutcomingMessage<String> broadcast = new OutcomingMessage<String>("ROLL_RESPONSE");
+	
+		OutcomingMessage<List<Actor>> broadcast = new OutcomingMessage<List<Actor>>("CONNECT_ACTOR_RESPONSE");
 		
-		TextMessage broadcastMessage = broadcast.textMessage(results.toString());		
+		TextMessage broadcastMessage = broadcast.textMessage(actorList);		
 		for (WebSocketSession session : sessions) {
 			try {
 				session.sendMessage(broadcastMessage);
@@ -41,9 +47,8 @@ public class RollSocketFlowHandler extends SocketFlowHandler {
 				e.printStackTrace();
 			}
 		}		
-		LOGGER.info("se completo una tirada");		
+		LOGGER.info("se conecto un personaje");		
 	}
-	
-	
+
 
 }

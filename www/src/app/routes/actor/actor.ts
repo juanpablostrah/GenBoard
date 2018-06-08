@@ -4,12 +4,12 @@ import { Partida } from 'app/services/partidas/partida.model';
 
 export class Actor {
 
-  id?: number;
+  id: number;
   tipoActor : ActorType;
   name: string;
   life: number;
   damage: string;
   player: Player;
-  partida: Partida;
+  gameSet: any;
   ultimaIniciativa : number;
 }

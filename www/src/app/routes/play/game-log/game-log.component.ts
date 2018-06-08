@@ -17,21 +17,25 @@ export class GameLogComponent implements OnInit {
   @Output()
   onChat: EventEmitter<any>
 
-  chat: String[]
+  chat: String
 
   log: String[]
 
   constructor() {
-    this.onChat = new EventEmitter();
+    this.onChat = new EventEmitter<String>();
   }
 
   ngOnInit() {
     this.log = []
   }
 
-  sendChat(chat : String[]){
+  sendChat(chat : String){
     console.log(this.chat)
-    this.onChat.emit(chat)
+    this.onChat.emit({chat:this.chat})
+  }
+
+  doChat(chat : String){
+    this.log.push(chat)
   }
 
   doLog(dataSet: [any]){

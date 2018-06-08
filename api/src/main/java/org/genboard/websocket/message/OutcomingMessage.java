@@ -19,6 +19,7 @@ public class OutcomingMessage<T> {
 		messageDTO.tag = this.tag;
 		String raw;
 		try {
+			//raw = mapper.writeValueAsString(messageDTO);
 			raw = mapper.writeValueAsString(messageDTO);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
@@ -37,7 +38,11 @@ public class OutcomingMessage<T> {
 		messageDTO.data = data;
 		String raw;
 		try {
-			raw = mapper.writeValueAsString(messageDTO);
+			if(messageDTO.data.getClass() == "".getClass()) {
+				raw = "{ \"tag\":\""+messageDTO.tag+"\", \"data\":"+messageDTO.data +"}";
+			} else {
+				raw = mapper.writeValueAsString(messageDTO);
+			}
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 			raw = "{\"tag\":\"PROCESSING_ERROR\"}";

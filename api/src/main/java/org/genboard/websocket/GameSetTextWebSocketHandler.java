@@ -1,9 +1,12 @@
 package org.genboard.websocket;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import org.genboard.websocket.dto.ActorConnectDTO;
+import org.genboard.model.Actor;
+import org.genboard.model.GameSet;
+import org.genboard.repository.GameSetRepository;
 import org.genboard.websocket.dto.AuthorizeDTO;
 import org.genboard.websocket.message.IncomingMessage;
 import org.genboard.websocket.message.OutcomingMessage;
@@ -21,6 +24,9 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 public class GameSetTextWebSocketHandler extends TextWebSocketHandler {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(GameSetTextWebSocketHandler.class);
+	
+	@Autowired
+    private GameSetRepository gameSetRepository;
 	
 	@Autowired
 	GameSetSocketFlowHandler gameSetSocketFlowHandler;
@@ -49,17 +55,19 @@ public class GameSetTextWebSocketHandler extends TextWebSocketHandler {
 			TextMessage responseMessage = response.textMessage(null);
 			session.sendMessage(responseMessage);
 			
-			OutcomingMessage<ActorConnectDTO> broadcast = new OutcomingMessage<ActorConnectDTO>("ACTOR_CONNECTION");
-			ActorConnectDTO broadcastDTO = new ActorConnectDTO();
-			broadcastDTO.actorId = actorId;
-			TextMessage broadcastMessage = broadcast.textMessage(broadcastDTO);
-			for (WebSocketSession webSocketSession : partidaSocket.getSessions()) {
-				if(webSocketSession.equals(session)) {
-					//no se envia el mensaje al jugador que se conecta
-					continue;
-				}
-				webSocketSession.sendMessage(broadcastMessage);
-			}
+			GameSet partida = gameSetRepository.findById(new Long(partidaId)).get();
+			List<Actor> actorList = partida.getActors();
+		
+//			OutcomingMessage<List<Actor>> broadcast = new OutcomingMessage<List<Actor>>("CONNECT_ACTOR_RESPONSE");
+//
+//			TextMessage broadcastMessage = broadcast.textMessage(actorList);
+//			for (WebSocketSession webSocketSession : partidaSocket.getSessions()) {
+//				if(webSocketSession.equals(session)) {
+//					//no se envia el mensaje al jugador que se conecta
+//					continue;
+//				}
+//				webSocketSession.sendMessage(broadcastMessage);
+//			}
 		}
 		else {
 			LOGGER.info("handling socket input" + tag);

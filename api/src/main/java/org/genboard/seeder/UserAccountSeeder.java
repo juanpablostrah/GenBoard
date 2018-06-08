@@ -1,10 +1,10 @@
 package org.genboard.seeder;
 
-import javax.annotation.PostConstruct;
-
-import org.genboard.model.UserAccount;
+//import javax.annotation.PostConstruct;
+//
+//import org.genboard.model.UserAccount;
 import org.genboard.repository.UserAccountRepository;
-import org.hibernate.annotations.common.util.impl.LoggerFactory;
+//import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;

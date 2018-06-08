@@ -1,14 +1,14 @@
 package org.genboard.seeder;
 
-import javax.annotation.PostConstruct;
-
-import org.genboard.model.Player;
-import org.genboard.model.UserAccount;
-import org.genboard.repository.PlayerRepository;
-import org.genboard.repository.UserAccountRepository;
-import org.hibernate.annotations.common.util.impl.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+//import javax.annotation.PostConstruct;
+//
+//import org.genboard.model.Player;
+//import org.genboard.model.UserAccount;
+//import org.genboard.repository.PlayerRepository;
+//import org.genboard.repository.UserAccountRepository;
+//import org.hibernate.annotations.common.util.impl.LoggerFactory;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.stereotype.Component;
 
 //@Component
 //public class PlayerSeeder {

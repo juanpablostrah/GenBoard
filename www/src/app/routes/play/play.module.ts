@@ -15,6 +15,7 @@ import { MapComponent } from './map/map.component';
 import { DmPanelComponent } from './dm-panel/dm-panel.component';
 import { DmDialogComponent } from './dm-dialog/dm-dialog.component';
 import { ActorListComponent } from './actor-list/actor-list.component';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
   imports: [
@@ -23,7 +24,9 @@ import { ActorListComponent } from './actor-list/actor-list.component';
     FlexLayoutModule,
     CommonModule,
     FormsModule,
-    MaterialModule
+    MaterialModule,
+    MatChipsModule
+
   ],
   exports: [
 
