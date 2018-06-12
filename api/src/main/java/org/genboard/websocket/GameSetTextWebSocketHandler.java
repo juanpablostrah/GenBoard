@@ -54,20 +54,22 @@ public class GameSetTextWebSocketHandler extends TextWebSocketHandler {
 			OutcomingMessage<String> response = new OutcomingMessage<String>("CONNECTION_SUCCESS");
 			TextMessage responseMessage = response.textMessage(null);
 			session.sendMessage(responseMessage);
+			LOGGER.info("Conection Success");
 			
 			GameSet partida = gameSetRepository.findById(new Long(partidaId)).get();
 			List<Actor> actorList = partida.getActors();
 		
-//			OutcomingMessage<List<Actor>> broadcast = new OutcomingMessage<List<Actor>>("CONNECT_ACTOR_RESPONSE");
-//
-//			TextMessage broadcastMessage = broadcast.textMessage(actorList);
-//			for (WebSocketSession webSocketSession : partidaSocket.getSessions()) {
-//				if(webSocketSession.equals(session)) {
-//					//no se envia el mensaje al jugador que se conecta
-//					continue;
-//				}
-//				webSocketSession.sendMessage(broadcastMessage);
-//			}
+			OutcomingMessage<List<Actor>> broadcast = new OutcomingMessage<List<Actor>>("CONNECT_ACTOR_RESPONSE");
+
+			TextMessage broadcastMessage = broadcast.textMessage(actorList);
+			for (WebSocketSession webSocketSession : partidaSocket.getSessions()) {
+				if(webSocketSession.equals(session)) {
+					//no se envia el mensaje al jugador que se conecta
+					continue;
+				}
+				webSocketSession.sendMessage(broadcastMessage);
+			}
+			LOGGER.info("Getting actor list");
 		}
 		else {
 			LOGGER.info("handling socket input" + tag);

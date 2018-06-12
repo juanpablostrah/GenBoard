@@ -4,6 +4,7 @@ import { AuthService } from './auth/auth.service';
 import { PartidasService } from './partidas/partidas.service';
 import { PartidasSocketService } from './partidas/partidas-socket.service';
 import { ActorService } from './actor/actor.service';
+import { PlayerService } from './player/player.service';
 import { WebSocketService } from './webSocket/webSocket.service';
 
 @NgModule({
@@ -17,7 +18,8 @@ import { WebSocketService } from './webSocket/webSocket.service';
     PartidasService,
     ActorService,
     WebSocketService,
-    PartidasSocketService
+    PartidasSocketService,
+    PlayerService
   ]
 })
 export class ServicesModule {

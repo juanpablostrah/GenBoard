@@ -32,6 +32,9 @@ export class DmPanelComponent implements OnInit {
   @Output()
   onSetMap: EventEmitter<File>
 
+  maps : File[];
+  selectedFile: File;
+
   private subscription: any;
 
   constructor(
@@ -44,6 +47,7 @@ export class DmPanelComponent implements OnInit {
     this.actors = [];
     this.onSetActors = new EventEmitter();
     this.onSetMap = new EventEmitter();
+    this.maps = []
   }
 
   openDialog(): void {
@@ -81,6 +85,12 @@ export class DmPanelComponent implements OnInit {
   public setMap(map :File){
     console.log("setting Map");
     this.onSetMap.emit(map);
+  }
+
+  public saveMap(event) {
+      this.selectedFile = event.target.files[0]
+      console.log(this.selectedFile);
+      this.maps.push(this.selectedFile);
   }
 
 }

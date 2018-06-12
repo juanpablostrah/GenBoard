@@ -19,6 +19,8 @@ import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.Range;
 
 @Entity
@@ -46,15 +48,21 @@ public class GameSet {
     @ManyToMany(fetch=FetchType.LAZY ,mappedBy="guestGameSet", targetEntity = Player.class )
     private List<Player> guests = new LinkedList<Player>();
     
+    //@OneToMany(fetch=FetchType.EAGER, mappedBy = "gameSet", targetEntity = Actor.class)
     @OneToMany(mappedBy = "gameSet", targetEntity = Actor.class)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Actor> actors;
     
     @OneToOne
     private GameSetStatus gameSetStatus;
     
-//    @NotNull
     @Range(min = 2,max = 20)
     private Integer cantPlayersMax;
+    
+//    @OneToMany(mappedBy = "gameSet", targetEntity = Token.class)
+//    private List<Token> tokens;
+    
+    //private List<Lob> maps;
     
     public String getName() {
 		return name;
@@ -127,6 +135,16 @@ public class GameSet {
 	public void setCantPlayersMax(Integer cantPlayersMax) {
 		this.cantPlayersMax = cantPlayersMax;
 	}
+
+//	public List<Token> getTokens() {
+//		return tokens;
+//	}
+//
+//	public void setTokens(List<Token> tokens) {
+//		this.tokens = tokens;
+//	}
+//	
+	
 	
 
 }

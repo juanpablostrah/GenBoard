@@ -1,7 +1,7 @@
 <form #form="ngForm" novalidate>
   <h4 class="stepper-legend">Datos de la Partida</h4>
   <div fxLayout fxLayoutGap="10px" class="mat-form-field-100">
-    <mat-form-field>
+    <mat-form-field style="width: 350px;">
       <input matInput
         name="nombre"
         [(ngModel)]="partida.name"
@@ -10,7 +10,7 @@
         required>
         <mat-error *ngIf="nameControl.invalid">{{getNameErrorMessage()}}</mat-error>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field style="width: 350px;">
       <input matInput
         name="historia"
         [(ngModel)]="partida.history"
@@ -19,8 +19,10 @@
         required>
         <mat-error *ngIf="historyControl.invalid">{{getHistoryErrorMessage()}}</mat-error>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field style="width: 200px;">
       <input matInput
+        type="number"
+        min="0"
         name="cantidad jugadores"
         [(ngModel)]="partida.cantPlayersMax"
         placeholder="cantidad jugadores"

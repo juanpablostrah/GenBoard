@@ -40,9 +40,10 @@ public class GameSetRestController {
 	@RequestMapping(
 		value = "", 
 		method = RequestMethod.POST)
-    public void create(@RequestBody GameSet gameSet) {
-		gameSetRepository.save(gameSet);
+    public GameSet create(@RequestBody GameSet gameSet) {
         LOGGER.info("partida creada" + gameSet.getName());
+        //probar mandando en el player del front el id del player para ir a buscarlo y setearlo aca
+        return gameSetRepository.save(gameSet);
     }
 	
 	@ResponseBody

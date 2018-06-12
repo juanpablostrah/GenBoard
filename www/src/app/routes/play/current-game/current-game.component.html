@@ -1,7 +1,8 @@
 <div fxLayout="row" id="currGame">
   <div fxLayout="column" id="controllers-column">
       <app-dm-panel
-        (onSetActors)="handleSetActors($event)">
+        (onSetActors)="handleSetActors($event)"
+        (onSetMap)="handleSetMap($event)">
       </app-dm-panel>
       <app-roller-control
         [dataSet]="dataSet"
@@ -15,12 +16,17 @@
       </app-actor-list>
   </div>
   <div fxLayout="col">
-    <app-map #map [hidden]='true'>
-    </app-map>
     <app-canvas-dice-roll #diceRoller>
     </app-canvas-dice-roll>
   </div>
 </div>
 <div fxLayout="col">
-  <app-maps-control (onSetMap)="handleSetMap($event)"></app-maps-control>
+  <!-- <app-maps-control (onSetMap)="handleSetMap($event)"></app-maps-control> -->
+</div>
+
+<div *ngIf="enanosi" class="ElEnano">
+    <div class="enanoText">
+        Bienvenido a tu nueva partida
+    </div>
+    <img src="assets/images/dwarf.jpg">
 </div>

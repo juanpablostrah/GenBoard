@@ -37,13 +37,6 @@ export class PlayComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // loading = true
-    // este es el padre
-    // administra todo el estado y la comunicacion con el socket
-    // igual sacando esto.. no tiene nada qe ver con el null creo ajaja
-    // no, hay algo extraño, no se esta completando el flujo
-    // ahora reviso, que lindo dejarle estos comentisisisis son hermosos los voy a pushear te lo juro
-    // jajajjaajjajajajaja
     this.subscription = this.route.params
     .subscribe(params => {
       const partidaIdRaw = params['partidaId'];
@@ -114,6 +107,7 @@ export class PlayComponent implements OnInit, OnDestroy {
           break;
        }
        case "CONNECT_ACTOR_RESPONSE": {
+            console.log("se conecto un personaje")
             this.currentGame.populateList(data)
           break;
        }

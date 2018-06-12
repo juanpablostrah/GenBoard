@@ -39,6 +39,9 @@ export class CurrentGameComponent implements OnInit {
   actorList: ActorListComponent
 
   data : any;
+  
+  @Input()
+  enanosi : boolean;
 
   @Input()
   chat : any;
@@ -93,8 +96,6 @@ export class CurrentGameComponent implements OnInit {
       dataSet: this.dataSet
     };
   }
-
-
 
   public handleSetMap(map:File){
     this.diceRoller.setMap(map);

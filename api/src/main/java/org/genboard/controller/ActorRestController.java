@@ -33,8 +33,8 @@ public class ActorRestController {
         public Actor create(@RequestBody Actor actor) {
     		LOGGER.info("actor creado" + actor.getName());    		
     		//Long gameSetId = actor.getGameSet().getId();
-			//GameSet gameSet = gameSetRepository.getOne(2);
-			//actor.setGameSet(gameSet);    		
+			GameSet gameSet = gameSetRepository.getOne((long) 2);
+			actor.setGameSet(gameSet);    		
     		return actorRepository.save(actor);            
         }
 

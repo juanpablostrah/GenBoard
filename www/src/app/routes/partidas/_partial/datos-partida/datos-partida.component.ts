@@ -44,15 +44,16 @@ export class DatosPartidaComponent {
 
   getCantPlayerErrorMessage(){
     return this.cantPlayerControl.hasError('required') ? 'Ingresa la cantidad maxima de jugadores' :
-           this.cantPlayerControl.hasError('min') ? 'La cantidad maxima debe ser mayor a 1' :
+           this.cantPlayerControl.hasError('min') ? 'La cantidad maxima debe ser mayor a 0' :
            this.cantPlayerControl.hasError('max') ? 'La cantidad maxima debe ser menor a 20' :
             '';
   }
 
   save():void{
-    console.log(this.partida)
+    //console.log(this.partida)
     this.partidasService.save(this.partida).then((data) => {
-      console.log(data)
+      console.log('respuesta',data)
+      this.router.navigate(['/play/'+data['id']+'/1'])
     })
   }
 

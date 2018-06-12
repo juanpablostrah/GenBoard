@@ -13,7 +13,7 @@
           <mat-icon>whatshot</mat-icon>
             Iniciativa
         </button>
-        <button mat-raised-button (click)="modoCombate()" class="btnPanel">Modo Combate</button>
+        <!-- <button mat-raised-button (click)="modoCombate()" class="btnPanel">Modo Combate</button> -->
         <button mat-raised-button (click)="historia()" class="btnHistory">
           <mat-icon>history</mat-icon>
             Historia
@@ -23,7 +23,18 @@
             Dar Turno
           </button>
         <input style="display: none" type="file" (change)="saveMap($event)" #fileInput>
-        <button mat-raised-button (click)="fileInput.click()" class="btnPanel">Cargar Mapa</button>
+        <button mat-raised-button (click)="fileInput.click()" class="btnPanel">
+          <mat-icon>map</mat-icon>
+            Cargar Mapa
+          </button>
       </div>
+      <div class=""> Mapas :
+        <ng-template ngFor let-index="index" let-map [ngForOf]="maps">
+          <div class="">
+            <a (click)="setMap(map)">{{ map.name }} </a>
+          </div>
+        </ng-template>
+      </div>
+
     </mat-expansion-panel>
 </mat-accordion>

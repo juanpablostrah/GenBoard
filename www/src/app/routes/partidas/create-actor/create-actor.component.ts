@@ -38,21 +38,25 @@ export class CreateActorComponent implements OnInit {
   save() {
     var partidaId = this.localStorage.getItem("PARTIDA_ID")
     this.actor.tipoActor = ActorType.PERSONAJE;
-    var partidaGet = this.partidaService.get(partidaId).then((partida) => {
-      console.log("partida id: ", partidaId)
-      //this.actor.partida = 2
-      //this.actor.partida = partida
-      // this.actor.gameSet = {
-      //   id: 5,
-      //   name: 'nada'
-      // };
-      this.actorService.save(this.actor).then((data) =>  {
-        console.log("response : ",data)
-        this.onSetActor.emit(data)
-        this.router.navigateByUrl('/play/'+ partidaId +"/1" )
-        //this.localStorage.setItem(ACTOR_ID, this.actor.id.toString())
-      })
-    }
+    this.actor.partidaId = partidaId
+    this.actorService.save(this.actor).then((data) =>  {
+      console.log("response : ",data)
+      this.onSetActor.emit(data)
+      this.router.navigateByUrl('/play/'+ partidaId + '/1')
+
+      //this.localStorage.setItem(ACTOR_ID, this.actor.id.toString())
+    })
+    // var partidaGet = this.partidaService.get(partidaId).then((partida) => {
+    //   console.log("partida id: ", partidaId)
+    //   this.actor.partidaId = partidaId
+    //   this.actorService.save(this.actor).then((data) =>  {
+    //     console.log("response : ",data)
+    //     this.onSetActor.emit(data)
+    //     this.router.navigateByUrl('/play/'+ partidaId + '/1')
+    //
+    //     //this.localStorage.setItem(ACTOR_ID, this.actor.id.toString())
+    //   })
+    // }
 
     )
     //var actorId = this.localStorage.getItem("ACTOR_ID")

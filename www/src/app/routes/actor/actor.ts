@@ -10,6 +10,7 @@ export class Actor {
   life: number;
   damage: string;
   player: Player;
+  partidaId : any;
   gameSet: any;
   ultimaIniciativa : number;
 }

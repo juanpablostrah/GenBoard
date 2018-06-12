@@ -21,8 +21,11 @@ export class IndexComponent implements OnInit{
   dataSource : MatTableDataSource<Partida>;
 
   localStorage: Storage;
+
   displayedColumns : String[];
+
   partidas : Partida[];
+
   partida : Partida;
 
   @ViewChild('form')
@@ -40,7 +43,7 @@ export class IndexComponent implements OnInit{
     private router: Router,
     private formBuilder: FormBuilder
   ) {
-    this.displayedColumns = ['name', 'history', 'cant-players', 'join']
+    this.displayedColumns = ['id', 'name', 'history', 'cant-players', 'join']
     this.dataSource = new MatTableDataSource(this.partidas);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -55,10 +58,11 @@ export class IndexComponent implements OnInit{
     });
   }
 
-  join(){
+  join(partida : Partida){
+    this.partida = partida
     console.log(this.partida);
     //this.localStorage.setItem(PARTIDA_ID, this.partida.id.toString())
-    this.localStorage.setItem(PARTIDA_ID, "2")
+    this.localStorage.setItem(PARTIDA_ID, partida.id.toString())
     //this.partidaService.get()
     this.router.navigateByUrl('/partidas/create-actor')
   }
