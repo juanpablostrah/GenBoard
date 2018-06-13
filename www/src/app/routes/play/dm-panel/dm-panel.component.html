@@ -21,7 +21,18 @@
         <button mat-raised-button (click)="darTurno()" class="btnGiveTurn">
           <mat-icon>fullscreen_exit</mat-icon>
             Dar Turno
-          </button>
+        </button>
+        <div id="content">
+      		<p><b>Mouse Action:</b>
+      			<label><input type="radio" name="action" id="mouseDrag">Drag</label>
+      			<label><input type="radio" name="action" id="mouseAdd">Add</label>
+      			<label><input type="radio" name="action" id="mouseDelete">Delete</label>
+      		</p>
+      		<div id="canvas-holder">
+      			<canvas id="maincanvas"></canvas>
+      		</div>
+      	</div>
+      	<div id='grand'></div>
         <input style="display: none" type="file" (change)="saveMap($event)" #fileInput>
         <button mat-raised-button (click)="fileInput.click()" class="btnPanel">
           <mat-icon>map</mat-icon>

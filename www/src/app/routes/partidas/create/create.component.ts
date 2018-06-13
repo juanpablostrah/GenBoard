@@ -31,7 +31,7 @@ export class CreateComponent {
     console.log(this.partida)
     var playerId = window.localStorage.getItem("PLAYER_ID")
     var player = this.playerService.get(playerId).then((player) =>{
-        this.partida.owner = player;
+        this.partida.owner = player.id;
         this.partidasService.save(this.partida).then((data) => {
           console.log(data)
         })

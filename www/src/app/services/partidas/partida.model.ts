@@ -9,5 +9,5 @@ export interface Partida {
     guests: Player[];
     actors: Actor[];
     cantPlayersMax: number;
-    owner : Player;
+    owner : any;
 }
