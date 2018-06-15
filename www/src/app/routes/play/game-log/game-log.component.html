@@ -1,11 +1,11 @@
 <mat-accordion>
-  <mat-expansion-panel class="backColor">
+  <mat-expansion-panel class="backColor" [expanded]="true">
     <mat-expansion-panel-header color="primary">
       Tirada
     </mat-expansion-panel-header>
     <div class="logComponent">
       <ng-template ngFor let-index="index" let-logentry [ngForOf]="log">
-        <p>Tirada: {{ logentry }}</p>
+        <p> {{ logentry }}</p>
       </ng-template>
     </div>
     <div class="">

@@ -7,7 +7,6 @@ import org.json.JSONObject;
 public class ThrowDice {
 
 	public JSONObject buildThrow(String dataSet) throws JSONException{
-//		JSONArray jsonArray = null;
 		JSONObject jsonArray = new JSONObject(dataSet);
 		JSONArray array = jsonArray.getJSONArray("dataSet");
 		JSONObject result = new JSONObject();

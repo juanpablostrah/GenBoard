@@ -7,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,6 +23,8 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.genboard.patterns.DPattern;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -71,19 +72,22 @@ public class Player {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date birthday;
 
-    @OneToMany(mappedBy = "owner", targetEntity = GameSet.class)
+    @OneToMany(mappedBy = "owner")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<GameSet> ownGameSet;
     
-    @ManyToMany(fetch=FetchType.EAGER)
+    @ManyToMany()
 	@JoinTable(name = "game_set_guest", 
 	  joinColumns = @JoinColumn(name = "player_id"), 
 	  inverseJoinColumns = @JoinColumn(name = "game_set_id"))
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<GameSet> guestGameSet;
 
     @Enumerated(value = EnumType.STRING)
     private PlayerState playerState = PlayerState.NEW;
     
-    @OneToMany(mappedBy = "player", targetEntity = Actor.class)
+    @OneToMany(mappedBy = "player")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Actor> actors;
     
     private String disablingReason;

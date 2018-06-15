@@ -21,7 +21,8 @@
       "styles": [
         "assets/css/reset.css",
         "assets/css/loading.css",
-        "assets/css/styles.scss"
+        "assets/css/styles.scss",
+        "../node_modules/dragula/dist/dragula.css"
       ],
       "scripts": [
         "assets/js/modernizr.js"

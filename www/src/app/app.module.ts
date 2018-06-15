@@ -23,7 +23,7 @@ import { MaterialModule } from 'app/shared/modules/material.module';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { PlayModule } from 'app/routes/play/play.module';
 import { WebsocketService } from 'app/sockjsNew/socketjs.service';
-
+import { DragulaModule } from 'ng2-dragula/ng2-dragula';
 
 @NgModule({
   imports: [
@@ -33,6 +33,7 @@ import { WebsocketService } from 'app/sockjsNew/socketjs.service';
     MaterialModule,
     HttpClientModule,
     FlexLayoutModule,
+    DragulaModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

@@ -7,6 +7,10 @@ import * as SockJS from 'sockjs-client';
 import { PartidasSocketService } from 'app/services/partidas/partidas-socket.service';
 import { ActorListComponent } from 'app/routes/play/actor-list/actor-list.component';
 import { Actor } from 'app/routes/actor/actor';
+import { PartidasService } from 'app/services/partidas/partidas.service';
+import { ActorService } from 'app/services/actor/actor.service';
+import { ActivatedRoute } from '@angular/router';
+import { DmPanelComponent } from 'app/routes/play/dm-panel/dm-panel.component';
 
 
 @Component({
@@ -15,6 +19,8 @@ import { Actor } from 'app/routes/actor/actor';
   styleUrls: ['./current-game.component.css']
 })
 export class CurrentGameComponent implements OnInit {
+
+  actors: Actor[];
 
   client: any;
   localStorage: Storage;
@@ -38,26 +44,57 @@ export class CurrentGameComponent implements OnInit {
   @ViewChild('actorList')
   actorList: ActorListComponent
 
+  @ViewChild('dmPanel')
+  dmPanel: DmPanelComponent
+
   data : any;
-  
+
   @Input()
   enanosi : boolean;
 
   @Input()
   chat : any;
 
-  constructor(private partidasSocketService: PartidasSocketService) {
+  isDM : boolean;
+  currentActor : any;
+  subscription: any;
+
+  constructor(private partidasSocketService: PartidasSocketService,
+    private partidasService: PartidasService,
+    private actorService: ActorService,
+    private route: ActivatedRoute,) {
     this.localStorage = window.localStorage;
     this.onRollToParent = new EventEmitter();
     this.onChatToParent = new EventEmitter();
   }
 
   ngOnInit() {
-    //tenes que passarte la instancia del socket, no podes conectarte 2 veces,
-    // al margen de la bizarreada de pasarte el partida id por el localStorage
-    var partidaId = Number(this.localStorage.getItem("PARTIDA_ID"));
-    //var actorId = Number(this.localStorage.getItem("ACTOR_ID"));
-    var actorId = 1
+    this.subscription = this.route.params.subscribe(params => {
+    var partidaId = params['partidaId']
+    console.log('obteniendo partida: '+ partidaId);
+      var promise: Promise<Actor[]> = this.partidasService.getActors(partidaId);
+      var afterThenPromise: Promise<void> = promise.then((actors) => {
+        console.log(actors);
+        this.actors = actors;
+        console.log("ACTORES",this.actors)
+        this.actorList.populateActorList(this.actors)
+        this.dmPanel.actors = this.actors
+
+      });
+    });
+
+    // var partidaId = Number(this.localStorage.getItem("PARTIDA_ID"));
+    // this.partidasService.get(partidaId).then((partida) => {
+    //   console.log("PARTIDA",partida)
+    //   if(partida.owner = partidaId){
+    //     this.isDM = true
+    //   }else{
+    //     this.isDM = false
+    //   }
+    // });
+    // var actorId = Number(this.localStorage.getItem("ACTOR_ID"));
+    // this.actorService.get(actorId)
+
     console.log("conectado al socket")
 
     this.dataSet = [{
@@ -143,7 +180,7 @@ export class CurrentGameComponent implements OnInit {
   }
 
   sendChat(data : any){
-    this.gameLogger.doChat(data.chat);
+    this.gameLogger.doChat(data.chat , data.actorId);
   }
 
   getRandomColor(){

@@ -35,8 +35,8 @@ public class ChatSocketFlowHandler extends SocketFlowHandler {
 				e.printStackTrace();
 			}
 		}		
-		LOGGER.info("se envio el mensaje " + chatDTO.chat);		
-
+		LOGGER.info("se envio el mensaje de actorId " + chatDTO.actorId +
+				" con el mensaje " + chatDTO.chat);		
 	}
 
 }

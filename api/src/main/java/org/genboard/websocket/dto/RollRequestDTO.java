@@ -13,7 +13,6 @@ public class RollRequestDTO {
 	
 	ThrowDice throwDice;
 	
-	// aca deberias tener un objeto diceResult, que tiene el dice
 	public List<Integer> dice;
 	public List<Dice> results;
 	public JSONObject dataSet;

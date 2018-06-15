@@ -1,5 +1,6 @@
 package org.genboard.websocket;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Map;
 import org.genboard.model.Actor;
 import org.genboard.model.GameSet;
 import org.genboard.repository.GameSetRepository;
+import org.genboard.websocket.dto.ActorDTO;
 import org.genboard.websocket.dto.AuthorizeDTO;
 import org.genboard.websocket.message.IncomingMessage;
 import org.genboard.websocket.message.OutcomingMessage;
@@ -57,16 +59,32 @@ public class GameSetTextWebSocketHandler extends TextWebSocketHandler {
 			LOGGER.info("Conection Success");
 			
 			GameSet partida = gameSetRepository.findById(new Long(partidaId)).get();
-			List<Actor> actorList = partida.getActors();
+			//en vez de actor, devolve una lista de ActorDTOo
+			//los actor DTO, llenalos con los datos del Actor
+			// pero no con instancias de @entity porque te va a explotar
+			// los resource lo resuelven controlando la profundidad de la serializacin
+			// aca eso te cagaria la vida para entonces en el ActorDTO voy a tener los datos de ACTOR
+			// y los voy a agregar a una List<ActorDTO> que va a ser lo que voy a devolver ?
+			
+			List<ActorDTO> actorList = new ArrayList<>();
+			
+			for (Actor actor : partida.getActors()) {
+				ActorDTO actorDTO = new ActorDTO();
+				ActorDTO actorDTOResult= actorDTO.buildActor(actor);
+				actorList.add(actorDTOResult);
+			}
 		
-			OutcomingMessage<List<Actor>> broadcast = new OutcomingMessage<List<Actor>>("CONNECT_ACTOR_RESPONSE");
-
+			OutcomingMessage<List<ActorDTO>> broadcast = new OutcomingMessage<List<ActorDTO>>("CONNECT_ACTOR_RESPONSE");
+			// no podes serializar automaticamente actorList 
+			// tiene referencias circulares
+			// tenes que crear un DTO que mapee solo un lado de la relacion
+			// sino siempre te va a romper
 			TextMessage broadcastMessage = broadcast.textMessage(actorList);
 			for (WebSocketSession webSocketSession : partidaSocket.getSessions()) {
-				if(webSocketSession.equals(session)) {
-					//no se envia el mensaje al jugador que se conecta
-					continue;
-				}
+//				if(webSocketSession.equals(session)) {
+//					//no se envia el mensaje al jugador que se conecta
+//					continue;
+//				}
 				webSocketSession.sendMessage(broadcastMessage);
 			}
 			LOGGER.info("Getting actor list");

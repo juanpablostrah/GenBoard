@@ -15,8 +15,7 @@ export class ActorService {
 		this.localStorage = window.localStorage;
 	}
 
-  save(actor: Actor): Promise<Response> { //service para crear un actor
-
+  save(actor: Actor): Promise<Actor> { //service para crear un actor
 		console.log('creando actor ' + JSON.stringify(actor));
 		console.log(`${this.actorRestUrl}`)
 		return this.http.post(`${this.actorRestUrl}`,
@@ -25,35 +24,14 @@ export class ActorService {
 			.then(response =>response)
 			.catch(this.handleError);
   }
-  //
-  // get(id:any): Promise<Partida> { //service para traer una partida
-  //   return this.http.get(`${this.partidasRestUrl}/getById/`+ id)
-  //             .toPromise()
-  //             .then(response => response as Partida)
-  //             .catch(this.handleError);
-  // }
-  //
-  // getPartidas(): Promise<Partida[]> { //service para traer todas las partidas
-  //   return this.http.get(`${this.partidasRestUrl}/getAll`, { headers: this.getHeaders() })
-  //             .toPromise()
-  //             .then(response => response as Partida[])
-  //             .catch(this.handleError);
-  // }
-  //
-  // update(partida: Partida): Promise<Response> { //metodo para editar una partida
-	// 	console.log('editando partida ' + JSON.stringify(partida));
-	// 	return this.http.put(`${this.partidasRestUrl}/edit`, JSON.stringify(partida), { headers: this.getHeaders() }).toPromise()
-	// 		.then(response => response)
-	// 		.catch(this.handleError);;
-	// }
-  //
-	// setGameSetInitiaive(id:any): Promise<Actor[]> { 			//service para setear todos los puedeJugar de los actores en true
-  //   return this.http.post<any>(`${this.partidasResourceUrl}/${id}/actors/set` , { headers: this.getHeaders() })
-  //       .toPromise()
-  //       .then(response => response._embedded.actors as Actor[])
-  //       .catch(this.handleError);
-  // }
-  //
+
+	get(id:any): Promise<Actor> { //service para traer un actor
+    return this.http.get(`${this.actorRestUrl}/getById/`+ id)
+              .toPromise()
+              .then(response => response as Actor)
+              .catch(this.handleError);
+  }
+
 	private getHeaders() {
 		return new HttpHeaders({
 			'Content-Type': 'application/json',

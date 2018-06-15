@@ -16,11 +16,12 @@ public class GameSetSocketFlowHandler {
 	private Map<String, SocketFlowHandler> handlers = new HashMap<String, SocketFlowHandler>();
 	
 	public GameSetSocketFlowHandler() {
-		//se subscribe por cada tag de mensaje una instancia de su hanlder
+		//se subscribe por cada tag de mensaje una instancia de su handlder
 		handlers.put("ROLL_REQUEST", new RollSocketFlowHandler());
 		handlers.put("INITIATIVE", new InitiativeSocketFlowHandler());
 		handlers.put("CHAT_REQUEST", new ChatSocketFlowHandler());
-		//handlers.put("CONNECT_ACTOR", new ConnectActorSocketFlowHandler());
+		handlers.put("MOVE_TOKEN_REQUEST", new MoveTokenSocketFlowHandler());
+	
 	}
 
 

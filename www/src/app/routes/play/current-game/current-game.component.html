@@ -1,6 +1,6 @@
 <div fxLayout="row" id="currGame">
   <div fxLayout="column" id="controllers-column">
-      <app-dm-panel
+      <app-dm-panel #dmPanel
         (onSetActors)="handleSetActors($event)"
         (onSetMap)="handleSetMap($event)">
       </app-dm-panel>
@@ -9,7 +9,8 @@
         (onRoll)="doRoll()">
       </app-roller-control>
       <app-game-log #gameLogger
-        (onChat)="doChat($event)">
+        (onChat)="doChat($event)"
+        [actorListNew]="actors">
       </app-game-log>
       <app-actor-list #actorList
         (onSetActor)="setActor($event)">

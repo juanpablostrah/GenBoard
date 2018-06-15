@@ -6,7 +6,7 @@ import { PartidasService } from 'app/services/partidas/partidas.service';
 import { ActorType } from 'app/routes/actor/actorType';
 import { Router } from '@angular/router';
 import { ActorListComponent } from 'app/routes/play/actor-list/actor-list.component';
-
+import { AppConfig } from 'app/config/app.config';
 const ACTOR_ID = 'ACTOR_ID';
 
 @Component({
@@ -31,36 +31,21 @@ export class CreateActorComponent implements OnInit {
     this.onSetActor = new EventEmitter();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
 
-
+  }
 
   save() {
     var partidaId = this.localStorage.getItem("PARTIDA_ID")
-    this.actor.tipoActor = ActorType.PERSONAJE;
-    this.actor.partidaId = partidaId
-    this.actorService.save(this.actor).then((data) =>  {
-      console.log("response : ",data)
-      this.onSetActor.emit(data)
-      this.router.navigateByUrl('/play/'+ partidaId + '/1')
-
-      //this.localStorage.setItem(ACTOR_ID, this.actor.id.toString())
+    //creo que Personaje se convierte en falopa igual
+    this.actor.tipoActor = ActorType.Personaje;
+    let gamSetURI = `${AppConfig.endpoints.api}/gameSet/${partidaId}`
+    this.actor.gameSet = gamSetURI;
+    this.actorService.save(this.actor).then((actor) =>  {
+      console.log("response : ",actor)
+      this.onSetActor.emit(actor)
+      this.router.navigateByUrl('/play/'+ partidaId + '/' + actor.id)
     })
-    // var partidaGet = this.partidaService.get(partidaId).then((partida) => {
-    //   console.log("partida id: ", partidaId)
-    //   this.actor.partidaId = partidaId
-    //   this.actorService.save(this.actor).then((data) =>  {
-    //     console.log("response : ",data)
-    //     this.onSetActor.emit(data)
-    //     this.router.navigateByUrl('/play/'+ partidaId + '/1')
-    //
-    //     //this.localStorage.setItem(ACTOR_ID, this.actor.id.toString())
-    //   })
-    // }
-
-    )
-    //var actorId = this.localStorage.getItem("ACTOR_ID")
-    //this.onSetActor.emit(this.actor)
-
   }
+  
 }

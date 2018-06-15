@@ -1,4 +1,4 @@
 export enum ActorType {
-    PERSONAJE,
+    Personaje,
     MOUNSTRUO
 }

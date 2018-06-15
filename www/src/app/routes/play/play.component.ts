@@ -67,34 +67,33 @@ export class PlayComponent implements OnInit, OnDestroy {
   }
 
   doRoll(data : any){
-    console.log(data)
-    this.message = {
-      tag: 'ROLL_REQUEST',
-      data: data
-    }
-    console.log("envio el roll al backend")
-    this.send(this.message)
+    this.subscription = this.route.params
+    .subscribe(params => {
+        var actorId = params['actorId'];
+        this.message = {
+          tag: 'ROLL_REQUEST',
+          data: {dataSet : data, actorId : actorId}
+        }
+        console.log("envio el roll al backend")
+
+        this.send(this.message)
+     })
   }
 
-  // logActor(data : any){
-  //   console.log(data)
-  //   this.message = {
-  //     tag: 'CONNECT_ACTOR_REQUEST',
-  //     data: data
-  //   }
-  //   console.log("se conecto un personaje")
-  //   this.send(this.message)
-  // }
-
   doChat(data : any){
-    console.log(data)
+    console.log("CHATINFO",data)
+    this.subscription = this.route.params
+    .subscribe(params => {
+        var actorId = params['actorId'];
+        this.message = {
+          tag: 'CHAT_REQUEST',
+          data: {chat : data, actorId : actorId}
+        }
+        console.log("se envio el mensaje")
 
-    this.message = {
-      tag: 'CHAT_REQUEST',
-      data: {chat : data}
-    }
-    console.log("se envio el mensaje")
-    this.send(this.message)
+        this.send(this.message)
+     })
+
   }
 
   handle(tag:any, data: any ){
@@ -102,13 +101,16 @@ export class PlayComponent implements OnInit, OnDestroy {
 
     switch(tag) {
       case "ROLL_RESPONSE": {
-            this.currentGame.roll(data.result.dataSet);
-            this.currentGame.log(data.result.dataSet);
+            console.log("DATA",data.dataSet)
+            this.currentGame.roll(data.dataSet.result.dataSet);
+            this.currentGame.log(data);
+            // this.currentGame.roll(data.result.dataSet);
+            // this.currentGame.log(data.result.dataSet);
           break;
        }
        case "CONNECT_ACTOR_RESPONSE": {
             console.log("se conecto un personaje")
-            this.currentGame.populateList(data)
+            //this.currentGame.populateList(data)
           break;
        }
        case "CHAT_RESPONSE": {

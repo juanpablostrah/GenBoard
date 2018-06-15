@@ -16,6 +16,8 @@ import { DmPanelComponent } from './dm-panel/dm-panel.component';
 import { DmDialogComponent } from './dm-dialog/dm-dialog.component';
 import { ActorListComponent } from './actor-list/actor-list.component';
 import { MatChipsModule } from '@angular/material/chips';
+import { DragulaModule } from 'ng2-dragula/ng2-dragula';
+
 
 @NgModule({
   imports: [
@@ -25,7 +27,8 @@ import { MatChipsModule } from '@angular/material/chips';
     CommonModule,
     FormsModule,
     MaterialModule,
-    MatChipsModule
+    MatChipsModule,
+    DragulaModule
 
   ],
   exports: [

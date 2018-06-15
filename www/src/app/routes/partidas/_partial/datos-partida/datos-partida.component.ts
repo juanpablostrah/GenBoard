@@ -27,8 +27,12 @@ export class DatosPartidaComponent {
   @ViewChild(NgForm)
   form:NgForm
 
+  localStorage: Storage;
+
   constructor(private partidasService: PartidasService,
-    private route: ActivatedRoute, private router: Router) {}
+    private route: ActivatedRoute, private router: Router) {
+      this.localStorage = window.localStorage;
+    }
 
   getNameErrorMessage() {
     return this.nameControl.hasError('required') ? 'Ingresa un nombre para la partida' :
@@ -50,7 +54,9 @@ export class DatosPartidaComponent {
   }
 
   save():void{
-    //console.log(this.partida)
+    var playerId = this.localStorage.getItem("PLAYER_ID")
+    let playerOwnerURI = `${AppConfig.endpoints.api}/player/${playerId}`
+    this.partida.owner = playerOwnerURI;
     this.partidasService.save(this.partida).then((data) => {
       console.log('respuesta',data)
       this.router.navigate(['/play/'+data['id']+'/1'])

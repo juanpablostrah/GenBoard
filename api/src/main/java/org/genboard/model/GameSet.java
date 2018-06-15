@@ -45,11 +45,11 @@ public class GameSet {
     @JoinColumn(name="owner_id")
     private Player owner;
    
-    @ManyToMany(fetch=FetchType.LAZY ,mappedBy="guestGameSet", targetEntity = Player.class )
+    @ManyToMany(mappedBy="guestGameSet")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Player> guests = new LinkedList<Player>();
     
-    //@OneToMany(fetch=FetchType.EAGER, mappedBy = "gameSet", targetEntity = Actor.class)
-    @OneToMany(mappedBy = "gameSet", targetEntity = Actor.class)
+    @OneToMany(mappedBy = "gameSet")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Actor> actors;
     

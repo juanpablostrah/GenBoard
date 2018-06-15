@@ -22,18 +22,21 @@ public class RollSocketFlowHandler extends SocketFlowHandler {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SocketFlowHandler.class);
 
 	public void handle(IncomingMessage messageDTO, PartidaSocket partidaSocket) throws JSONException {
-		String dataSet = messageDTO.getData();
+		JSONObject data = new JSONObject(messageDTO.getData());
+		String actorId = (String) data.get("actorId");
+		JSONObject dataSetNew = (JSONObject) data.get("dataSet");
+		//String dataSet = messageDTO.getData();
 		ThrowDice throwDice = new ThrowDice();
-		JSONObject results = throwDice.buildThrow(dataSet);
-		//RollRequestDTO rollRequestDTO = messageDTO.marshallize(RollRequestDTO.class);
-		//aca tenes que llenar el response con los resultados de los datos del request
-		// mete un servicio por favor
-		RollResponseDTO rollResponseDTO = new RollResponseDTO();
+		JSONObject results = throwDice.buildThrow(dataSetNew.toString());
 		Set<WebSocketSession> sessions = partidaSocket.getSessions();
-		//OutcomingMessage<RollResponseDTO> broadcast = new OutcomingMessage<RollResponseDTO>("ROLL_RESPONSE");
 		OutcomingMessage<String> broadcast = new OutcomingMessage<String>("ROLL_RESPONSE");
 		
-		TextMessage broadcastMessage = broadcast.textMessage(results.toString());		
+		JSONObject jsonReturn = new JSONObject();
+		jsonReturn.put("dataSet", results);
+		jsonReturn.put("actorId", actorId);
+		
+		//TextMessage broadcastMessage = broadcast.textMessage(results.toString());
+		TextMessage broadcastMessage = broadcast.textMessage(jsonReturn.toString());
 		for (WebSocketSession session : sessions) {
 			try {
 				session.sendMessage(broadcastMessage);
@@ -41,7 +44,7 @@ public class RollSocketFlowHandler extends SocketFlowHandler {
 				e.printStackTrace();
 			}
 		}		
-		LOGGER.info("se completo una tirada");		
+		LOGGER.info("se completo una tirada del id:" + actorId);		
 	}
 	
 	

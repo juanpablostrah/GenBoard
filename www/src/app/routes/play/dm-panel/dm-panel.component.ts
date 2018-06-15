@@ -66,16 +66,16 @@ export class DmPanelComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.subscription = this.route.params.subscribe(params => {
-    var partidaId = params['partidaId']
-    console.log('obteniendo partida: '+ partidaId);
-      var promise: Promise<Actor[]> = this.partidasService.getActors(partidaId);
-      var afterThenPromise: Promise<void> = promise.then((actors) => {
-        console.log(actors);
-        this.actors = actors;
-        //this.dmDialog.setActors(actors);
-      });
-    });
+    // this.subscription = this.route.params.subscribe(params => {
+    // var partidaId = params['partidaId']
+    // console.log('obteniendo partida: '+ partidaId);
+    //   var promise: Promise<Actor[]> = this.partidasService.getActors(partidaId);
+    //   var afterThenPromise: Promise<void> = promise.then((actors) => {
+    //     console.log(actors);
+    //     this.actors = actors;
+    //     //this.dmDialog.setActors(actors);
+    //   });
+    // });
   }
 
   darTurno(){
