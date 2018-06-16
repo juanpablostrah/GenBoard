@@ -1,0 +1,5 @@
+- Cada vez que agrego una ficha al mapa envio por websocket al backend para que asocie el token a la partida(nosotros le mandamos un id, las coordenadas, el color de la ficha y el id del actor al que le pertenece), el backend le tiene que avisar a todos los jugadores todos los datos de la nueva ficha
+- Un actor puede mover solo fichas que le pertenecen
+- Cuando se mueve una ficha mandar al backend el id y la nueva posicion de la ficha, el backend le tiene que avisar a todos los jugadores la nueva posicion de la ficha
+- Cada actor tiene una ficha suya por defecto
+- El DM puede crear y eliminar actores, cuando crea un actor nuevo, se le crea una ficha en el mapa y se agrega a la lista de actores(todo esto se le tiene que informar a todos los jugadores)

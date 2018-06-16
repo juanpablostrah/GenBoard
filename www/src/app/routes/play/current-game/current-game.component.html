@@ -1,6 +1,6 @@
 <div fxLayout="row" id="currGame">
   <div fxLayout="column" id="controllers-column">
-      <app-dm-panel #dmPanel
+      <app-dm-panel #dmPanel [hidden]="!isDM"
         (onSetActors)="handleSetActors($event)"
         (onSetMap)="handleSetMap($event)">
       </app-dm-panel>

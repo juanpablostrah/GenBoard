@@ -11,6 +11,8 @@ import { PartidasService } from 'app/services/partidas/partidas.service';
 import { ActorService } from 'app/services/actor/actor.service';
 import { ActivatedRoute } from '@angular/router';
 import { DmPanelComponent } from 'app/routes/play/dm-panel/dm-panel.component';
+import { Partida } from 'app/services/partidas/partida.model';
+
 
 
 @Component({
@@ -69,29 +71,32 @@ export class CurrentGameComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.subscription = this.route.params.subscribe(params => {
-    var partidaId = params['partidaId']
-    console.log('obteniendo partida: '+ partidaId);
-      var promise: Promise<Actor[]> = this.partidasService.getActors(partidaId);
-      var afterThenPromise: Promise<void> = promise.then((actors) => {
-        console.log(actors);
-        this.actors = actors;
-        console.log("ACTORES",this.actors)
-        this.actorList.populateActorList(this.actors)
-        this.dmPanel.actors = this.actors
-
-      });
-    });
-
-    // var partidaId = Number(this.localStorage.getItem("PARTIDA_ID"));
-    // this.partidasService.get(partidaId).then((partida) => {
-    //   console.log("PARTIDA",partida)
-    //   if(partida.owner = partidaId){
-    //     this.isDM = true
-    //   }else{
-    //     this.isDM = false
-    //   }
+    // this.subscription = this.route.params.subscribe(params => {
+    // var partidaId = params['partidaId']
+    // console.log('obteniendo partida: '+ partidaId);
+    //   var promise: Promise<Actor[]> = this.partidasService.getActors(partidaId);
+    //   var afterThenPromise: Promise<void> = promise.then((actors) => {
+    //     console.log(actors);
+    //     this.actors = actors;
+    //     console.log("ACTORES",this.actors)
+    //     this.actorList.populateActorList(this.actors)
+    //     this.dmPanel.actors = this.actors
+    //
+    //   });
     // });
+
+    var partidaId = Number(this.localStorage.getItem("PARTIDA_ID"));
+    this.partidasService.get(partidaId).then((partida) => {
+      console.log("PARTIDAOWNER",partida['owner'])
+      console.log("PARTIDA",partida)
+      if(partida.owner == partidaId){
+        console.log("ES DM")
+        this.isDM = true
+      }else{
+        console.log("ES INVITADO")
+        this.isDM = false
+      }
+    });
     // var actorId = Number(this.localStorage.getItem("ACTOR_ID"));
     // this.actorService.get(actorId)
 
@@ -172,7 +177,18 @@ export class CurrentGameComponent implements OnInit {
   }
 
   populateList(data : any) {
-    this.actorList.populateActorList(data)
+    this.subscription = this.route.params.subscribe(params => {
+    var partidaId = params['partidaId']
+    console.log('obteniendo partida: '+ partidaId);
+      var promise: Promise<Actor[]> = this.partidasService.getActors(partidaId);
+      var afterThenPromise: Promise<void> = promise.then((actors) => {
+        console.log(actors);
+        this.actors = actors;
+        console.log("ACTORES",this.actors)
+        this.actorList.populateActorList(this.actors)
+        this.dmPanel.actors = this.actors
+      });
+    });
   }
 
   log(data : any){

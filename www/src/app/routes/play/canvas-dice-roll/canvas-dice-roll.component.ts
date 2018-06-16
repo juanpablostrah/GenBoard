@@ -218,7 +218,6 @@ initialize(){
     new THREE.MeshBasicMaterial()
   );
   this.targetForDragging.material.visible = false;
-  console.log("targetForDragging0",this.targetForDragging)
   //Walls
 
   //add tokens
@@ -248,16 +247,13 @@ this.render();
 }
 
 doMouseDown(x,y) {
-  console.log(this)
-  console.log("targetForDragging",this.targetForDragging)
   if (this.targetForDragging.parent == this.scene) {
     this.scene.remove(this.targetForDragging);  // I don't want to check for hits on targetForDragging
   }
-  var a = 2*x/this.renderContainerElem.nativeElement.width - 1;
-  var b = 1 - 2*y/this.renderContainerElem.nativeElement.height;
-  a = ( ( x - this.renderContainerElem.nativeElement.offsetLeft ) / this.renderContainerElem.nativeElement.width ) * 2 - 1;
-  b = - ( ( y - this.renderContainerElem.nativeElement.offsetTop ) / this.renderContainerElem.nativeElement.height ) * 2 + 1
+  this.controls.enabled = true;
 
+  var a = 2*x/this.renderContainerElem.nativeElement.offsetWidth - 1;
+  var b = 1 - 2*y/this.renderContainerElem.nativeElement.offsetHeight;
 
   this.raycaster.setFromCamera( new THREE.Vector2(a,b), this.camera );
 
@@ -296,47 +292,45 @@ doMouseDown(x,y) {
     this.scene.add(line);
   }
 
-  drawRaycastLine(this.raycaster)
+  // drawRaycastLine(this.raycaster)
 
-  console.log('world children',this.scene.children)
   this.intersects = this.raycaster.intersectObjects( this.scene.children );  // aca el DM hizo una negrada y se gano una comida (this.world.children era)
-  console.log('desps',this.intersects)
   if (this.intersects.length == 0) {
-  return false;
-}
-var item = this.intersects[0];
-var objectHit = item.object;
-console.log('son iguales?', this.ground, objectHit)
-//DRAG CASE
-if (objectHit == this.ground) {
-return false;
-}
-else {
-  this.dragItem = objectHit;
-  this.scene.add(this.targetForDragging);
-  this.targetForDragging.position.set(0,item.point.y,0);
-  this.render();
-  return true;
-}
+    return false;
+  }
+  var item = this.intersects[0];
+  var objectHit = item.object;
+
+  if (objectHit == this.ground) {
+    return false;
+  }
+  else {
+    this.controls.enabled = false;
+    this.dragItem = objectHit;
+    this.scene.add(this.targetForDragging);
+    this.targetForDragging.position.set(0,item.point.y,0);
+    this.render();
+    return true;
+  }
 }
 
 doMouseMove(x,y,evt,prevX,prevY) {
-  // var a = 2*x/this.renderContainerElem.nativeElement.width - 1;
-  // var b = 1 - 2*y/this.renderContainerElem.nativeElement.height;
-  // this.raycaster.setFromCamera( new THREE.Vector2(a,b), this.camera );
-  // this.intersects = this.raycaster.intersectObject( this.targetForDragging );
-  // console.log("intersects",this.intersects)
-  // if (this.intersects.length == 0) {
-  //   return;
-  // }
-  // var locationX = this.intersects[0].point.x;
-  // var locationZ = this.intersects[0].point.z;
-  // var coords = new THREE.Vector3(locationX, 0, locationZ);
-  // this.scene.worldToLocal(coords);
-  // a = Math.min(19,Math.max(-19,coords.x));  // clamp coords to the range -19 to 19, so object stays on ground
-  // b = Math.min(19,Math.max(-19,coords.z));
-  // this.dragItem.position.set(a,-0.70,b);
-  // this.render();
+  var a = 2*x/this.renderContainerElem.nativeElement.offsetWidth - 1;
+  var b = 1 - 2*y/this.renderContainerElem.nativeElement.offsetHeight;
+  this.raycaster.setFromCamera( new THREE.Vector2(a,b), this.camera );
+  this.intersects = this.raycaster.intersectObject( this.targetForDragging );
+  console.log("intersects",this.intersects)
+  if (this.intersects.length == 0) {
+    return;
+  }
+  var locationX = this.intersects[0].point.x;
+  var locationZ = this.intersects[0].point.z;
+  var coords = new THREE.Vector3(locationX, 0, locationZ);
+  this.scene.worldToLocal(coords);
+  a = Math.min(30,Math.max(-30,coords.x));  // clamp coords to the range -19 to 19, so object stays on ground
+  b = Math.min(30,Math.max(-30,coords.z));
+  this.dragItem.position.set(a,0.70,b);
+  this.render();
 }
 
 setUpMouseHander(element, mouseDownFunc, mouseDragFunc, mouseUpFunc?) {

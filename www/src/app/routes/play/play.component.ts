@@ -110,7 +110,7 @@ export class PlayComponent implements OnInit, OnDestroy {
        }
        case "CONNECT_ACTOR_RESPONSE": {
             console.log("se conecto un personaje")
-            //this.currentGame.populateList(data)
+            this.currentGame.populateList(data)
           break;
        }
        case "CHAT_RESPONSE": {

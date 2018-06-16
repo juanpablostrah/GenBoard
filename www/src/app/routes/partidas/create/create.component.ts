@@ -37,9 +37,6 @@ export class CreateComponent {
         })
         //no funciona, hay que setearle la partida en el back
     })
-    // this.partidasService.save(this.partida).then((data) => {
-    //   console.log(data)
-    // })
   }
 
 }

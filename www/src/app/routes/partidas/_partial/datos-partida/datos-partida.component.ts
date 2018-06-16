@@ -10,6 +10,8 @@ import { LoggerService } from 'app/core/logger.service';
 import { NgForm } from '@angular/forms';
 import { FormControl, Validators } from '@angular/forms';
 
+const PARTIDA_ID = 'PARTIDA_ID';
+
 @Component({
   selector: 'app-partidas-datos-partida',
   templateUrl: './datos-partida.component.html',
@@ -59,6 +61,7 @@ export class DatosPartidaComponent {
     this.partida.owner = playerOwnerURI;
     this.partidasService.save(this.partida).then((data) => {
       console.log('respuesta',data)
+      this.localStorage.setItem("PARTIDA_ID",data['id'])
       this.router.navigate(['/play/'+data['id']+'/1'])
     })
   }
