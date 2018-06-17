@@ -53,11 +53,18 @@ public class GameSet {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Actor> actors;
     
+    @OneToMany(mappedBy = "gameSet")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Actor> dmActors;
+    
     @OneToOne
     private GameSetStatus gameSetStatus;
     
     @Range(min = 2,max = 20)
     private Integer cantPlayersMax;
+    
+    @OneToOne
+    private Initiative initiative;
     
 //    @OneToMany(mappedBy = "gameSet", targetEntity = Token.class)
 //    private List<Token> tokens;
@@ -135,6 +142,17 @@ public class GameSet {
 	public void setCantPlayersMax(Integer cantPlayersMax) {
 		this.cantPlayersMax = cantPlayersMax;
 	}
+
+	public Initiative getInitiative() {
+		return initiative;
+	}
+
+	public void setInitiative(Initiative initiative) {
+		this.initiative = initiative;
+	}
+	
+	
+	
 
 //	public List<Token> getTokens() {
 //		return tokens;

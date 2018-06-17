@@ -22,8 +22,11 @@ export class RollerControlComponent implements OnInit {
   @ViewChild(NgForm)
   form:NgForm
 
+  yourTurn : boolean;
+
   constructor() {
     this.onRoll = new EventEmitter();
+    this.yourTurn = false;
   }
 
   ngOnInit(){}
@@ -39,6 +42,11 @@ export class RollerControlComponent implements OnInit {
     if (this.form.valid) {
       this.form.reset();
     }
+  }
+
+  enabledTurn(){
+    console.log("SETEO TURNO EN TRUE")
+    this.yourTurn = true;
   }
 
 }

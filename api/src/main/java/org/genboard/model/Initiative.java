@@ -1,10 +1,15 @@
 package org.genboard.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 public class Initiative {
@@ -13,42 +18,38 @@ public class Initiative {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Long id;
 	
-	@OneToOne
-	private Actor actor;
+	private Integer turn;	
 	
-	private int actualInitiative;
+	@OneToMany(mappedBy = "initiative")
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<Throw> initiativeThrow;
 
-	private Boolean canPLay;
-	
 	public Initiative() {
 		super();
 	}
 
-	public Actor getActor() {
-		return actor;
+	public Integer getTurn() {
+		return turn;
 	}
 
-	public void setActor(Actor actor) {
-		this.actor = actor;
+	public void setTurn(Integer turn) {
+		this.turn = turn;
 	}
 
-	public int getActualInitiative() {
-		return actualInitiative;
+	public List<Throw> getInitiativeThrow() {
+		return initiativeThrow;
 	}
 
-	public void setActualInitiative(int actualInitiative) {
-		this.actualInitiative = actualInitiative;
+	public void setInitiativeThrow(List<Throw> initiativeThrow) {
+		this.initiativeThrow = initiativeThrow;
 	}
 
-	public Boolean getCanPLay() {
-		return canPLay;
+	public void order() {
+		//personList.sort((p1, p2) -> p1.firstName.compareTo(p2.firstName));
+		getInitiativeThrow().sort((Throw t1,Throw t2) -> t1.getResult().compareTo(t2.getResult()));
+		
+		
 	}
-
-	public void setCanPLay(Boolean canPLay) {
-		this.canPLay = canPLay;
-	}
-	
-	
-	
+		
 
 }

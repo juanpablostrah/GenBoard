@@ -10,6 +10,7 @@ import org.genboard.model.GameSet;
 import org.genboard.repository.GameSetRepository;
 import org.genboard.websocket.dto.ActorDTO;
 import org.genboard.websocket.dto.AuthorizeDTO;
+import org.genboard.websocket.flow.GameSetSocketFlowHandler;
 import org.genboard.websocket.message.IncomingMessage;
 import org.genboard.websocket.message.OutcomingMessage;
 import org.slf4j.Logger;

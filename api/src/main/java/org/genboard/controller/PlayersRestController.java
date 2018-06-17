@@ -1,4 +1,4 @@
-package org.genboard.controller;
+	package org.genboard.controller;
 
 
 import org.genboard.model.Player;

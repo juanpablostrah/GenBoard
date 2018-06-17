@@ -1,0 +1,41 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="root (generated)" id="1529170139920-1">
+        <createTable tableName="throw">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="throwPK"/>
+            </column>
+            <column name="actor_id" type="INT"/>
+            <column name="result" type="INT"/>
+            <column name="initiative_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="root (generated)" id="1529170139920-2">
+        <addColumn tableName="game_set">
+            <column name="initiative_id" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="root (generated)" id="1529170139920-3">
+        <addColumn tableName="initiative">
+            <column name="turn" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="root (generated)" id="1529170139920-4">
+        <addForeignKeyConstraint baseColumnNames="initiative_id" baseTableName="game_set" constraintName="FKj1d5rn1rjedr2x1a6570tlx0k" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="initiative"/>
+    </changeSet>
+    <changeSet author="root (generated)" id="1529170139920-5">
+        <addForeignKeyConstraint baseColumnNames="initiative_id" baseTableName="throw" constraintName="FKnfpkfq8gh6ndkoceo8vp6bk63" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="initiative"/>
+    </changeSet>
+    <changeSet author="root (generated)" id="1529170139920-6">
+        <dropForeignKeyConstraint baseTableName="initiative" constraintName="FKceeenmicidvpax3cw51tcx1e6"/>
+    </changeSet>
+    <changeSet author="root (generated)" id="1529170139920-7">
+        <dropColumn columnName="actor_id" tableName="initiative"/>
+    </changeSet>
+    <changeSet author="root (generated)" id="1529170139920-8">
+        <dropColumn columnName="actual_initiative" tableName="initiative"/>
+    </changeSet>
+    <changeSet author="root (generated)" id="1529170139920-9">
+        <dropColumn columnName="canplay" tableName="initiative"/>
+    </changeSet>
+</databaseChangeLog>

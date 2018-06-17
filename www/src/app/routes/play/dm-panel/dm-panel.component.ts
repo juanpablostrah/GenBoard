@@ -24,6 +24,9 @@ export class DmPanelComponent implements OnInit {
   actors : Actor[];
 
   @Input()
+  dmActors : Actor[];
+
+  @Input()
   onSetActors: EventEmitter<Actor[]>
 
   @ViewChild('dmDialog')
@@ -32,8 +35,13 @@ export class DmPanelComponent implements OnInit {
   @Output()
   onSetMap: EventEmitter<File>
 
+  @Output()
+  onInitiative: EventEmitter<any>
+
   maps : File[];
   selectedFile: File;
+
+  yourTurn : boolean;
 
   private subscription: any;
 
@@ -47,7 +55,9 @@ export class DmPanelComponent implements OnInit {
     this.actors = [];
     this.onSetActors = new EventEmitter();
     this.onSetMap = new EventEmitter();
-    this.maps = []
+    this.onInitiative = new EventEmitter();
+    this.maps = [];
+    this.yourTurn = false;
   }
 
   openDialog(): void {
@@ -91,6 +101,19 @@ export class DmPanelComponent implements OnInit {
       this.selectedFile = event.target.files[0]
       console.log(this.selectedFile);
       this.maps.push(this.selectedFile);
+  }
+
+  public iniciative(){
+    // if(this.isDM){
+    //   this.dmActors[0].id
+    // }
+    this.actors[0].id
+    this.onInitiative.emit()
+  }
+
+  enabledTurn(){
+    console.log("SETEO TURNO EN TRUE")
+    this.yourTurn = true;
   }
 
 }

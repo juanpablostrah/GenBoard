@@ -66,6 +66,16 @@ export class PlayComponent implements OnInit, OnDestroy {
     this.client.sendMessage(message.tag, message.data);
   }
 
+  doInitiative(){
+    this.message = {
+      tag: 'INITIATIVE_REQUEST',
+      data: {}
+    }
+    console.log("comienzo iniciativa")
+
+    this.send(this.message)
+  }
+
   doRoll(data : any){
     this.subscription = this.route.params
     .subscribe(params => {
@@ -115,6 +125,10 @@ export class PlayComponent implements OnInit, OnDestroy {
        }
        case "CHAT_RESPONSE": {
             this.currentGame.sendChat(data)
+          break;
+       }
+       case "INITIATIVE_RESPONSE": {
+            this.currentGame.notifyActor()
           break;
        }
        default: {

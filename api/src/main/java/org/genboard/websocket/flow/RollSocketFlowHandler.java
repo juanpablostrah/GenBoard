@@ -12,11 +12,13 @@ import org.genboard.websocket.message.OutcomingMessage;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import org.json.JSONObject;
 
+@Component
 public class RollSocketFlowHandler extends SocketFlowHandler {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(SocketFlowHandler.class);

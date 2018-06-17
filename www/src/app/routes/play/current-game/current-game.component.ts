@@ -12,6 +12,7 @@ import { ActorService } from 'app/services/actor/actor.service';
 import { ActivatedRoute } from '@angular/router';
 import { DmPanelComponent } from 'app/routes/play/dm-panel/dm-panel.component';
 import { Partida } from 'app/services/partidas/partida.model';
+import { RollerControlComponent } from 'app/routes/play/roller-control/roller-control.component';
 
 
 
@@ -37,6 +38,9 @@ export class CurrentGameComponent implements OnInit {
   @Output()
   onChatToParent: EventEmitter<any>
 
+  @Output()
+  onInitiativeToParent: EventEmitter<any>
+
   @ViewChild('diceRoller')
   diceRoller: CanvasDiceRollComponent
 
@@ -49,6 +53,9 @@ export class CurrentGameComponent implements OnInit {
   @ViewChild('dmPanel')
   dmPanel: DmPanelComponent
 
+  @ViewChild('rollerControl')
+  rollerControl: RollerControlComponent
+
   data : any;
 
   @Input()
@@ -57,9 +64,13 @@ export class CurrentGameComponent implements OnInit {
   @Input()
   chat : any;
 
+  @Input()
   isDM : boolean;
   currentActor : any;
   subscription: any;
+
+
+  initiativeList : Number[];
 
   constructor(private partidasSocketService: PartidasSocketService,
     private partidasService: PartidasService,
@@ -68,6 +79,8 @@ export class CurrentGameComponent implements OnInit {
     this.localStorage = window.localStorage;
     this.onRollToParent = new EventEmitter();
     this.onChatToParent = new EventEmitter();
+    this.onInitiativeToParent = new EventEmitter();
+    this.initiativeList = [];
   }
 
   ngOnInit() {
@@ -167,6 +180,10 @@ export class CurrentGameComponent implements OnInit {
     this.onChatToParent.emit($event.chat)
   }
 
+  notifyActor(){
+    this.rollerControl.enabledTurn()
+  }
+
   setActor(actor : Actor){
     console.log("actor : " + actor)
     this.actorList.addActor(actor)
@@ -196,7 +213,11 @@ export class CurrentGameComponent implements OnInit {
   }
 
   sendChat(data : any){
-    this.gameLogger.doChat(data.chat , data.actorId);
+    this.gameLogger.doChat(data.chat, data.actorId);
+  }
+
+  public handleInitiative(){
+    this.onInitiativeToParent.emit();
   }
 
   getRandomColor(){

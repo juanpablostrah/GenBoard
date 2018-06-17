@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.genboard.model.Actor;
 import org.genboard.model.GameSet;
+import org.genboard.model.Initiative;
 import org.genboard.model.Player;
 import org.genboard.repository.GameSetRepository;
 import org.slf4j.Logger;
@@ -42,6 +43,7 @@ public class GameSetRestController {
 		method = RequestMethod.POST)
     public GameSet create(@RequestBody GameSet gameSet) {
         LOGGER.info("partida creada" + gameSet.getName());
+        //gameSet.setInitiative(new Initiative());
         //probar mandando en el player del front el id del player para ir a buscarlo y setearlo aca
         return gameSetRepository.save(gameSet);
     }
@@ -81,5 +83,4 @@ public class GameSetRestController {
 	        LOGGER.info("obteniendo partida con el id : " + id);
 			return gameSetRepository.findById(id).get();
 	    }
-
 }

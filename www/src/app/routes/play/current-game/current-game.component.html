@@ -1,8 +1,9 @@
 <div fxLayout="row" id="currGame">
   <div fxLayout="column" id="controllers-column">
-      <app-dm-panel #dmPanel [hidden]="!isDM"
+      <app-dm-panel #dmPanel
         (onSetActors)="handleSetActors($event)"
-        (onSetMap)="handleSetMap($event)">
+        (onSetMap)="handleSetMap($event)"
+        (onInitiative)="handleInitiative()">
       </app-dm-panel>
       <app-roller-control
         [dataSet]="dataSet"
