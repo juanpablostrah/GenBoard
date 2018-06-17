@@ -1,17 +1,24 @@
-package org.genboard.websocket.flow;
+package org.genboard.websocket;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.genboard.repository.GameSetRepository;
-import org.genboard.websocket.PartidaSocket;
+import org.genboard.websocket.flow.ChatSocketFlowHandler;
+import org.genboard.websocket.flow.InitiativeResponseSocketFlowHandler;
+import org.genboard.websocket.flow.InitiativeSocketFlowHandler;
+import org.genboard.websocket.flow.MoveTokenSocketFlowHandler;
+import org.genboard.websocket.flow.RollSocketFlowHandler;
+import org.genboard.websocket.flow.SocketFlowHandler;
 import org.genboard.websocket.message.IncomingMessage;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GameSetSocketFlowHandler {
+public class GameSetSocketFlowManager {
 	
 	
 	private Map<String, SocketFlowHandler> handlers = new HashMap<String, SocketFlowHandler>();
@@ -31,8 +38,8 @@ public class GameSetSocketFlowHandler {
 	@Autowired
 	private MoveTokenSocketFlowHandler moveTokenSocketFlowHandler;
 	
-	
-	public GameSetSocketFlowHandler() {
+	@PostConstruct
+	public void initialize() {
 		//se subscribe por cada tag de mensaje una instancia de su handlder
 		handlers.put("ROLL_REQUEST", rollSocketFlowHandler);
 		handlers.put("INITIATIVE_REQUEST", initiativeSocketFlowHandler);

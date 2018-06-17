@@ -10,7 +10,6 @@ import org.genboard.model.GameSet;
 import org.genboard.repository.GameSetRepository;
 import org.genboard.websocket.dto.ActorDTO;
 import org.genboard.websocket.dto.AuthorizeDTO;
-import org.genboard.websocket.flow.GameSetSocketFlowHandler;
 import org.genboard.websocket.message.IncomingMessage;
 import org.genboard.websocket.message.OutcomingMessage;
 import org.slf4j.Logger;
@@ -32,7 +31,7 @@ public class GameSetTextWebSocketHandler extends TextWebSocketHandler {
     private GameSetRepository gameSetRepository;
 	
 	@Autowired
-	GameSetSocketFlowHandler gameSetSocketFlowHandler;
+	GameSetSocketFlowManager gameSetSocketFlowManager;
 	
 	AuthenticationProvider authenticationProvider;	
 	
@@ -97,7 +96,7 @@ public class GameSetTextWebSocketHandler extends TextWebSocketHandler {
 				throw new RuntimeException("usuario no autorizado");
 			}
 			PartidaSocket partidaSocket = partidas.get(partidaId);			
-			gameSetSocketFlowHandler.handle(messageDTO, partidaSocket);
+			gameSetSocketFlowManager.handle(messageDTO, partidaSocket);
 		}
 	
 	}
