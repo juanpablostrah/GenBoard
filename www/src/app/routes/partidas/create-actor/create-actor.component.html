@@ -6,7 +6,10 @@
         name="nombre"
         [(ngModel)]="actor.name"
         placeholder="nombre"
+        [formControl]="nameControl"
         required>
+        <mat-error *ngIf="nameControl.invalid">{{getNameErrorMessage()}}
+        </mat-error>
     </mat-form-field>
   </div>
   <div fxLayout fxLayoutGap="10px" fxLayoutAlign="end start">

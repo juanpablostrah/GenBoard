@@ -41,7 +41,7 @@ public class InitiativeSocketFlowHandler extends SocketFlowHandler {
 			WebSocketSession currentSession = iterator.next();
 			Integer sessionActorId = (Integer) currentSession.getAttributes().get("actorId");
 			Long longSessionActorId  = new Long(sessionActorId);
-			if(longSessionActorId == actorId) {
+			if(longSessionActorId.longValue() == actorId.longValue()) {
 				OutcomingMessage<InitiativeDTO> broadcast = new OutcomingMessage<InitiativeDTO>("INITIATIVE_RESPONSE");
 				TextMessage broadcastMessage = broadcast.textMessage(initiativeDTO);
 				try {

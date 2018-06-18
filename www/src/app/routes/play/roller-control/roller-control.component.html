@@ -49,8 +49,8 @@
         <div fxLayout="row">
           <div>
             <button type="submit" mat-raised-button color="primary" class="rollButtonContainer" [disabled]="!yourTurn">Tirar</button>
-            <button type="button" (click)="resetDice()" mat-raised-button color="warn">Limpiar Dados</button>
-            <button mat-raised-button (click)="finishTurn()" class="finishButton">
+            <button type="button" (click)="resetDice()" mat-raised-button color="warn" [disabled]="!yourTurn">Limpiar Dados</button>
+            <button mat-raised-button (click)="finishTurn()" class="finishButton" [disabled]="!yourTurn">
               <mat-icon>done</mat-icon>
                 Finalizar Turno
             </button>

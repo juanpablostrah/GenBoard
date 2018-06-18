@@ -8,6 +8,7 @@ import org.genboard.model.GameSet;
 import org.genboard.model.Initiative;
 import org.genboard.model.Player;
 import org.genboard.repository.GameSetRepository;
+import org.genboard.repository.InitiativeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class GameSetRestController {
 	
     @Autowired
     private GameSetRepository gameSetRepository;
+    
+    @Autowired
+    private InitiativeRepository initiativeRepository;
 	
 	@RequestMapping(
 		value = "", 
@@ -43,8 +47,8 @@ public class GameSetRestController {
 		method = RequestMethod.POST)
     public GameSet create(@RequestBody GameSet gameSet) {
         LOGGER.info("partida creada" + gameSet.getName());
-        //gameSet.setInitiative(new Initiative());
-        //probar mandando en el player del front el id del player para ir a buscarlo y setearlo aca
+        Initiative initiative = initiativeRepository.save(new Initiative());
+        gameSet.setInitiative(initiative);
         return gameSetRepository.save(gameSet);
     }
 	

@@ -69,7 +69,7 @@ export class PlayComponent implements OnInit, OnDestroy {
   doInitiative(){
     this.message = {
       tag: 'INITIATIVE_REQUEST',
-      data: {}
+      data: { message: "tu turno" }
     }
     console.log("comienzo iniciativa")
 
@@ -91,7 +91,6 @@ export class PlayComponent implements OnInit, OnDestroy {
   }
 
   doChat(data : any){
-    console.log("CHATINFO",data)
     this.subscription = this.route.params
     .subscribe(params => {
         var actorId = params['actorId'];

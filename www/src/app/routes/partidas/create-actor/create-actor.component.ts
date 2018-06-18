@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { Actor } from 'app/routes/actor/actor';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormControl, Validators } from '@angular/forms';
 import { ActorService } from 'app/services/actor/actor.service';
 import { PartidasService } from 'app/services/partidas/partidas.service';
 import { ActorType } from 'app/routes/actor/actorType';
@@ -23,16 +23,25 @@ export class CreateActorComponent implements OnInit {
   @Output()
   onSetActor: EventEmitter<any>
 
+  nameControl = new FormControl('', [Validators.required, Validators.minLength(3)]);
+
   constructor(private actorService: ActorService,
     private partidaService: PartidasService,
     private router: Router,) {
     this.actor = new Actor;
     this.localStorage = window.localStorage;
     this.onSetActor = new EventEmitter();
+
   }
 
   ngOnInit() {
 
+  }
+
+  getNameErrorMessage() {
+    return this.nameControl.hasError('required') ? 'Ingresa un nombre para el actor' :
+           this.nameControl.hasError('minlength') ? 'Debes ingresar al menos 3 caracteres' :
+            '';
   }
 
   save() {
@@ -47,5 +56,5 @@ export class CreateActorComponent implements OnInit {
       this.router.navigateByUrl('/play/'+ partidaId + '/' + actor.id)
     })
   }
-  
+
 }

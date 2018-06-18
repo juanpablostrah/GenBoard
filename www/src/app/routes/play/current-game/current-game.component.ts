@@ -69,7 +69,6 @@ export class CurrentGameComponent implements OnInit {
   currentActor : any;
   subscription: any;
 
-
   initiativeList : Number[];
 
   constructor(private partidasSocketService: PartidasSocketService,
