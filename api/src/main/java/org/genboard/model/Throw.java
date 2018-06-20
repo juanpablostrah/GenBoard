@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Throw {
@@ -12,8 +13,9 @@ public class Throw {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Long id;
-	
-	private Integer actorId;
+		
+    @OneToOne
+	private Actor actor;
 	
 	private Integer result;
 	
@@ -25,21 +27,38 @@ public class Throw {
 	}
 	
 	
-	public Throw(Integer actorId, Integer result) {
+	public Throw(Actor actor, Integer result) {
 		super();
-		this.actorId = actorId;
+		this.actor = actor;
 		this.result = result;
 	}
+	
+	
+	
+	public Long getId() {
+		return id;
+	}
 
-	public Integer getActorId() {
-		return actorId;
+
+	public void setId(Long id) {
+		this.id = id;
 	}
-	public void setActorId(Integer actorId) {
-		this.actorId = actorId;
+
+
+	public Actor getActor() {
+		return actor;
 	}
+
+
+	public void setActor(Actor actor) {
+		this.actor = actor;
+	}
+
+
 	public Integer getResult() {
 		return result;
 	}
+	
 	public void setResult(Integer result) {
 		this.result = result;
 	}

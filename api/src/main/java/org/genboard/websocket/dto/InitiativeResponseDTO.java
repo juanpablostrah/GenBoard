@@ -7,6 +7,7 @@ import org.genboard.model.Throw;
 public class InitiativeResponseDTO {
 	
 	private Integer actorId;
+	private Integer partidaId;
 	private Integer result;
 	private List<Throw> throwResults;
 	
@@ -21,6 +22,18 @@ public class InitiativeResponseDTO {
 	}
 	public void setResult(Integer result) {
 		this.result = result;
+	}
+	public List<Throw> getThrowResults() {
+		return throwResults;
+	}
+	public void setThrowResults(List<Throw> throwResults) {
+		this.throwResults = throwResults;
+	}
+	public Integer getPartidaId() {
+		return partidaId;
+	}
+	public void setPartidaId(Integer partidaId) {
+		this.partidaId = partidaId;
 	}
 	
 	

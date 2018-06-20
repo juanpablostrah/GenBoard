@@ -13,6 +13,8 @@ public class RollRequestDTO {
 	
 	ThrowDice throwDice;
 	
+	public Integer actorId;
+	public Integer partidaId;
 	public List<Integer> dice;
 	public List<Dice> results;
 	public JSONObject dataSet;

@@ -8,7 +8,7 @@ import org.genboard.model.Actor;
 import org.genboard.model.GameSet;
 import org.genboard.model.ThrowDice;
 import org.genboard.repository.GameSetRepository;
-import org.genboard.websocket.PartidaSocket;
+import org.genboard.websocket.GameSetSocket;
 import org.genboard.websocket.dto.RollResponseDTO;
 import org.genboard.websocket.message.IncomingMessage;
 import org.genboard.websocket.message.OutcomingMessage;
@@ -28,7 +28,7 @@ public class ConnectActorSocketFlowHandler extends SocketFlowHandler {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(SocketFlowHandler.class);
 
-	public void handle(IncomingMessage messageDTO, PartidaSocket partidaSocket) throws JSONException {
+	public void handle(IncomingMessage messageDTO, GameSetSocket partidaSocket) throws JSONException {
 		
 //		String partidaId = messageDTO.getData();
 //		

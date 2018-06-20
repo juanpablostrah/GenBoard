@@ -39,6 +39,9 @@ export class CurrentGameComponent implements OnInit {
   onChatToParent: EventEmitter<any>
 
   @Output()
+  onThrowInitiativeToParent: EventEmitter<any>
+
+  @Output()
   onInitiativeToParent: EventEmitter<any>
 
   @ViewChild('diceRoller')
@@ -79,38 +82,37 @@ export class CurrentGameComponent implements OnInit {
     this.onRollToParent = new EventEmitter();
     this.onChatToParent = new EventEmitter();
     this.onInitiativeToParent = new EventEmitter();
+    this.onThrowInitiativeToParent = new EventEmitter();
     this.initiativeList = [];
   }
 
   ngOnInit() {
-    // this.subscription = this.route.params.subscribe(params => {
-    // var partidaId = params['partidaId']
-    // console.log('obteniendo partida: '+ partidaId);
-    //   var promise: Promise<Actor[]> = this.partidasService.getActors(partidaId);
-    //   var afterThenPromise: Promise<void> = promise.then((actors) => {
-    //     console.log(actors);
-    //     this.actors = actors;
-    //     console.log("ACTORES",this.actors)
-    //     this.actorList.populateActorList(this.actors)
-    //     this.dmPanel.actors = this.actors
-    //
-    //   });
-    // });
+    this.subscription = this.route.params.subscribe(params => {
+    var actorId = params['actorId']
+    console.log('obteniendo actor: ',actorId);
+    if(actorId == 1){
+      console.log("ES DM")
+      this.isDM = true
+    }else{
+      console.log("ES INVITADO")
+      this.isDM = false
+    }});
 
-    var partidaId = Number(this.localStorage.getItem("PARTIDA_ID"));
-    this.partidasService.get(partidaId).then((partida) => {
-      console.log("PARTIDAOWNER",partida['owner'])
-      console.log("PARTIDA",partida)
-      if(partida.owner == partidaId){
-        console.log("ES DM")
-        this.isDM = true
-      }else{
-        console.log("ES INVITADO")
-        this.isDM = false
-      }
-    });
-    // var actorId = Number(this.localStorage.getItem("ACTOR_ID"));
-    // this.actorService.get(actorId)
+    //VERIFICAR PORQUE NO TRAE EL PLAYER OWNER, Y PORQUE NO TRANSFORMA
+    //EL RESPONSE EN UNA PARTIDA Y LO DEJA COMO OBJECT
+
+    // var partidaId = Number(this.localStorage.getItem("PARTIDA_ID"));
+    // this.partidasService.get(partidaId).then((partida) => {
+    //   console.log("PARTIDAOWNER",partida['owner'])
+    //   console.log("PARTIDA",partida)
+    //   if(partida.owner == partidaId){
+    //     console.log("ES DM")
+    //     this.isDM = true
+    //   }else{
+    //     console.log("ES INVITADO")
+    //     this.isDM = false
+    //   }
+    // });
 
     console.log("conectado al socket")
 
@@ -179,6 +181,10 @@ export class CurrentGameComponent implements OnInit {
     this.onChatToParent.emit($event.chat)
   }
 
+  doThrowInitiative(){
+    this.onThrowInitiativeToParent.emit()
+  }
+
   notifyActor(){
     this.rollerControl.enabledTurn()
   }
@@ -205,6 +211,20 @@ export class CurrentGameComponent implements OnInit {
         this.dmPanel.actors = this.actors
       });
     });
+  }
+
+  sortList(actorsId : any){
+    let result : Actor[];
+    result = [];
+    console.log("lista actual",this.actors)
+    console.log("lista recibida",actorsId.throwsActorsId)
+    for (let actorIdReceived in actorsId.throwsActorsId) {
+      result.push(this.actors.find(actor =>
+          actor.id  == parseInt(actorIdReceived)
+      ))
+    }
+    console.log("LISTA YA ORDENADA",result);
+    this.actors = result;
   }
 
   log(data : any){

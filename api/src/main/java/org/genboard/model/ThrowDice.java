@@ -27,7 +27,7 @@ public class ThrowDice {
 		return result;
 	}
 
-	private Integer throwDice(Integer descriptor) {
+	public Integer throwDice(Integer descriptor) {
 		return (int) Math.floor(Math.random() * (descriptor)) + 1;		
 	}
 

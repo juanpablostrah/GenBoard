@@ -22,6 +22,7 @@
   <include file="classpath:/liquibase/dml/2018_06_05_00002_delete_size_annotation_player_game_set.xml"/>
   <include file="classpath:/liquibase/dml/2018_06_16_00001_create_initiative_table.xml"/>
   <include file="classpath:/liquibase/dml/2018_06_16_00002_add_dmActors_in_gameSet.xml"/>
+  <include file="classpath:/liquibase/dml/2018_06_20_00001_update_throw_actor.xml"/>
   
   
   

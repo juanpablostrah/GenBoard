@@ -47,7 +47,8 @@ public class GameSetRestController {
 		method = RequestMethod.POST)
     public GameSet create(@RequestBody GameSet gameSet) {
         LOGGER.info("partida creada" + gameSet.getName());
-        Initiative initiative = initiativeRepository.save(new Initiative());
+        Initiative initiative = new Initiative();
+        initiativeRepository.save(initiative);
         gameSet.setInitiative(initiative);
         return gameSetRepository.save(gameSet);
     }

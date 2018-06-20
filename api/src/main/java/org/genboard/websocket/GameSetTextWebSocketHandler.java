@@ -35,7 +35,7 @@ public class GameSetTextWebSocketHandler extends TextWebSocketHandler {
 	
 	AuthenticationProvider authenticationProvider;	
 	
-	Map<Integer, PartidaSocket> partidas = new HashMap<Integer, PartidaSocket>();
+	Map<Long, GameSetSocket> gameSetSockets = new HashMap<Long, GameSetSocket>();
 
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {	
 		IncomingMessage messageDTO = new IncomingMessage(message.getPayload());		
@@ -43,14 +43,14 @@ public class GameSetTextWebSocketHandler extends TextWebSocketHandler {
 		
 		if("AUTHORIZE".equals(tag)) {	
 			AuthorizeDTO authorizeDTO = messageDTO.marshallize(AuthorizeDTO.class);					
-			Integer partidaId = authorizeDTO.partidaId;
-			Integer actorId = authorizeDTO.actorId;
-			session.getAttributes().put("partidaId", partidaId );
+			Long partidaId = authorizeDTO.partidaId;
+			Long actorId = authorizeDTO.actorId;
+			session.getAttributes().put("partidaId", partidaId);
 			session.getAttributes().put("actorId", actorId);			
-			PartidaSocket partidaSocket = partidas.get(partidaId);
+			GameSetSocket partidaSocket = gameSetSockets.get(partidaId);
 			if(partidaSocket == null) {
-				partidaSocket = new PartidaSocket();
-				partidas.put(partidaId, partidaSocket);
+				partidaSocket = new GameSetSocket(partidaId);
+				gameSetSockets.put(partidaId, partidaSocket);
 			}
 			partidaSocket.addSession(session);
 			OutcomingMessage<String> response = new OutcomingMessage<String>("CONNECTION_SUCCESS");
@@ -58,13 +58,7 @@ public class GameSetTextWebSocketHandler extends TextWebSocketHandler {
 			session.sendMessage(responseMessage);
 			LOGGER.info("Conection Success");
 			
-			GameSet partida = gameSetRepository.findById(new Long(partidaId)).get();
-			//en vez de actor, devolve una lista de ActorDTOo
-			//los actor DTO, llenalos con los datos del Actor
-			// pero no con instancias de @entity porque te va a explotar
-			// los resource lo resuelven controlando la profundidad de la serializacin
-			// aca eso te cagaria la vida para entonces en el ActorDTO voy a tener los datos de ACTOR
-			// y los voy a agregar a una List<ActorDTO> que va a ser lo que voy a devolver ?
+			GameSet partida = gameSetRepository.findById(partidaId).get();
 			
 			List<ActorDTO> actorList = new ArrayList<>();
 			
@@ -75,10 +69,6 @@ public class GameSetTextWebSocketHandler extends TextWebSocketHandler {
 			}
 		
 			OutcomingMessage<List<ActorDTO>> broadcast = new OutcomingMessage<List<ActorDTO>>("CONNECT_ACTOR_RESPONSE");
-			// no podes serializar automaticamente actorList 
-			// tiene referencias circulares
-			// tenes que crear un DTO que mapee solo un lado de la relacion
-			// sino siempre te va a romper
 			TextMessage broadcastMessage = broadcast.textMessage(actorList);
 			for (WebSocketSession webSocketSession : partidaSocket.getSessions()) {
 //				if(webSocketSession.equals(session)) {
@@ -91,11 +81,11 @@ public class GameSetTextWebSocketHandler extends TextWebSocketHandler {
 		}
 		else {
 			LOGGER.info("handling socket input" + tag);
-			Integer partidaId = (Integer) session.getAttributes().get("partidaId");
+			Long partidaId = (Long) session.getAttributes().get("partidaId");
 			if(partidaId == null) {
 				throw new RuntimeException("usuario no autorizado");
 			}
-			PartidaSocket partidaSocket = partidas.get(partidaId);			
+			GameSetSocket partidaSocket = gameSetSockets.get(partidaId);			
 			gameSetSocketFlowManager.handle(messageDTO, partidaSocket);
 		}
 	
@@ -107,14 +97,14 @@ public class GameSetTextWebSocketHandler extends TextWebSocketHandler {
 	
 	
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		Integer partidaId = (Integer) session.getAttributes().get("partidaId");
+		Long partidaId = (Long) session.getAttributes().get("partidaId");
 		if(partidaId != null) {
-			PartidaSocket partidaSocket = partidas.get(partidaId);
+			GameSetSocket partidaSocket = gameSetSockets.get(partidaId);
 			partidaSocket.getSessions().remove(session);
 			if(partidaSocket.getSessions().isEmpty()) {
 				// elimino la partida del conjunto para desasociarla del arbol
 				// de referencias de java y permitir que GC la borre
-				partidas.remove(partidaId);
+				gameSetSockets.remove(partidaId);
 			}
 		}
 		super.afterConnectionClosed(session, status);			

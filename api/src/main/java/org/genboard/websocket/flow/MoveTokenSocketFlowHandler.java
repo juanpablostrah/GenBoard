@@ -3,7 +3,7 @@ package org.genboard.websocket.flow;
 import java.io.IOException;
 import java.util.Set;
 
-import org.genboard.websocket.PartidaSocket;
+import org.genboard.websocket.GameSetSocket;
 import org.genboard.websocket.dto.TokenRequestDTO;
 import org.genboard.websocket.message.IncomingMessage;
 import org.genboard.websocket.message.OutcomingMessage;
@@ -21,7 +21,7 @@ public class MoveTokenSocketFlowHandler extends SocketFlowHandler {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SocketFlowHandler.class);
 
 	@Override
-	public void handle(IncomingMessage messageDTO, PartidaSocket partidaSocket) {
+	public void handle(IncomingMessage messageDTO, GameSetSocket partidaSocket) {
 		TokenRequestDTO tokenDTO = messageDTO.marshallize(TokenRequestDTO.class);
 		Set<WebSocketSession> sessions = partidaSocket.getSessions();
 		

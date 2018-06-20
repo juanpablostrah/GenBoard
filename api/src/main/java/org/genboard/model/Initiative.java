@@ -1,5 +1,7 @@
 package org.genboard.model;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -23,6 +25,20 @@ public class Initiative {
 	@OneToMany(mappedBy = "initiative")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Throw> initiativeThrow;
+	
+	public void nextTurn() {
+		turn++;
+		if(turn.equals(initiativeThrow.size())){
+			turn = null;
+		}
+//		else {
+//			turn++;
+//		}
+	}
+	
+	public Throw currentThrow() {
+		return initiativeThrow.get(turn);
+	}
 
 	public Initiative() {
 		super();
@@ -45,10 +61,19 @@ public class Initiative {
 	}
 
 	public void order() {
-		//personList.sort((p1, p2) -> p1.firstName.compareTo(p2.firstName));
-		getInitiativeThrow().sort((Throw t1,Throw t2) -> t1.getResult().compareTo(t2.getResult()));
+		Comparator<Throw> orderThrowListLessToGreater = (throw1, throw2)->throw1.getResult().compareTo(throw2.getResult());
+		this.getInitiativeThrow().sort(orderThrowListLessToGreater.reversed());
 		
+		//getInitiativeThrow().sort((Throw t1,Throw t2) -> t1.getResult().compareTo(t2.getResult()));	
 		
+	}
+
+	public List<Long> getActors() {
+		List<Long> actorsId = new ArrayList<>();
+		for (Throw throw1 : this.getInitiativeThrow()) {
+			actorsId.add(throw1.getActor().getId());
+		}
+		return actorsId;		
 	}
 		
 

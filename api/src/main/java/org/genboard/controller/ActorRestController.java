@@ -1,14 +1,7 @@
 package org.genboard.controller;
 
-import java.util.Optional;
-
 import org.genboard.model.Actor;
-import org.genboard.model.GameSet;
-import org.genboard.model.Initiative;
-import org.genboard.model.Throw;
 import org.genboard.repository.ActorRepository;
-import org.genboard.repository.GameSetRepository;
-import org.genboard.repository.ThrowRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,20 +21,10 @@ public class ActorRestController {
 	@Autowired
 	private ActorRepository actorRepository;
 
-	@Autowired
-	private GameSetRepository gameSetRepository;
-	
-	@Autowired
-	private ThrowRepository throwRepository;
 
 	@ResponseBody
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public Actor create(@RequestBody Actor actor) {
-		GameSet currentGameSet = gameSetRepository.findById(actor.getGameSet().getId()).get();
-		Throw newThrow = throwRepository.save(new Throw());
-		Initiative initiative = currentGameSet.getInitiative();
-		initiative.getInitiativeThrow().add(newThrow);
-		actor.setGameSet(currentGameSet);
 		LOGGER.info("creando actor" + actor.getName());
 		return actorRepository.save(actor);
 	}

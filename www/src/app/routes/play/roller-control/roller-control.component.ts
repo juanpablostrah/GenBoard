@@ -19,13 +19,19 @@ export class RollerControlComponent implements OnInit {
   @Output()
   onRoll: EventEmitter<void>
 
+  @Output()
+  onThrowInitiative: EventEmitter<void>
+
   @ViewChild(NgForm)
   form:NgForm
 
   yourTurn : boolean;
 
+  isIniciative : boolean;
+
   constructor() {
     this.onRoll = new EventEmitter();
+    this.onThrowInitiative = new EventEmitter();
     this.yourTurn = false;
   }
 
@@ -38,8 +44,14 @@ export class RollerControlComponent implements OnInit {
     this.onRoll.emit();
   }
 
+  throwInitiative(){
+    this.onThrowInitiative.emit()
+    this.yourTurn = false;
+  }
+
   public resetDice(){
     if (this.form.valid) {
+      //this.dataSet.map((dataSet) => dataSet.reset())
       this.form.reset();
     }
   }

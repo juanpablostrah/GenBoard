@@ -1,12 +1,14 @@
 <div fxLayout="row" id="currGame">
   <div fxLayout="column" id="controllers-column">
       <app-dm-panel #dmPanel
+        [hidden]="!isDM"
         (onSetActors)="handleSetActors($event)"
         (onSetMap)="handleSetMap($event)"
         (onInitiative)="handleInitiative()">
       </app-dm-panel>
       <app-roller-control #rollerControl
         [dataSet]="dataSet"
+        (onThrowInitiative)="doThrowInitiative()"
         (onRoll)="doRoll()">
       </app-roller-control>
       <app-game-log #gameLogger
@@ -21,9 +23,8 @@
     <app-canvas-dice-roll #diceRoller>
     </app-canvas-dice-roll>
   </div>
-</div>
+  </div>
 <div fxLayout="col">
-  <!-- <app-maps-control (onSetMap)="handleSetMap($event)"></app-maps-control> -->
 </div>
 
 <div *ngIf="enanosi" class="ElEnano">

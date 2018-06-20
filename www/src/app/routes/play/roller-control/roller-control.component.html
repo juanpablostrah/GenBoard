@@ -35,11 +35,10 @@
             <ng-template ngFor let-index="index" let-dice [ngForOf]="dataSet">
               <div fxLayout="row" fxLayoutGap="5px" class="inputContainer">
                 <div fxLayout="column"  fxFlex="40px">
-                  <input
+                  <input class="marginTop"
                     type="number"
                     [(ngModel)]="dice.modifier"
-                    name="modifierOf{{dice.descriptor}}"
-                    class="modifier">
+                    name="modifierOf{{dice.descriptor}}">
                 </div>
               </div>
             </ng-template>
@@ -49,7 +48,10 @@
         <div fxLayout="row">
           <div>
             <button type="submit" mat-raised-button color="primary" class="rollButtonContainer" [disabled]="!yourTurn">Tirar</button>
-            <button type="button" (click)="resetDice()" mat-raised-button color="warn" [disabled]="!yourTurn">Limpiar Dados</button>
+            <button type="button" (click)="throwInitiative()" mat-raised-button color="primary" class="rollButtonContainer" [disabled]="!yourTurn">Tirar iniciativa</button>
+            <!-- <button type="submit" mat-raised-button color="primary" class="rollButtonContainer">Tirar</button>
+            <button type="button" (click)="throwInitiative()" mat-raised-button color="primary" class="rollButtonContainer">Tirar iniciativa</button> -->
+            <button type="button" (click)="resetDice()" mat-raised-button color="warn" [disabled]="!yourTurn" >Limpiar Dados</button>
             <button mat-raised-button (click)="finishTurn()" class="finishButton" [disabled]="!yourTurn">
               <mat-icon>done</mat-icon>
                 Finalizar Turno

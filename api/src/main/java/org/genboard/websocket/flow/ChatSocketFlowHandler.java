@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Set;
 
 import org.genboard.model.ThrowDice;
-import org.genboard.websocket.PartidaSocket;
+import org.genboard.websocket.GameSetSocket;
 import org.genboard.websocket.dto.ChatDTO;
 import org.genboard.websocket.message.IncomingMessage;
 import org.genboard.websocket.message.OutcomingMessage;
@@ -21,7 +21,7 @@ public class ChatSocketFlowHandler extends SocketFlowHandler {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SocketFlowHandler.class);
 
 	@Override
-	public void handle(IncomingMessage messageDTO, PartidaSocket partidaSocket) {
+	public void handle(IncomingMessage messageDTO, GameSetSocket partidaSocket) {
 		ChatDTO chatDTO = messageDTO.marshallize(ChatDTO.class);
 		Set<WebSocketSession> sessions = partidaSocket.getSessions();
 		

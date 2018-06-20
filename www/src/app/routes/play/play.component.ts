@@ -67,13 +67,35 @@ export class PlayComponent implements OnInit, OnDestroy {
   }
 
   doInitiative(){
-    this.message = {
-      tag: 'INITIATIVE_REQUEST',
-      data: { message: "tu turno" }
-    }
-    console.log("comienzo iniciativa")
+    this.subscription = this.route.params
+    .subscribe(params => {
+        var actorId = params['actorId'];
+        var partidaId = params['partidaId'];
+        this.message = {
+          tag: 'INITIATIVE_REQUEST',
+          data: {actorId : actorId,
+                 partidaId: partidaId}
+        }
+        console.log("comienzo iniciativa")
 
-    this.send(this.message)
+        this.send(this.message)
+     })
+  }
+
+  throwInitiative(){
+    this.subscription = this.route.params
+    .subscribe(params => {
+        var actorId = params['actorId'];
+        var partidaId = params['partidaId'];
+        this.message = {
+          tag: 'THROW_INITIATIVE',
+          data: {actorId : actorId,
+                 partidaId: partidaId}
+        }
+        console.log("envio la tirada de iniciativa")
+
+        this.send(this.message)
+     })
   }
 
   doRoll(data : any){
@@ -113,6 +135,7 @@ export class PlayComponent implements OnInit, OnDestroy {
             console.log("DATA",data.dataSet)
             this.currentGame.roll(data.dataSet.result.dataSet);
             this.currentGame.log(data);
+            //this.throwInitiative();
             // this.currentGame.roll(data.result.dataSet);
             // this.currentGame.log(data.result.dataSet);
           break;
@@ -127,7 +150,13 @@ export class PlayComponent implements OnInit, OnDestroy {
           break;
        }
        case "INITIATIVE_RESPONSE": {
+            console.log("ENTRANDO A MI TURNO")
             this.currentGame.notifyActor()
+          break;
+       }
+       case "SORTING_INITIATIVE": {
+            console.log("Ordenando iniciativa")
+            this.currentGame.sortList(data)
           break;
        }
        default: {

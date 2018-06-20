@@ -43,12 +43,12 @@ public class GameSetSocketFlowManager {
 		//se subscribe por cada tag de mensaje una instancia de su handlder
 		handlers.put("ROLL_REQUEST", rollSocketFlowHandler);
 		handlers.put("INITIATIVE_REQUEST", initiativeSocketFlowHandler);
-		handlers.put("INITIATIVE_RESPONSE", initiativeResponseSocketFlowHandler);
+		handlers.put("THROW_INITIATIVE", initiativeResponseSocketFlowHandler);
 		handlers.put("CHAT_REQUEST",chatSocketFlowHandler);
 		handlers.put("MOVE_TOKEN_REQUEST", moveTokenSocketFlowHandler);
 	}
 
-	public void handle(IncomingMessage messageDTO, PartidaSocket partidaSocket) throws JSONException {
+	public void handle(IncomingMessage messageDTO, GameSetSocket partidaSocket) throws JSONException {
 		String tag = messageDTO.getTag();
 		SocketFlowHandler handler = handlers.get(tag);
 		handler.handle(messageDTO, partidaSocket);
