@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -38,6 +39,8 @@ public class Actor {
     @ManyToOne
     private GameSet gameSet;
     
+    @OneToOne
+    private Token token;
     
     private int ultimaIniciativa;
     
@@ -115,6 +118,15 @@ public class Actor {
 	public void setUltimaIniciativa(int ultimaIniciativa) {
 		this.ultimaIniciativa = ultimaIniciativa;
 	}
+
+	public Token getToken() {
+		return token;
+	}
+
+	public void setToken(Token token) {
+		this.token = token;
+	}
+	
 	
 	
     

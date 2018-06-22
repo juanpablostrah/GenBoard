@@ -23,7 +23,9 @@
   <include file="classpath:/liquibase/dml/2018_06_16_00001_create_initiative_table.xml"/>
   <include file="classpath:/liquibase/dml/2018_06_16_00002_add_dmActors_in_gameSet.xml"/>
   <include file="classpath:/liquibase/dml/2018_06_20_00001_update_throw_actor.xml"/>
-  
+  <include file="classpath:/liquibase/dml/2018_06_21_00001_add_coord_and_token.xml"/>
+  <include file="classpath:/liquibase/dml/2018_06_21_00002_add_token_in_actor.xml"/>
+  <include file="classpath:/liquibase/dml/2018_06_21_00003_add_actor_in_token2.xml"/>
   
   
 

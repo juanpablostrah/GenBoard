@@ -1,7 +1,11 @@
 package org.genboard.controller;
 
 import org.genboard.model.Actor;
+import org.genboard.model.Coord;
+import org.genboard.model.Token;
 import org.genboard.repository.ActorRepository;
+import org.genboard.repository.CoordRepository;
+import org.genboard.repository.TokenRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +25,27 @@ public class ActorRestController {
 	@Autowired
 	private ActorRepository actorRepository;
 
+	@Autowired
+	private TokenRepository tokenRepository;
 
+	@Autowired
+	private CoordRepository coordRepository;
+	
 	@ResponseBody
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public Actor create(@RequestBody Actor actor) {
 		LOGGER.info("creando actor" + actor.getName());
-		return actorRepository.save(actor);
+		Coord coord = new Coord(new Double(0), new Double(0));
+		coordRepository.save(coord);
+		Token token = new Token();
+		token.setCoord(coord);
+		actor.setToken(token);
+		token = tokenRepository.save(token);
+		Actor newActor = actorRepository.save(actor);
+		token.setGameSet(actor.getGameSet());
+		token.setActor(newActor);
+		tokenRepository.save(token);
+		return newActor;
 	}
 	
 	@ResponseBody

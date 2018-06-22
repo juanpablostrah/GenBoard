@@ -82,6 +82,22 @@ export class PlayComponent implements OnInit, OnDestroy {
      })
   }
 
+  setToken(){
+    this.subscription = this.route.params
+    .subscribe(params => {
+        var actorId = params['actorId'];
+        var partidaId = params['partidaId'];
+        this.message = {
+          tag: 'SET_TOKEN_REQUEST',
+          data: {actorId : actorId,
+                 partidaId: partidaId}
+        }
+        console.log("pongo una ficha en el tablero")
+
+        this.send(this.message)
+     })
+  }
+
   throwInitiative(){
     this.subscription = this.route.params
     .subscribe(params => {
@@ -159,6 +175,12 @@ export class PlayComponent implements OnInit, OnDestroy {
             this.currentGame.sortList(data)
           break;
        }
+       case "SET_TOKEN_RESPONSE": {
+            console.log("insertando una ficha",data)
+            this.currentGame.setTokenInCanvas(data)
+          break;
+       }
+
        default: {
           //statements;
           break;

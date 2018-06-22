@@ -30,6 +30,7 @@ export class CanvasDiceRollComponent implements AfterViewInit {
   lastUpdate: any
   controls: any
   map: any;
+  tokens:any;
   floorMaterial: any;
   raycaster : any ;  // A THREE.Raycaster for user mouse input.
   ground : any; // A square base on which the cylinders stand.
@@ -47,8 +48,33 @@ export class CanvasDiceRollComponent implements AfterViewInit {
 
   constructor() {
     this.dice = []
-    //this.map = "../assets/images/castle.jpg";
+    this.tokens = []
   }
+
+  addCylinder(x : any,z : any){
+    var obj = this.cylinder.clone();
+    obj.position.x = x;
+    obj.position.z = z;
+    obj.material = new THREE.MeshLambertMaterial( {color:this.getRandomColor()} )
+    this.scene.add(obj);
+    this.tokens.push(obj)
+  }
+
+  getRandomColor(){
+    var color = "";
+    for(var i = 0; i < 3; i++) {
+        var sub = Math.floor(Math.random() * 256).toString(16);
+        color += (sub.length == 1 ? "0" + sub : sub);
+    }
+    return "#" + color;
+  }
+
+  setToken(data : any){
+    console.log("SETEO TOKEN",data.tokens)
+    this.tokens.map(token => this.scene.remove(token))
+    data.tokens.map(token => this.addCylinder(token.x,token.z))
+  }
+
   setMap(map : File){
     var reader = new FileReader();
     reader.onload = (evnt :any) => {
@@ -226,19 +252,6 @@ initialize(){
   new THREE.MeshLambertMaterial( {color:"red"} )
 );
 this.cylinder.position.y = 0.70;  // places base at y = 0;
-
-let addCylinder = (x,z) => {
-  var obj = this.cylinder.clone();
-  obj.position.x = x;
-  obj.position.z = z;
-  this.scene.add(obj);
-}
-
-addCylinder(10,10);
-addCylinder(0,15);
-addCylinder(-15,-7);
-addCylinder(-8,5);
-addCylinder(5,-12);
 
 
 this.setUpMouseHander(this.renderContainerElem.nativeElement,this.doMouseDown.bind(this),this.doMouseMove.bind(this));

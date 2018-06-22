@@ -1,12 +1,12 @@
 package org.genboard.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -66,8 +66,9 @@ public class GameSet {
     @OneToOne
     private Initiative initiative;
     
-//    @OneToMany(mappedBy = "gameSet", targetEntity = Token.class)
-//    private List<Token> tokens;
+    @OneToMany(mappedBy = "gameSet", targetEntity = Token.class)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Token> tokens;
     
     //private List<Lob> maps;
     
@@ -150,18 +151,31 @@ public class GameSet {
 	public void setInitiative(Initiative initiative) {
 		this.initiative = initiative;
 	}
-	
-	
-	
 
-//	public List<Token> getTokens() {
-//		return tokens;
-//	}
-//
-//	public void setTokens(List<Token> tokens) {
-//		this.tokens = tokens;
-//	}
-//	
+	public List<Actor> getDmActors() {
+		return dmActors;
+	}
+
+	public void setDmActors(List<Actor> dmActors) {
+		this.dmActors = dmActors;
+	}
+
+	public List<Token> getTokens() {
+		return tokens;
+	}
+
+	public void setTokens(List<Token> tokens) {
+		this.tokens = tokens;
+	}
+
+	public List<Coord> getTokenCoords(List<Token> tokens2) {
+		List<Coord> coords = new ArrayList<>();
+		for (Token token : tokens2) {
+			coords.add(token.getCoord());
+		}
+		return coords;
+	}
+	
 	
 	
 

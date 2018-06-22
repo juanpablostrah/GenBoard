@@ -1,0 +1,17 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="root (generated)" id="1529596875085-1">
+        <addColumn tableName="actor">
+            <column name="token_id" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="root (generated)" id="1529596875085-2">
+        <addForeignKeyConstraint baseColumnNames="token_id" baseTableName="actor" constraintName="FKbbitwsha01xxr682vqmwaqac7" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="token"/>
+    </changeSet>
+    <changeSet author="root (generated)" id="1529596875085-3">
+        <dropForeignKeyConstraint baseTableName="token" constraintName="FKnu4o24fm82or3t12u707x1aro"/>
+    </changeSet>
+    <changeSet author="root (generated)" id="1529596875085-4">
+        <dropColumn columnName="actor_id" tableName="token"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,4 +1,5 @@
 <app-current-game #currentGame
+  (onSetTokenToParent)="setToken()"
   (onRollToParent)="doRoll($event)"
   (onChatToParent)="doChat($event)"
   (onInitiativeToParent)="doInitiative()"

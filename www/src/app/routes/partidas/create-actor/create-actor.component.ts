@@ -46,7 +46,6 @@ export class CreateActorComponent implements OnInit {
 
   save() {
     var partidaId = this.localStorage.getItem("PARTIDA_ID")
-    //creo que Personaje se convierte en falopa igual
     this.actor.tipoActor = ActorType.Personaje;
     let gamSetURI = `${AppConfig.endpoints.api}/gameSet/${partidaId}`
     this.actor.gameSet = gamSetURI;

@@ -7,11 +7,14 @@ import java.util.Map;
 
 import org.genboard.model.Actor;
 import org.genboard.model.GameSet;
+import org.genboard.model.Token;
 import org.genboard.repository.GameSetRepository;
 import org.genboard.websocket.dto.ActorDTO;
 import org.genboard.websocket.dto.AuthorizeDTO;
 import org.genboard.websocket.message.IncomingMessage;
 import org.genboard.websocket.message.OutcomingMessage;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +63,7 @@ public class GameSetTextWebSocketHandler extends TextWebSocketHandler {
 			
 			GameSet partida = gameSetRepository.findById(partidaId).get();
 			
+			
 			List<ActorDTO> actorList = new ArrayList<>();
 			
 			for (Actor actor : partida.getActors()) {
@@ -67,15 +71,29 @@ public class GameSetTextWebSocketHandler extends TextWebSocketHandler {
 				ActorDTO actorDTOResult= actorDTO.buildActor(actor);
 				actorList.add(actorDTOResult);
 			}
-		
-			OutcomingMessage<List<ActorDTO>> broadcast = new OutcomingMessage<List<ActorDTO>>("CONNECT_ACTOR_RESPONSE");
-			TextMessage broadcastMessage = broadcast.textMessage(actorList);
+			
+			JSONObject jsonTokens = new JSONObject();
+			List<Token> tokens = partida.getTokens();
+			JSONArray arrayTokens = new JSONArray();
+			for (Token token : tokens) {
+				JSONObject json = new JSONObject();
+				json.put("actorId", token.getActor().getId());
+				json.put("x", token.getCoord().getX());
+				json.put("z", token.getCoord().getZ());
+				arrayTokens.put(json);
+			}
+			jsonTokens.put("tokens", arrayTokens);
+			
+			OutcomingMessage<String> broadcastToken = new OutcomingMessage<String>("SET_TOKEN_RESPONSE");
+			TextMessage broadcastTokens = broadcastToken.textMessage(jsonTokens.toString());
+			
+			OutcomingMessage<List<ActorDTO>> broadcastActors = new OutcomingMessage<List<ActorDTO>>("CONNECT_ACTOR_RESPONSE");
+			TextMessage broadcastMessage = broadcastActors.textMessage(actorList);
+			
 			for (WebSocketSession webSocketSession : partidaSocket.getSessions()) {
-//				if(webSocketSession.equals(session)) {
-//					//no se envia el mensaje al jugador que se conecta
-//					continue;
-//				}
+
 				webSocketSession.sendMessage(broadcastMessage);
+				webSocketSession.sendMessage(broadcastTokens);
 			}
 			LOGGER.info("Getting actor list");
 		}

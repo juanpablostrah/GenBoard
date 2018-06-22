@@ -42,6 +42,9 @@ export class CurrentGameComponent implements OnInit {
   onThrowInitiativeToParent: EventEmitter<any>
 
   @Output()
+  onSetTokenToParent: EventEmitter<any>
+
+  @Output()
   onInitiativeToParent: EventEmitter<any>
 
   @ViewChild('diceRoller')
@@ -82,12 +85,15 @@ export class CurrentGameComponent implements OnInit {
     this.onRollToParent = new EventEmitter();
     this.onChatToParent = new EventEmitter();
     this.onInitiativeToParent = new EventEmitter();
+    this.onSetTokenToParent = new EventEmitter();
     this.onThrowInitiativeToParent = new EventEmitter();
     this.initiativeList = [];
   }
 
   ngOnInit() {
+
     this.subscription = this.route.params.subscribe(params => {
+    //this.onSetTokenToParent.emit()
     var actorId = params['actorId']
     console.log('obteniendo actor: ',actorId);
     if(actorId == 1){
@@ -96,23 +102,17 @@ export class CurrentGameComponent implements OnInit {
     }else{
       console.log("ES INVITADO")
       this.isDM = false
-    }});
+    }
+    // this.actorService.get(actorId).then(actor =>
+    //   this.onSetTokenToParent(actor.);
+    // )
+
+    });
+
+
 
     //VERIFICAR PORQUE NO TRAE EL PLAYER OWNER, Y PORQUE NO TRANSFORMA
     //EL RESPONSE EN UNA PARTIDA Y LO DEJA COMO OBJECT
-
-    // var partidaId = Number(this.localStorage.getItem("PARTIDA_ID"));
-    // this.partidasService.get(partidaId).then((partida) => {
-    //   console.log("PARTIDAOWNER",partida['owner'])
-    //   console.log("PARTIDA",partida)
-    //   if(partida.owner == partidaId){
-    //     console.log("ES DM")
-    //     this.isDM = true
-    //   }else{
-    //     console.log("ES INVITADO")
-    //     this.isDM = false
-    //   }
-    // });
 
     console.log("conectado al socket")
 
@@ -216,15 +216,22 @@ export class CurrentGameComponent implements OnInit {
   sortList(actorsId : any){
     let result : Actor[];
     result = [];
-    console.log("lista actual",this.actors)
-    console.log("lista recibida",actorsId.throwsActorsId)
-    for (let actorIdReceived in actorsId.throwsActorsId) {
-      result.push(this.actors.find(actor =>
-          actor.id  == parseInt(actorIdReceived)
-      ))
-    }
+    actorsId.throwsActorsId.map(actorthrow => {
+      let actorReorder = this.actors.find(actor => {
+        console.log("ID ACTOR", actor.id);
+        console.log("ID RECEIVED", actorthrow);
+        return actor.id  == parseInt(actorthrow)
+      })
+      this.actors.splice(this.actors.indexOf(actorReorder), 1)
+      this.actors.push(actorReorder)
+
+    })
     console.log("LISTA YA ORDENADA",result);
-    this.actors = result;
+    console.log("ACTORS", this.actors)
+  }
+
+  setTokenInCanvas(data : any){
+    this.diceRoller.setToken(data)
   }
 
   log(data : any){

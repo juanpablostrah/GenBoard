@@ -1,0 +1,32 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="root (generated)" id="1529595447467-1">
+        <createTable tableName="coord">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="coordPK"/>
+            </column>
+            <column name="x" type="DOUBLE"/>
+            <column name="z" type="DOUBLE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="root (generated)" id="1529595447467-2">
+        <createTable tableName="token">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="tokenPK"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="actor_id" type="BIGINT"/>
+            <column name="coord_id" type="BIGINT"/>
+            <column name="game_set_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="root (generated)" id="1529595447467-3">
+        <addForeignKeyConstraint baseColumnNames="game_set_id" baseTableName="token" constraintName="FK2degeg7ka5kpn5ddh7k5r0ot4" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="game_set"/>
+    </changeSet>
+    <changeSet author="root (generated)" id="1529595447467-4">
+        <addForeignKeyConstraint baseColumnNames="coord_id" baseTableName="token" constraintName="FK62yv7thmbb21qdlcm8c2ytors" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="coord"/>
+    </changeSet>
+    <changeSet author="root (generated)" id="1529595447467-5">
+        <addForeignKeyConstraint baseColumnNames="actor_id" baseTableName="token" constraintName="FKnu4o24fm82or3t12u707x1aro" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="actor"/>
+    </changeSet>
+</databaseChangeLog>
