@@ -1,11 +1,10 @@
 package org.genboard.websocket.dto;
 
-import org.genboard.model.Coord;
-
 public class TokenRequestDTO {
 
-	private Integer actorId;
-	private Coord coord;
+	public Integer actorId;
+	public Double x;
+	public Double z;
 	
 	public Integer getActorId() {
 		return actorId;
@@ -13,11 +12,17 @@ public class TokenRequestDTO {
 	public void setActorId(Integer actorId) {
 		this.actorId = actorId;
 	}
-	public Coord getCoord() {
-		return coord;
+	public Double getX() {
+		return x;
 	}
-	public void setCoord(Coord coord) {
-		this.coord = coord;
+	public void setX(Double x) {
+		this.x = x;
 	}
+	public Double getZ() {
+		return z;
+	}
+	public void setZ(Double z) {
+		this.z = z;
+	}		
 	
 }

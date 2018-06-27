@@ -76,8 +76,6 @@ public class InitiativeResponseSocketFlowHandler extends SocketFlowHandler {
 			}
 		}		
 		LOGGER.info("se completo una tirada del id:" + actorId);
-		
-		InitiativeResponseDTO initiativeResponseDTO = messageDTO.marshallize(InitiativeResponseDTO.class);
 
 		GameSet partida = gameSetRepository.findById(partidaId).get();
 		Initiative initiative = partida.getInitiative();	
@@ -86,12 +84,13 @@ public class InitiativeResponseSocketFlowHandler extends SocketFlowHandler {
 		currentThrow.setResult(result20Dice);
 		throwRepository.save(currentThrow);
 		
-		initiative.nextTurn();		
+				
 		initiativeRepository.save(initiative);
 		
 		
 		//pregunto si es el ultimo actor de la lista para ordenarlos
-		if(initiative.getTurn() == null) {	
+		if(initiative.getTurn().equals(initiative.getInitiativeThrow().size() - 1)) {
+			initiative.nextTurn();
 			initiative.order();
 			List<Long> actors = initiative.getActors();
 			//initiativeRepository.save(initiative);
@@ -115,6 +114,7 @@ public class InitiativeResponseSocketFlowHandler extends SocketFlowHandler {
 			
 			//sino le pido la tirada al siguiente, llamo al circuito del InitiativeSocketFlow
 		}else {
+			initiative.nextTurn();
 			Throw nextThrow = initiative.currentThrow();
 			Actor nextActor = nextThrow.getActor();
 			Long nextActorId = nextActor.getId();
@@ -129,9 +129,11 @@ public class InitiativeResponseSocketFlowHandler extends SocketFlowHandler {
 			}
 			LOGGER.info("el siguiente turno es de "+ nextActorId);
 		}
+		
+		
+		initiativeRepository.save(initiative);
+		
 		gameSetRepository.save(partida);
-
-				
 
 	}
 

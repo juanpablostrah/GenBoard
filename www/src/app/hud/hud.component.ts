@@ -54,7 +54,7 @@ export class HUDComponent implements  AfterViewInit{
 
   menuList = [{
     icon:     'dashboard',
-    title:    'Dashboard',
+    title:    'Inicio',
     link:     '/',
   },{
     icon:     'business',

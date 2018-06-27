@@ -13,8 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DmPanelComponent } from 'app/routes/play/dm-panel/dm-panel.component';
 import { Partida } from 'app/services/partidas/partida.model';
 import { RollerControlComponent } from 'app/routes/play/roller-control/roller-control.component';
-
-
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-current-game',
@@ -45,7 +44,13 @@ export class CurrentGameComponent implements OnInit {
   onSetTokenToParent: EventEmitter<any>
 
   @Output()
+  onMoveTokenToParent: EventEmitter<any>
+
+  @Output()
   onInitiativeToParent: EventEmitter<any>
+
+  @Output()
+  onCombatModeToParent: EventEmitter<any>
 
   @ViewChild('diceRoller')
   diceRoller: CanvasDiceRollComponent
@@ -80,13 +85,16 @@ export class CurrentGameComponent implements OnInit {
   constructor(private partidasSocketService: PartidasSocketService,
     private partidasService: PartidasService,
     private actorService: ActorService,
-    private route: ActivatedRoute,) {
+    private route: ActivatedRoute,
+    public snackBar: MatSnackBar) {
     this.localStorage = window.localStorage;
     this.onRollToParent = new EventEmitter();
     this.onChatToParent = new EventEmitter();
     this.onInitiativeToParent = new EventEmitter();
     this.onSetTokenToParent = new EventEmitter();
+    this.onMoveTokenToParent = new EventEmitter();
     this.onThrowInitiativeToParent = new EventEmitter();
+    this.onCombatModeToParent = new EventEmitter();
     this.initiativeList = [];
   }
 
@@ -115,7 +123,7 @@ export class CurrentGameComponent implements OnInit {
     //EL RESPONSE EN UNA PARTIDA Y LO DEJA COMO OBJECT
 
     console.log("conectado al socket")
-
+    this.snackBar.open('Conectado a la partida', '', {duration:5000});
     this.dataSet = [{
       descriptor: 4,
       value: 0,
@@ -185,7 +193,13 @@ export class CurrentGameComponent implements OnInit {
     this.onThrowInitiativeToParent.emit()
   }
 
+  doOnMouseMove($event){
+    console.log("do_mouse", $event)
+    this.onMoveTokenToParent.emit($event)
+  }
+
   notifyActor(){
+    this.snackBar.open('Es tu turno aventurero', '', {duration:10000});
     this.rollerControl.enabledTurn()
   }
 
@@ -242,8 +256,17 @@ export class CurrentGameComponent implements OnInit {
     this.gameLogger.doChat(data.chat, data.actorId);
   }
 
+  doMouseMove(data : any){
+    console.log('doMouseMove', data)
+    this.diceRoller.doMouseMoveExternal(data.x, data.z, data.actorId)
+  }
+
   public handleInitiative(){
     this.onInitiativeToParent.emit();
+  }
+
+  handleCombatMode($event){
+    this.onCombatModeToParent.emit($event);
   }
 
   getRandomColor(){

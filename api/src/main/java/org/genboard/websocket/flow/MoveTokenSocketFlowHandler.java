@@ -3,11 +3,11 @@ package org.genboard.websocket.flow;
 import java.io.IOException;
 import java.util.Set;
 
+import org.genboard.model.Coord;
 import org.genboard.websocket.GameSetSocket;
 import org.genboard.websocket.dto.TokenRequestDTO;
 import org.genboard.websocket.message.IncomingMessage;
 import org.genboard.websocket.message.OutcomingMessage;
-import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -25,6 +25,8 @@ public class MoveTokenSocketFlowHandler extends SocketFlowHandler {
 		TokenRequestDTO tokenDTO = messageDTO.marshallize(TokenRequestDTO.class);
 		Set<WebSocketSession> sessions = partidaSocket.getSessions();
 		
+		Coord coord = new Coord(tokenDTO.getX(), tokenDTO.getZ());
+		
 		OutcomingMessage<TokenRequestDTO> broadcast = new OutcomingMessage<TokenRequestDTO>("MOVE_TOKEN_RESPONSE");
 		
 		TextMessage broadcastMessage = broadcast.textMessage(tokenDTO);		
@@ -36,8 +38,6 @@ public class MoveTokenSocketFlowHandler extends SocketFlowHandler {
 			}
 		}		
 		LOGGER.info("el actor "+ tokenDTO.getActorId()+ " movio una ficha");		
-
 	}
-
 
 }

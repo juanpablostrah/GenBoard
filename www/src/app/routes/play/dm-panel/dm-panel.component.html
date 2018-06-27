@@ -13,7 +13,7 @@
           <mat-icon>whatshot</mat-icon>
             Iniciativa
         </button>
-        <!-- <button mat-raised-button (click)="modoCombate()" class="btnPanel">Modo Combate</button> -->
+        <button mat-raised-button (click)="combatMode()" class="btnPanel">Modo Combate</button>
         <button mat-raised-button (click)="historia()" class="btnHistory">
           <mat-icon>history</mat-icon>
             Historia
@@ -22,7 +22,7 @@
           <mat-icon>fullscreen_exit</mat-icon>
             Dar Turno
         </button>
-        <div id="content">
+        <!-- <div id="content">
       		<p><b>Mouse Action:</b>
       			<label><input type="radio" name="action" id="mouseDrag">Drag</label>
       			<label><input type="radio" name="action" id="mouseAdd">Add</label>
@@ -31,7 +31,7 @@
       		<div id="canvas-holder">
       			<canvas id="maincanvas"></canvas>
       		</div>
-      	</div>
+      	</div> -->
       	<div id='grand'></div>
         <input style="display: none" type="file" (change)="saveMap($event)" #fileInput>
         <button mat-raised-button (click)="fileInput.click()" class="btnPanel">

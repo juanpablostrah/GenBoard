@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AfterViewInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
@@ -46,15 +46,20 @@ export class CanvasDiceRollComponent implements AfterViewInit {
   // the motion right, I needed a target that is at the same height
   // above the ground as the point where the user clicked the cylinder.
 
+  @Output()
+  onMoveUpMouse: EventEmitter<any>
+
   constructor() {
     this.dice = []
     this.tokens = []
+    this.onMoveUpMouse = new EventEmitter();
   }
 
-  addCylinder(x : any,z : any){
+  addCylinder(x : any,z : any, actorId: any){
     var obj = this.cylinder.clone();
     obj.position.x = x;
     obj.position.z = z;
+    obj.actorId = actorId;
     obj.material = new THREE.MeshLambertMaterial( {color:this.getRandomColor()} )
     this.scene.add(obj);
     this.tokens.push(obj)
@@ -70,9 +75,10 @@ export class CanvasDiceRollComponent implements AfterViewInit {
   }
 
   setToken(data : any){
+    console.log("MOUSE ",this.onMoveUpMouse)
     console.log("SETEO TOKEN",data.tokens)
     this.tokens.map(token => this.scene.remove(token))
-    data.tokens.map(token => this.addCylinder(token.x,token.z))
+    data.tokens.map(token => this.addCylinder(token.x,token.z,token.actorId))
   }
 
   setMap(map : File){
@@ -254,7 +260,7 @@ initialize(){
 this.cylinder.position.y = 0.70;  // places base at y = 0;
 
 
-this.setUpMouseHander(this.renderContainerElem.nativeElement,this.doMouseDown.bind(this),this.doMouseMove.bind(this));
+this.setUpMouseHander();
 this.raycaster = new THREE.Raycaster();
 this.render();
 }
@@ -327,12 +333,14 @@ doMouseDown(x,y) {
   }
 }
 
-doMouseMove(x,y,evt,prevX,prevY) {
+
+
+doMouseMove(x, z, item) {
   var a = 2*x/this.renderContainerElem.nativeElement.offsetWidth - 1;
-  var b = 1 - 2*y/this.renderContainerElem.nativeElement.offsetHeight;
+  var b = 1 - 2*z/this.renderContainerElem.nativeElement.offsetHeight;
   this.raycaster.setFromCamera( new THREE.Vector2(a,b), this.camera );
   this.intersects = this.raycaster.intersectObject( this.targetForDragging );
-  console.log("intersects",this.intersects)
+  //console.log("intersects",this.intersects)
   if (this.intersects.length == 0) {
     return;
   }
@@ -342,25 +350,75 @@ doMouseMove(x,y,evt,prevX,prevY) {
   this.scene.worldToLocal(coords);
   a = Math.min(30,Math.max(-30,coords.x));  // clamp coords to the range -19 to 19, so object stays on ground
   b = Math.min(30,Math.max(-30,coords.z));
-  this.dragItem.position.set(a,0.70,b);
+  item.position.set(a,0.70,b);
+  this.render();
+  console.log('final', a, b)
+  return {a, b}
+}
+
+doMouseMoveLocal(x, z) {
+  return this.doMouseMove(x,z,this.dragItem);
+}
+
+doMouseMoveExternal(x, z, actorId) {
+  console.log('external ', x, z, actorId)
+  const item = this.getTokenByActorId(actorId);
+  item.position.set(x,0.70,z);
   this.render();
 }
 
-setUpMouseHander(element, mouseDownFunc, mouseDragFunc, mouseUpFunc?) {
-  if (!element || !mouseDownFunc || !(typeof mouseDownFunc == "function")) {
-    throw "Illegal arguments in setUpMouseHander";
+getTokenByActorId(actorId){
+  for (let i = 0; i < this.tokens.length; i++) {
+    let token = this.tokens[i];
+    if(token.actorId == actorId){
+      return token;
+    }
   }
-  if (typeof element == "string") {
-    element = document.getElementById(element);
-  }
-  if (!element || !element.addEventListener) {
-    throw "first argument in setUpMouseHander is not a valid element";
-  }
+}
+
+setUpMouseHander() {
+  const element = this.renderContainerElem.nativeElement;
+  //mouseDownFunc = this.doMouseDown.bind(this),
+  //mouseDragFunc = this.doMouseMove.bind(this)
+
   var dragging = false;
   var startX, startY;
   var prevX, prevY;
 
-  function doMouseDown(evt) {
+  //const doMouseMove = (e)=>this.doMouseMove(e);
+  const doDrag = (evt)=> {
+    if (dragging) {
+      var r = element.getBoundingClientRect();
+      var x = evt.clientX - r.left;
+      var y = evt.clientY - r.top;
+      this.doMouseMoveLocal(x, y);
+      prevX = x;
+      prevY = y;
+    }
+  }
+
+  const finishDrag = (evt)=> {
+    if (dragging) {
+      console.log("PASO")
+      document.removeEventListener("mousemove", doDrag);
+      document.removeEventListener("mouseup", finishDrag);
+      console.log("MOUSE_UP", this.onMoveUpMouse)
+      console.log("LEVANTO EL MOUSE")
+      var r = element.getBoundingClientRect();
+      var x = evt.clientX - r.left;
+      var z = evt.clientY - r.top;
+      const result = this.doMouseMoveLocal(x, z);
+
+      const data = {
+        actorId: this.dragItem.actorId,
+        x : result.a,
+        z : result.b
+      }
+      this.onMoveUpMouse.emit(data)
+      dragging = false;
+    }
+  }
+  const startDrag = (evt)=> {
     if (dragging) {
       return;
     }
@@ -369,40 +427,15 @@ setUpMouseHander(element, mouseDownFunc, mouseDragFunc, mouseUpFunc?) {
     var y = evt.clientY - r.top;
     prevX = startX = x;
     prevY = startY = y;
-    dragging = mouseDownFunc(x, y, evt);
+    //check if mouse click over token
+    dragging = this.doMouseDown(x, y);
     if (dragging) {
-      document.addEventListener("mousemove", doMouseMove);
-      document.addEventListener("mouseup", doMouseUp);
+      document.addEventListener("mousemove", doDrag);
+      document.addEventListener("mouseup", finishDrag);
     }
   }
 
-  function doMouseMove(evt) {
-    if (dragging) {
-      if (mouseDragFunc) {
-        var r = element.getBoundingClientRect();
-        var x = evt.clientX - r.left;
-        var y = evt.clientY - r.top;
-        mouseDragFunc(x, y, evt, prevX, prevY, startX, startY);
-      }
-      prevX = x;
-      prevY = y;
-    }
-  }
-
-  function doMouseUp(evt) {
-    if (dragging) {
-      document.removeEventListener("mousemove", doMouseMove);
-      document.removeEventListener("mouseup", doMouseUp);
-      if (mouseUpFunc) {
-        var r = element.getBoundingClientRect();
-        var x = evt.clientX - r.left;
-        var y = evt.clientY - r.top;
-        mouseUpFunc(x, y, evt, prevX, prevY, startX, startY);
-      }
-      dragging = false;
-    }
-  }
-  element.addEventListener("mousedown", doMouseDown);
+  element.addEventListener("mousedown", startDrag);
 }
 
 ngAfterViewInit() {

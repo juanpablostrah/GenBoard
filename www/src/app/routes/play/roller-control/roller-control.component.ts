@@ -22,6 +22,9 @@ export class RollerControlComponent implements OnInit {
   @Output()
   onThrowInitiative: EventEmitter<void>
 
+  @Output()
+  onCombatMode: EventEmitter<any>
+
   @ViewChild(NgForm)
   form:NgForm
 
@@ -32,6 +35,7 @@ export class RollerControlComponent implements OnInit {
   constructor() {
     this.onRoll = new EventEmitter();
     this.onThrowInitiative = new EventEmitter();
+    this.onCombatMode = new EventEmitter();
     this.yourTurn = false;
   }
 
@@ -55,6 +59,10 @@ export class RollerControlComponent implements OnInit {
       this.form.reset();
     }
   }
+
+  // finishTurn(){
+  //   this.onCombatMode.emit()
+  // }
 
   enabledTurn(){
     console.log("SETEO TURNO EN TRUE")

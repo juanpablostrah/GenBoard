@@ -1,4 +1,6 @@
 <app-current-game #currentGame
+  (onCombatModeToParent)="initiateCombatMode($event)"
+  (onMoveTokenToParent)="moveToken($event)"
   (onSetTokenToParent)="setToken()"
   (onRollToParent)="doRoll($event)"
   (onChatToParent)="doChat($event)"

@@ -2,6 +2,7 @@
   <div fxLayout="column" id="controllers-column">
       <app-dm-panel #dmPanel
         [hidden]="!isDM"
+        (onCombatMode)="handleCombatMode($event)"
         (onSetActors)="handleSetActors($event)"
         (onSetMap)="handleSetMap($event)"
         (onInitiative)="handleInitiative()">
@@ -20,7 +21,8 @@
       </app-actor-list>
   </div>
   <div fxLayout="col">
-    <app-canvas-dice-roll #diceRoller>
+    <app-canvas-dice-roll #diceRoller
+      (onMoveUpMouse)="doOnMouseMove($event)">
     </app-canvas-dice-roll>
   </div>
   </div>

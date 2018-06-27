@@ -38,6 +38,9 @@ export class DmPanelComponent implements OnInit {
   @Output()
   onInitiative: EventEmitter<any>
 
+  @Output()
+  onCombatMode: EventEmitter<any>
+
   maps : File[];
   selectedFile: File;
 
@@ -56,6 +59,7 @@ export class DmPanelComponent implements OnInit {
     this.onSetActors = new EventEmitter();
     this.onSetMap = new EventEmitter();
     this.onInitiative = new EventEmitter();
+    this.onCombatMode = new EventEmitter();
     this.maps = [];
     this.yourTurn = false;
   }
@@ -109,6 +113,10 @@ export class DmPanelComponent implements OnInit {
     // }
     this.actors[0].id
     this.onInitiative.emit()
+  }
+
+  combatMode(){
+    this.onCombatMode.emit(this.actors[0].id)
   }
 
   enabledTurn(){

@@ -29,6 +29,9 @@ export class PlayComponent implements OnInit, OnDestroy {
   @ViewChild('gameLogger')
   gameLogger: GameLogComponent
 
+  @ViewChild('diceRoller')
+  diceRoller: CanvasDiceRollComponent
+
   constructor(
     private route: ActivatedRoute,
     private partidasSocketSrv: PartidasSocketService,
@@ -82,6 +85,21 @@ export class PlayComponent implements OnInit, OnDestroy {
      })
   }
 
+  initiateCombatMode(data : any){
+    this.subscription = this.route.params
+    .subscribe(params => {
+        var partidaId = params['partidaId'];
+        this.message = {
+          tag: 'COMBAT_MODE_REQUEST',
+          data: {actorId : data,
+                 partidaId: partidaId}
+        }
+        console.log("entrando en combate")
+
+        this.send(this.message)
+     })
+  }
+
   setToken(){
     this.subscription = this.route.params
     .subscribe(params => {
@@ -94,6 +112,23 @@ export class PlayComponent implements OnInit, OnDestroy {
         }
         console.log("pongo una ficha en el tablero")
 
+        this.send(this.message)
+     })
+  }
+
+  moveToken(data){
+    console.log("MOVE_TOKEN", data)
+    this.subscription = this.route.params
+    .subscribe(params => {
+        var actorId = params['actorId'];
+        this.message = {
+          tag: 'MOVE_TOKEN_REQUEST',
+          data: {
+            actorId : data.actorId,
+            x: data.x,
+            z: data.z
+          }
+        }
         this.send(this.message)
      })
   }
@@ -178,6 +213,16 @@ export class PlayComponent implements OnInit, OnDestroy {
        case "SET_TOKEN_RESPONSE": {
             console.log("insertando una ficha",data)
             this.currentGame.setTokenInCanvas(data)
+          break;
+       }
+       case "MOVE_TOKEN_RESPONSE": {
+            console.log("moviendo una ficha",data)
+            this.currentGame.doMouseMove(data)
+          break;
+       }
+       case "COMBAT_RESPONSE": {
+            console.log("tu turno de combatir")
+            this.currentGame.notifyActor()
           break;
        }
 

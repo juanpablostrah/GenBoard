@@ -29,11 +29,8 @@ public class Initiative {
 	public void nextTurn() {
 		turn++;
 		if(turn.equals(initiativeThrow.size())){
-			turn = null;
+			turn = 0;
 		}
-//		else {
-//			turn++;
-//		}
 	}
 	
 	public Throw currentThrow() {

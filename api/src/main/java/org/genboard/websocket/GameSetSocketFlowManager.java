@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 
 import org.genboard.websocket.flow.ChatSocketFlowHandler;
+import org.genboard.websocket.flow.CombatModeFlowHandler;
 import org.genboard.websocket.flow.InitiativeResponseSocketFlowHandler;
 import org.genboard.websocket.flow.InitiativeSocketFlowHandler;
 import org.genboard.websocket.flow.MoveTokenSocketFlowHandler;
@@ -37,6 +38,9 @@ public class GameSetSocketFlowManager {
 	@Autowired
 	private MoveTokenSocketFlowHandler moveTokenSocketFlowHandler;
 	
+	@Autowired
+	private CombatModeFlowHandler combatModeFlowHandler;
+	
 	
 	@PostConstruct
 	public void initialize() {
@@ -46,7 +50,7 @@ public class GameSetSocketFlowManager {
 		handlers.put("THROW_INITIATIVE", initiativeResponseSocketFlowHandler);
 		handlers.put("CHAT_REQUEST",chatSocketFlowHandler);
 		handlers.put("MOVE_TOKEN_REQUEST", moveTokenSocketFlowHandler);
-		//handlers.put("SET_TOKEN_REQUEST", setTokenSocketFlowHandler);
+		handlers.put("COMBAT_MODE_REQUEST", combatModeFlowHandler);
 	}
 
 	public void handle(IncomingMessage messageDTO, GameSetSocket partidaSocket) throws JSONException {
