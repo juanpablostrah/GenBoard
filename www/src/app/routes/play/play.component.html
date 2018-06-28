@@ -1,4 +1,5 @@
 <app-current-game #currentGame
+  (onHistoryModeToParent)="historyMode()"
   (onCombatModeToParent)="initiateCombatMode($event)"
   (onMoveTokenToParent)="moveToken($event)"
   (onSetTokenToParent)="setToken()"

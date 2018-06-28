@@ -6,7 +6,6 @@ import org.genboard.model.GameSet;
 import org.genboard.model.Initiative;
 import org.genboard.repository.GameSetRepository;
 import org.genboard.repository.InitiativeRepository;
-import org.genboard.repository.ThrowRepository;
 import org.genboard.websocket.GameSetSocket;
 import org.genboard.websocket.dto.DefaultActionDTO;
 import org.genboard.websocket.message.IncomingMessage;

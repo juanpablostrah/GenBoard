@@ -50,7 +50,7 @@ export class RollerControlComponent implements OnInit {
 
   throwInitiative(){
     this.onThrowInitiative.emit()
-    this.yourTurn = false;
+    this.disabledTurn()
   }
 
   public resetDice(){
@@ -60,13 +60,19 @@ export class RollerControlComponent implements OnInit {
     }
   }
 
-  // finishTurn(){
-  //   this.onCombatMode.emit()
-  // }
+  finishTurn(){
+    this.onCombatMode.emit()
+    this.disabledTurn()
+  }
 
   enabledTurn(){
     console.log("SETEO TURNO EN TRUE")
     this.yourTurn = true;
+  }
+
+  disabledTurn(){
+    console.log("SETEO TURNO EN FALSE")
+    this.yourTurn = false;
   }
 
 }

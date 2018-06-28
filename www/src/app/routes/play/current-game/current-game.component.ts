@@ -52,6 +52,9 @@ export class CurrentGameComponent implements OnInit {
   @Output()
   onCombatModeToParent: EventEmitter<any>
 
+  @Output()
+  onHistoryModeToParent: EventEmitter<any>
+
   @ViewChild('diceRoller')
   diceRoller: CanvasDiceRollComponent
 
@@ -95,6 +98,7 @@ export class CurrentGameComponent implements OnInit {
     this.onMoveTokenToParent = new EventEmitter();
     this.onThrowInitiativeToParent = new EventEmitter();
     this.onCombatModeToParent = new EventEmitter();
+    this.onHistoryModeToParent = new EventEmitter();
     this.initiativeList = [];
   }
 
@@ -179,6 +183,10 @@ export class CurrentGameComponent implements OnInit {
       // };
       // this.client.sendMessage('roll', this.data)
 
+handleHistoryMode(){
+  this.onHistoryModeToParent.emit()
+}
+
   doRoll(){
     this.onRollToParent.emit(this.data)
   }
@@ -199,8 +207,13 @@ export class CurrentGameComponent implements OnInit {
   }
 
   notifyActor(){
-    this.snackBar.open('Es tu turno aventurero', '', {duration:10000});
+    this.snackBar.open('Es tu turno Aventurero', '', {duration:10000});
     this.rollerControl.enabledTurn()
+  }
+
+  historyMode(){
+    this.snackBar.open('Entrando en modo Historia Aventurero', '', {duration:5000});
+    this.rollerControl.disabledTurn()
   }
 
   setActor(actor : Actor){

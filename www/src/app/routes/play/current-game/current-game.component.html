@@ -2,6 +2,7 @@
   <div fxLayout="column" id="controllers-column">
       <app-dm-panel #dmPanel
         [hidden]="!isDM"
+        (onHistoryMode)="handleHistoryMode()"
         (onCombatMode)="handleCombatMode($event)"
         (onSetActors)="handleSetActors($event)"
         (onSetMap)="handleSetMap($event)"
@@ -9,6 +10,7 @@
       </app-dm-panel>
       <app-roller-control #rollerControl
         [dataSet]="dataSet"
+        (onCombatMode)="handleCombatMode($event)"
         (onThrowInitiative)="doThrowInitiative()"
         (onRoll)="doRoll()">
       </app-roller-control>

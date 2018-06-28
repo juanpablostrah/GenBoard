@@ -100,6 +100,22 @@ export class PlayComponent implements OnInit, OnDestroy {
      })
   }
 
+  historyMode(){
+    this.subscription = this.route.params
+    .subscribe(params => {
+        var partidaId = params['partidaId'];
+        var actorId = params['actorId'];
+        this.message = {
+          tag: 'HISTORY_MODE_REQUEST',
+          data: {actorId : actorId,
+                 partidaId: partidaId}
+        }
+        console.log("entrando en modo Historia")
+
+        this.send(this.message)
+     })
+  }
+
   setToken(){
     this.subscription = this.route.params
     .subscribe(params => {
@@ -223,6 +239,11 @@ export class PlayComponent implements OnInit, OnDestroy {
        case "COMBAT_RESPONSE": {
             console.log("tu turno de combatir")
             this.currentGame.notifyActor()
+          break;
+       }
+       case "HISTORY_RESPONSE": {
+            console.log("tu turno de combatir")
+            this.currentGame.historyMode()
           break;
        }
 
