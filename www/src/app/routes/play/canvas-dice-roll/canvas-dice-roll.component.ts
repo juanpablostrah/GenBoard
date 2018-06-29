@@ -8,6 +8,8 @@ import * as CANNON from 'cannon';
 import { DiceManager, DiceD6, DiceD20, DiceD4, DiceD8, DiceD10, DiceD12 } from 'threejs-dice'
 import { OrbitControls } from 'three-orbitcontrols-ts';
 import { MeshBasicMaterial } from 'three';
+import { ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 var diceIndex = 0;
 
@@ -18,7 +20,7 @@ var diceIndex = 0;
 })
 export class CanvasDiceRollComponent implements AfterViewInit {
 
-
+  private subscription: any;
   @ViewChild('renderContainer')
   renderContainerElem:ElementRef;
   arrow: any
@@ -49,7 +51,7 @@ export class CanvasDiceRollComponent implements AfterViewInit {
   @Output()
   onMoveUpMouse: EventEmitter<any>
 
-  constructor() {
+  constructor(private route: ActivatedRoute, public snackBar: MatSnackBar) {
     this.dice = []
     this.tokens = []
     this.onMoveUpMouse = new EventEmitter();
@@ -399,7 +401,6 @@ setUpMouseHander() {
 
   const finishDrag = (evt)=> {
     if (dragging) {
-      console.log("PASO")
       document.removeEventListener("mousemove", doDrag);
       document.removeEventListener("mouseup", finishDrag);
       console.log("MOUSE_UP", this.onMoveUpMouse)
@@ -414,8 +415,18 @@ setUpMouseHander() {
         x : result.a,
         z : result.b
       }
-      this.onMoveUpMouse.emit(data)
-      dragging = false;
+
+      this.subscription = this.route.params
+      .subscribe(params => {
+          var actorId = params['actorId'];
+          if(data.actorId == actorId){
+            this.onMoveUpMouse.emit(data)
+          }
+          else{
+            this.snackBar.open('Esa no es tu ficha', '', {duration:3000});
+          }
+       })
+       dragging = false;
     }
   }
   const startDrag = (evt)=> {

@@ -9,8 +9,9 @@ export class Actor {
   name: string;
   life: number;
   damage: string;
-  player: Player;
+  player: any;
   partidaId : any;
   gameSet: any;
   ultimaIniciativa : number;
+  dm: any;
 }

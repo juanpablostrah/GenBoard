@@ -44,6 +44,8 @@ public class Actor {
     
     private int ultimaIniciativa;
     
+    private Boolean dm;
+    
 	@Temporal(javax.persistence.TemporalType.DATE)
     private Date since = new Date(System.currentTimeMillis());
 
@@ -125,6 +127,14 @@ public class Actor {
 
 	public void setToken(Token token) {
 		this.token = token;
+	}
+
+	public Boolean getDm() {
+		return dm;
+	}
+
+	public void setDm(Boolean dm) {
+		this.dm = dm;
 	}
 	
 	

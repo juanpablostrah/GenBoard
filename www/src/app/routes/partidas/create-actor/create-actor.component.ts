@@ -31,7 +31,6 @@ export class CreateActorComponent implements OnInit {
     this.actor = new Actor;
     this.localStorage = window.localStorage;
     this.onSetActor = new EventEmitter();
-
   }
 
   ngOnInit() {
@@ -46,9 +45,13 @@ export class CreateActorComponent implements OnInit {
 
   save() {
     var partidaId = this.localStorage.getItem("PARTIDA_ID")
+    var playerId = this.localStorage.getItem("PLAYER_ID")
     this.actor.tipoActor = ActorType.Personaje;
-    let gamSetURI = `${AppConfig.endpoints.api}/gameSet/${partidaId}`
-    this.actor.gameSet = gamSetURI;
+    let gameSetURI = `${AppConfig.endpoints.api}/gameSet/${partidaId}`
+    let playerURI = `${AppConfig.endpoints.api}/player/${playerId}`
+    this.actor.gameSet = gameSetURI;
+    this.actor.player = playerURI;
+    this.actor.dm = false;
     this.actorService.save(this.actor).then((actor) =>  {
       console.log("response : ",actor)
       this.onSetActor.emit(actor)

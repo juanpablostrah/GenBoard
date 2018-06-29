@@ -48,7 +48,7 @@ public class GameSetSocketFlowManager {
 	
 	@PostConstruct
 	public void initialize() {
-		//se subscribe por cada tag de mensaje una instancia de su handlder
+		//se subscribe por cada tag de mensaje una instancia de su handler
 		handlers.put("ROLL_REQUEST", rollSocketFlowHandler);
 		handlers.put("INITIATIVE_REQUEST", initiativeSocketFlowHandler);
 		handlers.put("THROW_INITIATIVE", initiativeResponseSocketFlowHandler);
@@ -63,5 +63,5 @@ public class GameSetSocketFlowManager {
 		SocketFlowHandler handler = handlers.get(tag);
 		handler.handle(messageDTO, partidaSocket);
 	}
-
+	
 }

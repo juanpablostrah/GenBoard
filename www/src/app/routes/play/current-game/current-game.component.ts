@@ -105,16 +105,20 @@ export class CurrentGameComponent implements OnInit {
   ngOnInit() {
 
     this.subscription = this.route.params.subscribe(params => {
-    //this.onSetTokenToParent.emit()
-    var actorId = params['actorId']
-    console.log('obteniendo actor: ',actorId);
-    if(actorId == 1){
-      console.log("ES DM")
-      this.isDM = true
-    }else{
-      console.log("ES INVITADO")
-      this.isDM = false
-    }
+      var actorId = params['actorId']
+      console.log('obteniendo actor: ',actorId);
+      this.actorService.get(actorId).then((actor) =>  {
+        console.log("response : ",actor)
+        if(actor.dm){
+          console.log("ES DM")
+          this.isDM = true
+        }else{
+          console.log("ES INVITADO")
+          this.isDM = false
+        }
+      })
+
+
     // this.actorService.get(actorId).then(actor =>
     //   this.onSetTokenToParent(actor.);
     // )

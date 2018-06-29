@@ -63,7 +63,6 @@ public class GameSetTextWebSocketHandler extends TextWebSocketHandler {
 			
 			GameSet partida = gameSetRepository.findById(partidaId).get();
 			
-			
 			List<ActorDTO> actorList = new ArrayList<>();
 			
 			for (Actor actor : partida.getActors()) {

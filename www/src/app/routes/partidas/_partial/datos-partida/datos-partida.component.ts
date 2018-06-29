@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
 import { Input } from '@angular/core';
 import { Partida } from 'app/services/partidas/partida.model';
 import { PartidasService } from 'app/services/partidas/partidas.service';
@@ -9,6 +9,9 @@ import { AppConfig } from 'app/config/app.config';
 import { LoggerService } from 'app/core/logger.service';
 import { NgForm } from '@angular/forms';
 import { FormControl, Validators } from '@angular/forms';
+import { Actor } from 'app/routes/actor/actor';
+import { ActorService } from 'app/services/actor/actor.service';
+import { ActorType } from 'app/routes/actor/actorType';
 
 const PARTIDA_ID = 'PARTIDA_ID';
 
@@ -18,6 +21,9 @@ const PARTIDA_ID = 'PARTIDA_ID';
   styleUrls: ['./datos-partida.component.scss']
 })
 export class DatosPartidaComponent {
+
+  @Output()
+  onSetActor: EventEmitter<any>
 
   @Input()
   partida: any
@@ -31,9 +37,14 @@ export class DatosPartidaComponent {
 
   localStorage: Storage;
 
+  actor : Actor;
+
   constructor(private partidasService: PartidasService,
+    private actorService: ActorService,
     private route: ActivatedRoute, private router: Router) {
       this.localStorage = window.localStorage;
+      this.actor = new Actor;
+      this.onSetActor = new EventEmitter();
     }
 
   getNameErrorMessage() {
@@ -60,9 +71,21 @@ export class DatosPartidaComponent {
     let playerOwnerURI = `${AppConfig.endpoints.api}/player/${playerId}`
     this.partida.owner = playerOwnerURI;
     this.partidasService.save(this.partida).then((data) => {
-      console.log('respuesta',data)
-      this.localStorage.setItem("PARTIDA_ID",data['id'])
-      this.router.navigate(['/play/'+data['id']+'/1'])
+      var partidaId = this.localStorage.getItem("PARTIDA_ID")
+      this.actor.tipoActor = ActorType.Personaje;
+      let gameSetURI = `${AppConfig.endpoints.api}/gameSet/${partidaId}`
+      let playerURI = `${AppConfig.endpoints.api}/player/${playerId}`
+      this.actor.gameSet = gameSetURI;
+      this.actor.player = playerURI;
+      this.actor.dm = true;
+      this.actor.name = "DM ";
+      this.actorService.save(this.actor).then((actor) =>  {
+        console.log("response : ",actor)
+        console.log('respuesta',data)
+        this.onSetActor.emit(actor)
+        this.localStorage.setItem("PARTIDA_ID",data['id'])
+        this.router.navigate(['/play/'+data['id']+'/'+actor.id])
+      })
     })
   }
 
