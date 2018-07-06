@@ -17,6 +17,7 @@ import { DmDialogComponent } from './dm-dialog/dm-dialog.component';
 import { ActorListComponent } from './actor-list/actor-list.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { DragulaModule } from 'ng2-dragula/ng2-dragula';
+import { DmDialogTokenComponent } from './dm-dialog-token/dm-dialog-token.component';
 
 
 @NgModule({
@@ -44,12 +45,16 @@ import { DragulaModule } from 'ng2-dragula/ng2-dragula';
     MapComponent,
     DmPanelComponent,
     DmDialogComponent,
-    ActorListComponent
+
+    ActorListComponent,
+
+    DmDialogTokenComponent
   ],
   providers: [
 
   ],
-  entryComponents: [DmDialogComponent]
+  entryComponents: [DmDialogComponent,
+  DmDialogTokenComponent]
 })
 export class PlayModule {
 

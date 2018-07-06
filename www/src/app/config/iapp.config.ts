@@ -2,6 +2,7 @@
 export interface IAppConfig {
   endpoints: {
     api: string;
+    apiResource: string;
     socketGameSet : string;
   }
   votesLimit: number;

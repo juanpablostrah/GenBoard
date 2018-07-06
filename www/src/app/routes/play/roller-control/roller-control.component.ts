@@ -30,6 +30,8 @@ export class RollerControlComponent implements OnInit {
 
   yourTurn : boolean;
 
+  showThrow : boolean;
+
   isIniciative : boolean;
 
   constructor() {
@@ -37,9 +39,12 @@ export class RollerControlComponent implements OnInit {
     this.onThrowInitiative = new EventEmitter();
     this.onCombatMode = new EventEmitter();
     this.yourTurn = false;
+    this.showThrow = true;
   }
 
-  ngOnInit(){}
+  ngOnInit(){
+
+  }
 
   onSubmit():void{
     if(!this.form.valid){
@@ -73,6 +78,11 @@ export class RollerControlComponent implements OnInit {
   disabledTurn(){
     console.log("SETEO TURNO EN FALSE")
     this.yourTurn = false;
+  }
+
+  changeShow(){
+    console.log("HABILITO SHOW")
+    this.showThrow = !this.showThrow
   }
 
 }

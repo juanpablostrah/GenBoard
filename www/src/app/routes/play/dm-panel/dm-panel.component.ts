@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild, Output } from '@angular/core';
 import { Player } from 'app/routes/player/player';
 import { PartidasService } from 'app/services/partidas/partidas.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { Inject} from '@angular/core';
@@ -9,7 +9,7 @@ import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { DmDialogComponent } from '../dm-dialog/dm-dialog.component';
 import { Actor } from 'app/routes/actor/actor';
 import { EventEmitter } from '@angular/core';
-
+import { DmDialogTokenComponent } from 'app/routes/play/dm-dialog-token/dm-dialog-token.component';
 
 @Component({
   selector: 'app-dm-panel',
@@ -44,6 +44,9 @@ export class DmPanelComponent implements OnInit {
   @Output()
   onCombatMode: EventEmitter<any>
 
+  @Output()
+  onHandleNewPersonaje: EventEmitter<any>
+
   maps : File[];
   selectedFile: File;
 
@@ -56,6 +59,7 @@ export class DmPanelComponent implements OnInit {
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
+    public snackBar: MatSnackBar
   ) {
     this.guests = [];
     this.actors = [];
@@ -64,14 +68,29 @@ export class DmPanelComponent implements OnInit {
     this.onInitiative = new EventEmitter();
     this.onCombatMode = new EventEmitter();
     this.onHistoryMode = new EventEmitter();
+    this.onHandleNewPersonaje = new EventEmitter();
     this.maps = [];
     this.yourTurn = false;
   }
 
-  openDialog(): void {
+  openTurnDialog(): void {
     let dialogRef = this.dialog.open(DmDialogComponent, {
       width: '600px',
       data: { actors: this.actors }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+    });
+  }
+
+  openAddTokenDialog(): void {
+    let dialogRef = this.dialog.open(DmDialogTokenComponent, {
+      width: '600px',
+      data: { actors: this.actors }
+    });
+    const sub = dialogRef.componentInstance.onNewActor.subscribe((data:any) => {
+     console.log(data)
+     this.onHandleNewPersonaje.emit();
     });
     dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
@@ -97,7 +116,11 @@ export class DmPanelComponent implements OnInit {
   }
 
   darTurno(){
-    this.openDialog();
+    this.openTurnDialog();
+  }
+
+  agregarFicha(){
+    this.openAddTokenDialog();
   }
 
   public setMap(map :File){
@@ -112,11 +135,13 @@ export class DmPanelComponent implements OnInit {
   }
 
   public iniciative(){
-    // if(this.isDM){
-    //   this.dmActors[0].id
-    // }
-    this.actors[0].id
-    this.onInitiative.emit()
+    if(this.actors.length < 2){
+        this.snackBar.open('No hay suficiente jugadores para comenzar', '', {duration:5000});
+    }
+    else{
+      this.actors[0].id
+      this.onInitiative.emit()
+    }
   }
 
   historyMode(){

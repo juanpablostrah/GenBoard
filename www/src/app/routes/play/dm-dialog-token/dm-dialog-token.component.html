@@ -1,0 +1,14 @@
+<div #dmTokenDialog>
+  <h2 mat-dialog-title>Crea tu Personaje</h2>
+  <mat-dialog-content>
+      <input matInput
+        name="nombre"
+        [(ngModel)]="name"
+        placeholder="nombre"
+        required>
+        <!-- <mat-error *ngIf="nameControl.invalid">{{getNameErrorMessage()}}</mat-error> -->
+    <button mat-raised-button (click)="saveActor()" class="btnGiveTurn">
+        Crear
+    </button>
+  </mat-dialog-content>
+</div>

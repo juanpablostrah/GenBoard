@@ -3,11 +3,14 @@ import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
 import { Player } from 'app/routes/player/player';
+import { AppConfig } from 'app/config/app.config';
 
 @Injectable()
 export class PlayerService {
-	private playerRestUrl = 'http://localhost:8080/api/v1/player';  // path del controller
-	private playerResourceUrl = 'http://localhost:8080/player';  // path del controller
+	private apiUrl = AppConfig.endpoints.api;
+	private apiResourceUrl = AppConfig.endpoints.apiResource;
+	private playerRestUrl = this.apiUrl + '/player';  // path del controller
+	private playerResourceUrl = this.apiResourceUrl + '/player';  // path del controller
 
 	localStorage: Storage;
 

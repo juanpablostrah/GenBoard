@@ -27,6 +27,8 @@
   <include file="classpath:/liquibase/dml/2018_06_21_00002_add_token_in_actor.xml"/>
   <include file="classpath:/liquibase/dml/2018_06_21_00003_add_actor_in_token2.xml"/>
   <include file="classpath:/liquibase/dml/2018_06_28_00001_add_dm_in_actor.xml"/>
+  <include file="classpath:/liquibase/dml/2018_07_02_00001_add_list_token_in_actor.xml"/>
+  <include file="classpath:/liquibase/dml/2018_07_04_00001_add_state_type.xml"/>
   
  
 </databaseChangeLog>

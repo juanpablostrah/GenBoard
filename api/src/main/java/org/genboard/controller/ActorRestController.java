@@ -1,14 +1,10 @@
 package org.genboard.controller;
 
-import java.util.Optional;
-
 import org.genboard.model.Actor;
 import org.genboard.model.Coord;
-import org.genboard.model.Player;
 import org.genboard.model.Token;
 import org.genboard.repository.ActorRepository;
 import org.genboard.repository.CoordRepository;
-import org.genboard.repository.PlayerRepository;
 import org.genboard.repository.TokenRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +45,7 @@ public class ActorRestController {
 			Actor newActor = actorRepository.save(actor);
 			token.setGameSet(actor.getGameSet());
 			token.setActor(newActor);
+			token.setSecondActor(newActor);
 			tokenRepository.save(token);
 			return newActor;
 		}else {

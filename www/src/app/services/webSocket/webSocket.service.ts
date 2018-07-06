@@ -4,14 +4,15 @@ import 'rxjs/add/operator/toPromise';
 import { Injectable } from '@angular/core';
 import * as Rx from 'rxjs/Rx';
 import * as SockJS from 'sockjs-client';
+import { AppConfig } from 'app/config/app.config';
 
 @Injectable()
 export class WebSocketService {
   constructor() { }
 
   private subject: Rx.Subject<MessageEvent>;
-
-  webSocketUrl = "http://localhost:8080/api/v1/socket/gameset";
+  private apiUrl = AppConfig.endpoints.api;
+  webSocketUrl = this.apiUrl + '/socket/gameset';
   sock : any;
   //this.sock = new SockJS(websocketurl);
 

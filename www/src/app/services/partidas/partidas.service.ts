@@ -5,11 +5,14 @@ import { Partida } from './partida.model';
 import 'rxjs/add/operator/toPromise';
 import { Player } from 'app/routes/player/player';
 import { Actor } from 'app/routes/actor/actor';
+import { AppConfig } from 'app/config/app.config';
 
 @Injectable()
 export class PartidasService {
-	private partidasRestUrl = 'http://localhost:8080/api/v1/gameSet';  // path del controller
-	private partidasResourceUrl = 'http://localhost:8080/gameSet';  // path del controller
+	private apiUrl = AppConfig.endpoints.api;
+	private apiResourceUrl = AppConfig.endpoints.apiResource;
+	private partidasRestUrl = this.apiUrl + '/gameSet';  // path del controller
+	private partidasResourceUrl = this.apiResourceUrl + '/gameSet';  // path del controller
 
 	localStorage: Storage;
 

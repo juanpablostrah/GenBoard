@@ -4,6 +4,8 @@ import { Input } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Actor } from 'app/routes/actor/actor';
+import { ActorService } from 'app/services/actor/actor.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-game-log',
@@ -11,6 +13,8 @@ import { Actor } from 'app/routes/actor/actor';
   styleUrls: ['./game-log.component.css']
 })
 export class GameLogComponent implements OnInit {
+
+  private subscription: any;
 
   @Input()
   actorListNew : Actor[];
@@ -30,7 +34,7 @@ export class GameLogComponent implements OnInit {
 
   log: String[]
 
-  constructor() {
+  constructor(private actorService : ActorService,private route: ActivatedRoute) {
     this.onChat = new EventEmitter<String>();
     this.onDoChat = new EventEmitter<any>();
   }
@@ -46,8 +50,13 @@ export class GameLogComponent implements OnInit {
 
   doChat(chat: String , actorId: any){
     console.log("DO_CHAT",chat,actorId)
-    this.currentActorName = this.actorListNew.find(actor => actor.id == actorId);
-    this.log.push(this.currentActorName.name + " : " + chat)
+    this.subscription = this.route.params
+    this.actorService.get(actorId).then(actor =>
+      this.log.push(actor.name + " : " + chat))
+
+
+        // this.currentActorName = this.actorListNew.find(actor => actor.id == actorId);
+        // this.log.push(this.currentActorName.name + " : " + chat)
   }
 
   clearChat(){

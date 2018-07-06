@@ -11,6 +11,7 @@ import org.genboard.websocket.flow.HistoryModeSocketFlowHandler;
 import org.genboard.websocket.flow.InitiativeResponseSocketFlowHandler;
 import org.genboard.websocket.flow.InitiativeSocketFlowHandler;
 import org.genboard.websocket.flow.MoveTokenSocketFlowHandler;
+import org.genboard.websocket.flow.NewCharacterSocketFlowHandler;
 import org.genboard.websocket.flow.RollSocketFlowHandler;
 import org.genboard.websocket.flow.SocketFlowHandler;
 import org.genboard.websocket.message.IncomingMessage;
@@ -45,6 +46,9 @@ public class GameSetSocketFlowManager {
 	@Autowired
 	private HistoryModeSocketFlowHandler historyModeSocketFlowHandler;
 	
+	@Autowired
+	private NewCharacterSocketFlowHandler newCharacterSocketFlowHandler ;
+	
 	
 	@PostConstruct
 	public void initialize() {
@@ -56,6 +60,8 @@ public class GameSetSocketFlowManager {
 		handlers.put("MOVE_TOKEN_REQUEST", moveTokenSocketFlowHandler);
 		handlers.put("COMBAT_MODE_REQUEST", combatModeFlowHandler);
 		handlers.put("HISTORY_MODE_REQUEST", historyModeSocketFlowHandler);
+		handlers.put("HANDLE_NEW_PERSONAJE", newCharacterSocketFlowHandler);
+		
 	}
 
 	public void handle(IncomingMessage messageDTO, GameSetSocket partidaSocket) throws JSONException {

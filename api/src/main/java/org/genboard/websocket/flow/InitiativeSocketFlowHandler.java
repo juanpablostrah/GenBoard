@@ -47,11 +47,13 @@ public class InitiativeSocketFlowHandler extends SocketFlowHandler {
 			throwRepository.delete(oldThrow);
 		}
 		for(Actor actor : partida.getActors()) {
-			Throw initiativeThrow = new Throw(actor, 0);
-			initiativeThrow.setInitiative(initiative);
-			throwRepository.save(initiativeThrow);
+			if(!actor.getDm()) {
+				Throw initiativeThrow = new Throw(actor, 0);
+				initiativeThrow.setInitiative(initiative);
+				throwRepository.save(initiativeThrow);
+			}
 		}
-		Actor nextTurnActor = partida.getActors().get(0);
+		Actor nextTurnActor = partida.getActors().get(1);
 		WebSocketSession nextTurnSession = partidaSocket.findByActorId(nextTurnActor.getId());
 		OutcomingMessage<DefaultActionDTO> broadcast = new OutcomingMessage<DefaultActionDTO>("INITIATIVE_RESPONSE");
 		TextMessage broadcastMessage = broadcast.textMessage(initiativeDTO);

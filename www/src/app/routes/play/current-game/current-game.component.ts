@@ -32,6 +32,9 @@ export class CurrentGameComponent implements OnInit {
   map: File;
 
   @Output()
+  onHandleNewPersonajeToParent: EventEmitter<any>
+
+  @Output()
   onRollToParent: EventEmitter<any>
 
   @Output()
@@ -99,11 +102,11 @@ export class CurrentGameComponent implements OnInit {
     this.onThrowInitiativeToParent = new EventEmitter();
     this.onCombatModeToParent = new EventEmitter();
     this.onHistoryModeToParent = new EventEmitter();
+    this.onHandleNewPersonajeToParent = new EventEmitter();
     this.initiativeList = [];
   }
 
   ngOnInit() {
-
     this.subscription = this.route.params.subscribe(params => {
       var actorId = params['actorId']
       console.log('obteniendo actor: ',actorId);
@@ -117,12 +120,6 @@ export class CurrentGameComponent implements OnInit {
           this.isDM = false
         }
       })
-
-
-    // this.actorService.get(actorId).then(actor =>
-    //   this.onSetTokenToParent(actor.);
-    // )
-
     });
 
 
@@ -187,9 +184,9 @@ export class CurrentGameComponent implements OnInit {
       // };
       // this.client.sendMessage('roll', this.data)
 
-handleHistoryMode(){
-  this.onHistoryModeToParent.emit()
-}
+  handleHistoryMode(){
+    this.onHistoryModeToParent.emit()
+  }
 
   doRoll(){
     this.onRollToParent.emit(this.data)
@@ -213,6 +210,7 @@ handleHistoryMode(){
   notifyActor(){
     this.snackBar.open('Es tu turno Aventurero', '', {duration:10000});
     this.rollerControl.enabledTurn()
+    this.rollerControl.changeShow()
   }
 
   historyMode(){
@@ -236,10 +234,20 @@ handleHistoryMode(){
       var promise: Promise<Actor[]> = this.partidasService.getActors(partidaId);
       var afterThenPromise: Promise<void> = promise.then((actors) => {
         console.log(actors);
-        this.actors = actors;
+        this.actors = actors.filter(actor => !actor.dm)
         console.log("ACTORES",this.actors)
         this.actorList.populateActorList(this.actors)
         this.dmPanel.actors = this.actors
+
+        // actors.forEach(actor => {
+        //   if(actor.dm){
+        //     this.actors.push(actor)
+        //   }
+        //   this.actors = actors;
+        //   console.log("ACTORES",this.actors)
+        //   this.actorList.populateActorList(this.actors)
+        //   this.dmPanel.actors = this.actors
+        // })
       });
     });
   }
@@ -255,7 +263,6 @@ handleHistoryMode(){
       })
       this.actors.splice(this.actors.indexOf(actorReorder), 1)
       this.actors.push(actorReorder)
-
     })
     console.log("LISTA YA ORDENADA",result);
     console.log("ACTORS", this.actors)
@@ -284,6 +291,11 @@ handleHistoryMode(){
 
   handleCombatMode($event){
     this.onCombatModeToParent.emit($event);
+  }
+
+  handleNewPersonaje(){
+    console.log("HANDLE NEW PERSONAJE")
+    this.onHandleNewPersonajeToParent.emit()
   }
 
   getRandomColor(){

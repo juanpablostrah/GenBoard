@@ -92,8 +92,9 @@ public class InitiativeResponseSocketFlowHandler extends SocketFlowHandler {
 		if(initiative.getTurn().equals(initiative.getInitiativeThrow().size() - 1)) {
 			initiative.nextTurn();
 			initiative.order();
+			initiativeRepository.save(initiative);
 			List<Long> actors = initiative.getActors();
-			//initiativeRepository.save(initiative);
+			
 			
 			String buildThrow = "{ throwsActorsId: "+ actors.toString() + " }";			
 			JSONObject throwListJson = new JSONObject(buildThrow);
@@ -121,7 +122,19 @@ public class InitiativeResponseSocketFlowHandler extends SocketFlowHandler {
 			DefaultActionDTO initiativeDTO = messageDTO.marshallize(DefaultActionDTO.class);
 			OutcomingMessage<DefaultActionDTO> broadcast2 = new OutcomingMessage<DefaultActionDTO>("INITIATIVE_RESPONSE");
 			TextMessage broadcastNextTurnMessage = broadcast2.textMessage(initiativeDTO);
+			
 			WebSocketSession nextSession = partidaSocket.findByActorId(nextActorId);
+			if(nextSession == null) {
+				List<Actor> actors = partida.getActors();
+				for (Actor actor : actors) {
+					if(actor.getDm()) {
+						nextActorId = actor.getId();
+						break;
+					}
+				}
+				nextSession = partidaSocket.findByActorId(nextActorId);
+			}
+			
 			try {
 				nextSession.sendMessage(broadcastNextTurnMessage);
 			} catch (IOException e) {

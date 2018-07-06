@@ -1,5 +1,5 @@
-package org.genboard.seeder;
-
+//package org.genboard.seeder;
+//
 //import javax.annotation.PostConstruct;
 //
 //import org.genboard.model.Player;
@@ -9,7 +9,7 @@ package org.genboard.seeder;
 //import org.hibernate.annotations.common.util.impl.LoggerFactory;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Component;
-
+//
 //@Component
 //public class PlayerSeeder {
 //	
@@ -48,5 +48,5 @@ package org.genboard.seeder;
 //		playerRepository.save(player);
 //		return player;
 //	}
-
+//
 //}

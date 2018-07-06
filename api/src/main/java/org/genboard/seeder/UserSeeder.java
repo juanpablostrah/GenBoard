@@ -28,14 +28,13 @@ public class UserSeeder {
 
 	private static final org.jboss.logging.Logger LOGGER = LoggerFactory.logger(UserSeeder.class);
 
-//	@PostConstruct
-//	private void run() {		
-//		LOGGER.info("ejecuto despues de la phase de inyeccion de dependencias");
-//		
-//		UserAccount carabonita = null;
-//		carabonita = createUser("carabonita","12345678","");
-//		
+	@PostConstruct
+	private void run() {		
+		LOGGER.info("ejecuto despues de la phase de inyeccion de dependencias");
 		
+//		UserAccount carabonita = null;
+//		carabonita = createUser("bichi","12345678","");
+				
 //		Optional<Player> player = playerRepository.findById((long) 2);
 //		if(!player.isPresent()) {
 //			if(userAccount != null) {
@@ -45,10 +44,10 @@ public class UserSeeder {
 //				createPlayer("carabonita", carabonita);
 //			}	
 //		}
-		//UserAccount juampi = createUser("juampi","123456","");
-		//createPlayer("juampi", juampi);
+//		UserAccount juampi = createUser("juampi","123456","");
+//		createPlayer("juampi", juampi);
 		
-//	}
+	}
 	
 	private UserAccount createUser(String username, String password, String roles) {
 		UserAccount user = new UserAccount();

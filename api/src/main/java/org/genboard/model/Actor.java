@@ -1,6 +1,7 @@
 package org.genboard.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -9,10 +10,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 public class Actor {
@@ -41,6 +46,10 @@ public class Actor {
     
     @OneToOne
     private Token token;
+    
+    @OneToMany(mappedBy = "secondActor", targetEntity = Token.class)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Token> otherTokens;
     
     private int ultimaIniciativa;
     
@@ -135,6 +144,14 @@ public class Actor {
 
 	public void setDm(Boolean dm) {
 		this.dm = dm;
+	}
+
+	public List<Token> getOtherTokens() {
+		return otherTokens;
+	}
+
+	public void setOtherTokens(List<Token> otherTokens) {
+		this.otherTokens = otherTokens;
 	}
 	
 	

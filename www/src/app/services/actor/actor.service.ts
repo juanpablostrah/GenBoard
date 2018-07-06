@@ -3,11 +3,14 @@ import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
 import { Actor } from 'app/routes/actor/actor';
+import { AppConfig } from 'app/config/app.config';
 
 @Injectable()
 export class ActorService {
-	private actorRestUrl = 'http://localhost:8080/api/v1/actor';  // path del controller
-	private actorResourceUrl = 'http://localhost:8080/actor';  // path del controller
+	private apiUrl = AppConfig.endpoints.api;
+	private apiResourceUrl = AppConfig.endpoints.apiResource;
+	private actorRestUrl = this.apiUrl + '/actor';  // path del controller
+	private actorResourceUrl = this.apiResourceUrl + '/actor';  // path del controller
 
 	localStorage: Storage;
 
@@ -16,6 +19,7 @@ export class ActorService {
 	}
 
   save(actor: Actor): Promise<Actor> { //service para crear un actor
+
 		console.log('creando actor ' + JSON.stringify(actor));
 		console.log(`${this.actorRestUrl}`)
 		return this.http.post(`${this.actorRestUrl}`,

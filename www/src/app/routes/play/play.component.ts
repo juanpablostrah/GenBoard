@@ -69,20 +69,37 @@ export class PlayComponent implements OnInit, OnDestroy {
     this.client.sendMessage(message.tag, message.data);
   }
 
-  doInitiative(){
+  doHandleNewPersonaje(){
     this.subscription = this.route.params
     .subscribe(params => {
         var actorId = params['actorId'];
         var partidaId = params['partidaId'];
         this.message = {
-          tag: 'INITIATIVE_REQUEST',
+          tag: 'HANDLE_NEW_PERSONAJE',
           data: {actorId : actorId,
                  partidaId: partidaId}
+        }
+        console.log("nuevo personaje creado")
+
+        this.send(this.message)
+     })
+  }
+
+
+  doInitiative(){
+    this.subscription = this.route.params
+    .subscribe(params => {
+      var actorId = params['actorId'];
+      var partidaId = params['partidaId'];
+      this.message = {
+        tag: 'INITIATIVE_REQUEST',
+        data: {actorId : actorId,
+          partidaId: partidaId}
         }
         console.log("comienzo iniciativa")
 
         this.send(this.message)
-     })
+      })
   }
 
   initiateCombatMode(data : any){

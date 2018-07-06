@@ -28,6 +28,9 @@ public class Token {
     @OneToOne
     private Actor actor;
     
+    @ManyToOne
+    private Actor secondActor;
+    
 	public Token() {
 		super();
 	}
@@ -67,6 +70,14 @@ public class Token {
 
 	public void setActor(Actor actor) {
 		this.actor = actor;
+	}
+
+	public Actor getSecondActor() {
+		return secondActor;
+	}
+
+	public void setSecondActor(Actor secondActor) {
+		this.secondActor = secondActor;
 	}
     
 	

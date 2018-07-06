@@ -1,6 +1,8 @@
 package org.genboard.seeder;
 
-//import javax.annotation.PostConstruct;
+import javax.annotation.PostConstruct;
+
+import org.genboard.model.UserAccount;
 //
 //import org.genboard.model.UserAccount;
 import org.genboard.repository.UserAccountRepository;
@@ -23,7 +25,7 @@ public class UserAccountSeeder {
 
 //	@PostConstruct
 //	private void run() {		
-//		LOGGER.info("ejecuto despues de la phase de inyeccion de dependencias");
+//		//LOGGER.info("ejecuto despues de la phase de inyeccion de dependencias");
 //		createUser("laloba","12345678","");
 //		createUser("jefe","12345678","");
 //	}

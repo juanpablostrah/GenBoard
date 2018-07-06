@@ -48,8 +48,12 @@
 
         <div fxLayout="row">
           <div>
-            <button type="submit" mat-raised-button color="primary" class="rollButtonContainer" [disabled]="!yourTurn">Tirar</button>
-            <button type="button" (click)="throwInitiative()" mat-raised-button color="primary" class="rollButtonContainer" [disabled]="!yourTurn">Tirar iniciativa</button>
+            <ng-container *ngIf="showThrow">
+              <button type="submit" mat-raised-button color="primary" class="rollButtonContainer" *ngIf="true" [disabled]="!yourTurn">Tirar</button>
+            </ng-container>
+            <ng-container *ngIf="!showThrow">  
+              <button type="button" (click)="throwInitiative()" mat-raised-button color="primary" class="rollButtonContainer" [disabled]="!yourTurn">Tirar iniciativa</button>
+            </ng-container>
             <!-- <button type="submit" mat-raised-button color="primary" class="rollButtonContainer">Tirar</button>
             <button type="button" (click)="throwInitiative()" mat-raised-button color="primary" class="rollButtonContainer">Tirar iniciativa</button> -->
             <button type="button" (click)="resetDice()" mat-raised-button color="warn" [disabled]="!yourTurn" >Limpiar Dados</button>

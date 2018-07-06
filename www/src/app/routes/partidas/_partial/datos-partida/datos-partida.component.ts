@@ -71,7 +71,8 @@ export class DatosPartidaComponent {
     let playerOwnerURI = `${AppConfig.endpoints.api}/player/${playerId}`
     this.partida.owner = playerOwnerURI;
     this.partidasService.save(this.partida).then((data) => {
-      var partidaId = this.localStorage.getItem("PARTIDA_ID")
+      this.localStorage.setItem("PARTIDA_ID",data['id'])
+      var partidaId = data['id']
       this.actor.tipoActor = ActorType.Personaje;
       let gameSetURI = `${AppConfig.endpoints.api}/gameSet/${partidaId}`
       let playerURI = `${AppConfig.endpoints.api}/player/${playerId}`

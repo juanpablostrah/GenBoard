@@ -10,6 +10,7 @@ import { OrbitControls } from 'three-orbitcontrols-ts';
 import { MeshBasicMaterial } from 'three';
 import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
+import { ActorService } from 'app/services/actor/actor.service';
 
 var diceIndex = 0;
 
@@ -51,7 +52,7 @@ export class CanvasDiceRollComponent implements AfterViewInit {
   @Output()
   onMoveUpMouse: EventEmitter<any>
 
-  constructor(private route: ActivatedRoute, public snackBar: MatSnackBar) {
+  constructor(private route: ActivatedRoute, public snackBar: MatSnackBar, private actorService: ActorService) {
     this.dice = []
     this.tokens = []
     this.onMoveUpMouse = new EventEmitter();
@@ -79,8 +80,13 @@ export class CanvasDiceRollComponent implements AfterViewInit {
   setToken(data : any){
     console.log("MOUSE ",this.onMoveUpMouse)
     console.log("SETEO TOKEN",data.tokens)
-    this.tokens.map(token => this.scene.remove(token))
-    data.tokens.map(token => this.addCylinder(token.x,token.z,token.actorId))
+    //this.tokens.map(token => this.scene.remove(token))
+    data.tokens.map(token => {
+      let found = this.tokens.find((oldtoken)=> token.actorId === oldtoken.actorId)
+      if(!found) {
+        this.addCylinder(token.x,token.z,token.actorId)
+      }
+    })
   }
 
   setMap(map : File){
@@ -393,7 +399,13 @@ setUpMouseHander() {
       var r = element.getBoundingClientRect();
       var x = evt.clientX - r.left;
       var y = evt.clientY - r.top;
-      this.doMouseMoveLocal(x, y);
+      this.subscription = this.route.params
+      .subscribe(params => {
+          var actorId = params['actorId'];
+          if(this.dragItem.actorId == actorId){
+            const result = this.doMouseMoveLocal(x, y);
+          }
+       })
       prevX = x;
       prevY = y;
     }
@@ -408,23 +420,25 @@ setUpMouseHander() {
       var r = element.getBoundingClientRect();
       var x = evt.clientX - r.left;
       var z = evt.clientY - r.top;
-      const result = this.doMouseMoveLocal(x, z);
-
-      const data = {
-        actorId: this.dragItem.actorId,
-        x : result.a,
-        z : result.b
-      }
 
       this.subscription = this.route.params
       .subscribe(params => {
           var actorId = params['actorId'];
-          if(data.actorId == actorId){
-            this.onMoveUpMouse.emit(data)
-          }
-          else{
-            this.snackBar.open('Esa no es tu ficha', '', {duration:3000});
-          }
+          this.actorService.get(actorId).then((actor) =>  {
+            if(this.dragItem.actorId == actorId || actor.dm){
+              const result = this.doMouseMoveLocal(x, z);
+
+              const data = {
+                actorId: this.dragItem.actorId,
+                x : result.a,
+                z : result.b
+              }
+              this.onMoveUpMouse.emit(data)
+            }
+            else{
+              this.snackBar.open('Esa no es tu ficha', '', {duration:3000});
+            }
+          })
        })
        dragging = false;
     }

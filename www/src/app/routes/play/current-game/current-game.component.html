@@ -2,6 +2,7 @@
   <div fxLayout="column" id="controllers-column">
       <app-dm-panel #dmPanel
         [hidden]="!isDM"
+        (onHandleNewPersonaje)="handleNewPersonaje()"
         (onHistoryMode)="handleHistoryMode()"
         (onCombatMode)="handleCombatMode($event)"
         (onSetActors)="handleSetActors($event)"
