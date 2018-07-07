@@ -22,6 +22,8 @@ import {MatSnackBar} from '@angular/material';
 })
 export class CurrentGameComponent implements OnInit {
 
+  currentActorId: string;
+
   actors: Actor[];
 
   client: any;
@@ -83,7 +85,7 @@ export class CurrentGameComponent implements OnInit {
 
   @Input()
   isDM : boolean;
-  currentActor : any;
+
   subscription: any;
 
   initiativeList : Number[];
@@ -111,7 +113,6 @@ export class CurrentGameComponent implements OnInit {
       var actorId = params['actorId']
       console.log('obteniendo actor: ',actorId);
       this.actorService.get(actorId).then((actor) =>  {
-        console.log("response : ",actor)
         if(actor.dm){
           console.log("ES DM")
           this.isDM = true
@@ -122,12 +123,6 @@ export class CurrentGameComponent implements OnInit {
       })
     });
 
-
-
-    //VERIFICAR PORQUE NO TRAE EL PLAYER OWNER, Y PORQUE NO TRANSFORMA
-    //EL RESPONSE EN UNA PARTIDA Y LO DEJA COMO OBJECT
-
-    console.log("conectado al socket")
     this.snackBar.open('Conectado a la partida', '', {duration:5000});
     this.dataSet = [{
       descriptor: 4,
@@ -203,14 +198,16 @@ export class CurrentGameComponent implements OnInit {
   }
 
   doOnMouseMove($event){
-    console.log("do_mouse", $event)
     this.onMoveTokenToParent.emit($event)
   }
 
   notifyActor(){
-    this.snackBar.open('Es tu turno Aventurero', '', {duration:10000});
+    this.snackBar.open('Es tu turno ' + this.currentActorId , '', {duration:10000});
     this.rollerControl.enabledTurn()
-    this.rollerControl.changeShow()
+  }
+
+  changeShow(){
+    this.rollerControl.changeShow()//VERRRRR!!!
   }
 
   historyMode(){
@@ -273,6 +270,8 @@ export class CurrentGameComponent implements OnInit {
   }
 
   log(data : any){
+    data.actorId = this.currentActorId
+    console.log("LOG",data)
     this.gameLogger.doLog(data);
   }
 

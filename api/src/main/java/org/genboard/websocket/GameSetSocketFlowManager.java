@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 
 import org.genboard.websocket.flow.ChatSocketFlowHandler;
 import org.genboard.websocket.flow.CombatModeFlowHandler;
+import org.genboard.websocket.flow.CurrentActorSocketFlowHandler;
 import org.genboard.websocket.flow.HistoryModeSocketFlowHandler;
 import org.genboard.websocket.flow.InitiativeResponseSocketFlowHandler;
 import org.genboard.websocket.flow.InitiativeSocketFlowHandler;
@@ -49,6 +50,9 @@ public class GameSetSocketFlowManager {
 	@Autowired
 	private NewCharacterSocketFlowHandler newCharacterSocketFlowHandler ;
 	
+	@Autowired
+	private CurrentActorSocketFlowHandler currentActorSocketFlowHandler;
+	
 	
 	@PostConstruct
 	public void initialize() {
@@ -61,6 +65,7 @@ public class GameSetSocketFlowManager {
 		handlers.put("COMBAT_MODE_REQUEST", combatModeFlowHandler);
 		handlers.put("HISTORY_MODE_REQUEST", historyModeSocketFlowHandler);
 		handlers.put("HANDLE_NEW_PERSONAJE", newCharacterSocketFlowHandler);
+		handlers.put("CURRENT_ACTOR", currentActorSocketFlowHandler);
 		
 	}
 

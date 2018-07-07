@@ -1,0 +1,10 @@
+<div #dmDialogDeleteToken>
+  <h2 mat-dialog-title>Selecciona el Personaje para borrar</h2>
+  <mat-dialog-content>
+    <ng-template ngFor let-index="index" let-actor [ngForOf]="actors">
+      <div class="">
+        <button mat-raised-button (click)="deleteToken($event)" class="actorButton">{{ actor.name }} </button>
+      </div>
+    </ng-template>
+  </mat-dialog-content>
+</div>

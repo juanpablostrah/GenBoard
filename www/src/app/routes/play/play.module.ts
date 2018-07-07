@@ -18,6 +18,7 @@ import { ActorListComponent } from './actor-list/actor-list.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { DragulaModule } from 'ng2-dragula/ng2-dragula';
 import { DmDialogTokenComponent } from './dm-dialog-token/dm-dialog-token.component';
+import { DmDialogDeleteTokenComponent } from './dm-dialog-delete-token/dm-dialog-delete-token.component';
 
 
 @NgModule({
@@ -48,7 +49,9 @@ import { DmDialogTokenComponent } from './dm-dialog-token/dm-dialog-token.compon
 
     ActorListComponent,
 
-    DmDialogTokenComponent
+    DmDialogTokenComponent,
+
+    DmDialogDeleteTokenComponent
   ],
   providers: [
 

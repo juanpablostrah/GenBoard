@@ -108,7 +108,7 @@ export class PlayComponent implements OnInit, OnDestroy {
         var partidaId = params['partidaId'];
         this.message = {
           tag: 'COMBAT_MODE_REQUEST',
-          data: {actorId : data,
+          data: {actorId : this.currentGame.currentActorId,
                  partidaId: partidaId}
         }
         console.log("entrando en combate")
@@ -169,7 +169,7 @@ export class PlayComponent implements OnInit, OnDestroy {
   throwInitiative(){
     this.subscription = this.route.params
     .subscribe(params => {
-        var actorId = params['actorId'];
+        var actorId = this.currentGame.currentActorId;
         var partidaId = params['partidaId'];
         this.message = {
           tag: 'THROW_INITIATIVE',
@@ -177,7 +177,7 @@ export class PlayComponent implements OnInit, OnDestroy {
                  partidaId: partidaId}
         }
         console.log("envio la tirada de iniciativa")
-
+        console.log("INITIATIVE THROW",this.message.data)
         this.send(this.message)
      })
   }
@@ -185,7 +185,7 @@ export class PlayComponent implements OnInit, OnDestroy {
   doRoll(data : any){
     this.subscription = this.route.params
     .subscribe(params => {
-        var actorId = params['actorId'];
+        var actorId = params['actorId'];//esta mal tengo que enviar id del moustruo
         this.message = {
           tag: 'ROLL_REQUEST',
           data: {dataSet : data, actorId : actorId}
@@ -208,7 +208,21 @@ export class PlayComponent implements OnInit, OnDestroy {
 
         this.send(this.message)
      })
+  }
 
+  doSetCurrentActor(data : any){
+    this.subscription = this.route.params
+    .subscribe(params => {
+      var partidaId = params['partidaId'];
+        this.message = {
+          tag: 'CURRENT_ACTOR',
+          data: {actorId : data.actorId,
+                 partidaId: partidaId}
+        }
+        console.log("el actor actual es el id :"+ data.actorId)
+
+        this.send(this.message)
+     })
   }
 
   handle(tag:any, data: any ){
@@ -216,12 +230,10 @@ export class PlayComponent implements OnInit, OnDestroy {
 
     switch(tag) {
       case "ROLL_RESPONSE": {
-            console.log("DATA",data.dataSet)
+            console.log("ROLL_RESPONSE",data)
+            //this.doSetCurrentActor(data)
             this.currentGame.roll(data.dataSet.result.dataSet);
             this.currentGame.log(data);
-            //this.throwInitiative();
-            // this.currentGame.roll(data.result.dataSet);
-            // this.currentGame.log(data.result.dataSet);
           break;
        }
        case "CONNECT_ACTOR_RESPONSE": {
@@ -234,7 +246,9 @@ export class PlayComponent implements OnInit, OnDestroy {
           break;
        }
        case "INITIATIVE_RESPONSE": {
-            console.log("ENTRANDO A MI TURNO")
+            console.log("ENTRANDO A MI TURNO",data)
+            this.currentGame.currentActorId = data.actorId
+            this.currentGame.changeShow()
             this.currentGame.notifyActor()
           break;
        }
@@ -255,12 +269,18 @@ export class PlayComponent implements OnInit, OnDestroy {
        }
        case "COMBAT_RESPONSE": {
             console.log("tu turno de combatir")
+            this.currentGame.changeShow()
             this.currentGame.notifyActor()
           break;
        }
        case "HISTORY_RESPONSE": {
             console.log("tu turno de combatir")
             this.currentGame.historyMode()
+          break;
+       }
+       case "CURRENT_ACTOR_RESPONSE": {
+            console.log("seteo actor actual")
+            this.currentGame.currentActorId = data.actorId
           break;
        }
 

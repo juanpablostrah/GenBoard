@@ -10,6 +10,7 @@ import { DmDialogComponent } from '../dm-dialog/dm-dialog.component';
 import { Actor } from 'app/routes/actor/actor';
 import { EventEmitter } from '@angular/core';
 import { DmDialogTokenComponent } from 'app/routes/play/dm-dialog-token/dm-dialog-token.component';
+import { DmDialogDeleteTokenComponent } from 'app/routes/play/dm-dialog-delete-token/dm-dialog-delete-token.component';
 
 @Component({
   selector: 'app-dm-panel',
@@ -73,6 +74,16 @@ export class DmPanelComponent implements OnInit {
     this.yourTurn = false;
   }
 
+  openDeleteTokenDialog(): void {
+    let dialogRef = this.dialog.open(DmDialogDeleteTokenComponent, {
+      width: '500px',
+      data: { actors: this.actors }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+    });
+  }
+
   openTurnDialog(): void {
     let dialogRef = this.dialog.open(DmDialogComponent, {
       width: '600px',
@@ -119,8 +130,12 @@ export class DmPanelComponent implements OnInit {
     this.openTurnDialog();
   }
 
-  agregarFicha(){
+  agregarPersonaje(){
     this.openAddTokenDialog();
+  }
+
+  borrarPersonaje(){
+    this.openDeleteTokenDialog();
   }
 
   public setMap(map :File){

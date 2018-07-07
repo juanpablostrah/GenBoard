@@ -44,12 +44,10 @@ export class GameLogComponent implements OnInit {
   }
 
   sendChat(chat: String){
-    console.log(this.chat)
     this.onChat.emit({chat:this.chat})
   }
 
   doChat(chat: String , actorId: any){
-    console.log("DO_CHAT",chat,actorId)
     this.subscription = this.route.params
     this.actorService.get(actorId).then(actor =>
       this.log.push(actor.name + " : " + chat))
@@ -63,13 +61,10 @@ export class GameLogComponent implements OnInit {
     this.chat = "";
   }
 
-  //doLog(dataSet: [any]){
   doLog(data :any){
-    console.log("BUILDLOG",data)
     var sum = 0
     var log = ""
     var dataSet = data.dataSet.result.dataSet
-    console.log("DATASET",dataSet)
     dataSet.map((dicetype)=> {
       if (dicetype.value !== 0) {
         sum += dicetype.results.reduce((sum, x) => sum + x , 0) + dicetype.modifier
@@ -87,7 +82,6 @@ export class GameLogComponent implements OnInit {
     console.log(log)
     this.currentActorName = this.actorListNew.find(actor => actor.id == data.actorId);
     this.log.push(this.currentActorName.name + " : " + log)
-    //this.log.push(log)
   }
 
 }

@@ -22,19 +22,12 @@
           <mat-icon>fullscreen_exit</mat-icon>
             Dar Turno
         </button>
-        <button mat-raised-button (click)="agregarFicha()">
+        <button mat-raised-button (click)="agregarPersonaje()" class="btnGiveTurn">
             Agregar Personaje
         </button>
-        <!-- <div id="content">
-      		<p><b>Mouse Action:</b>
-      			<label><input type="radio" name="action" id="mouseDrag">Drag</label>
-      			<label><input type="radio" name="action" id="mouseAdd">Add</label>
-      			<label><input type="radio" name="action" id="mouseDelete">Delete</label>
-      		</p>
-      		<div id="canvas-holder">
-      			<canvas id="maincanvas"></canvas>
-      		</div>
-      	</div> -->
+        <button mat-raised-button (click)="borrarPersonaje()" class="btnGiveTurn">
+            Borrar Personaje
+        </button>
       	<div id='grand'></div>
         <input style="display: none" type="file" (change)="saveMap($event)" #fileInput>
         <button mat-raised-button (click)="fileInput.click()" class="btnPanel">

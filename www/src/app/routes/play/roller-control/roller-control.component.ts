@@ -34,12 +34,15 @@ export class RollerControlComponent implements OnInit {
 
   isIniciative : boolean;
 
+  isFinishTurn : boolean;
+
   constructor() {
     this.onRoll = new EventEmitter();
     this.onThrowInitiative = new EventEmitter();
     this.onCombatMode = new EventEmitter();
     this.yourTurn = false;
     this.showThrow = true;
+    this.isFinishTurn = false;
   }
 
   ngOnInit(){
@@ -66,23 +69,22 @@ export class RollerControlComponent implements OnInit {
   }
 
   finishTurn(){
+    this.isFinishTurn = true;
     this.onCombatMode.emit()
     this.disabledTurn()
   }
 
   enabledTurn(){
-    console.log("SETEO TURNO EN TRUE")
     this.yourTurn = true;
   }
 
   disabledTurn(){
-    console.log("SETEO TURNO EN FALSE")
     this.yourTurn = false;
   }
 
   changeShow(){
-    console.log("HABILITO SHOW")
     this.showThrow = !this.showThrow
+    console.log("HABILITO SHOW", this.showThrow)
   }
 
 }

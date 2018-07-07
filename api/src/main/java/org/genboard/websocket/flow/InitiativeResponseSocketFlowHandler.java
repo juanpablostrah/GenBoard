@@ -14,7 +14,6 @@ import org.genboard.repository.InitiativeRepository;
 import org.genboard.repository.ThrowRepository;
 import org.genboard.websocket.GameSetSocket;
 import org.genboard.websocket.dto.DefaultActionDTO;
-import org.genboard.websocket.dto.InitiativeResponseDTO;
 import org.genboard.websocket.message.IncomingMessage;
 import org.genboard.websocket.message.OutcomingMessage;
 import org.json.JSONException;
@@ -45,7 +44,8 @@ public class InitiativeResponseSocketFlowHandler extends SocketFlowHandler {
 	public void handle(IncomingMessage messageDTO, GameSetSocket partidaSocket) throws JSONException {
 		//calculo la tirada
 		JSONObject data = new JSONObject(messageDTO.getData());
-		String actorId = (String) data.get("actorId");
+		Integer actorId = data.getInt("actorId");
+		
 		
 		ThrowDice throwDice = new ThrowDice();
 		Integer result20Dice = throwDice.throwDice(20);
@@ -95,7 +95,6 @@ public class InitiativeResponseSocketFlowHandler extends SocketFlowHandler {
 			initiativeRepository.save(initiative);
 			List<Long> actors = initiative.getActors();
 			
-			
 			String buildThrow = "{ throwsActorsId: "+ actors.toString() + " }";			
 			JSONObject throwListJson = new JSONObject(buildThrow);
 			
@@ -120,6 +119,7 @@ public class InitiativeResponseSocketFlowHandler extends SocketFlowHandler {
 			Actor nextActor = nextThrow.getActor();
 			Long nextActorId = nextActor.getId();
 			DefaultActionDTO initiativeDTO = messageDTO.marshallize(DefaultActionDTO.class);
+			initiativeDTO.setActorId(nextActorId);
 			OutcomingMessage<DefaultActionDTO> broadcast2 = new OutcomingMessage<DefaultActionDTO>("INITIATIVE_RESPONSE");
 			TextMessage broadcastNextTurnMessage = broadcast2.textMessage(initiativeDTO);
 			
@@ -133,12 +133,29 @@ public class InitiativeResponseSocketFlowHandler extends SocketFlowHandler {
 					}
 				}
 				nextSession = partidaSocket.findByActorId(nextActorId);
+				
+				//aca vos estas notificando solo al siguiente user que es el siguiente
+				//deberias mandarle al resto un mesaje de que cambio el turno y listo
 			}
 			
 			try {
 				nextSession.sendMessage(broadcastNextTurnMessage);
 			} catch (IOException e) {
 				e.printStackTrace();
+			}
+			
+			OutcomingMessage<DefaultActionDTO> broadcast3 = new OutcomingMessage<DefaultActionDTO>("CURRENT_ACTOR_RESPONSE");
+			TextMessage broadcastToRest = broadcast3.textMessage(initiativeDTO);
+			
+			for (WebSocketSession session : sessions) {
+				if(session != nextSession) {
+					try {
+						session.sendMessage(broadcastToRest);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				
 			}
 			LOGGER.info("el siguiente turno es de "+ nextActorId);
 		}

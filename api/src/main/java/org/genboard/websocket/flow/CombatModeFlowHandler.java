@@ -1,7 +1,9 @@
 package org.genboard.websocket.flow;
 
 import java.io.IOException;
+import java.util.List;
 
+import org.genboard.model.Actor;
 import org.genboard.model.GameSet;
 import org.genboard.model.Initiative;
 import org.genboard.repository.GameSetRepository;
@@ -37,10 +39,22 @@ public class CombatModeFlowHandler extends SocketFlowHandler{
 		
 		GameSet partida = gameSetRepository.findById(partidaId).get();
 		Initiative initiative = partida.getInitiative();
-		Long currentActorId = initiative.currentThrow().getActor().getId();
+		Long currentActorId = initiative.currentThrow().getActor().getId();		
 		initiative.nextTurn();
 		initiativeRepository.save(initiative);
 		WebSocketSession nextTurnSession = partidaSocket.findByActorId(currentActorId);
+		
+		if(nextTurnSession == null) {
+			List<Actor> actors = partida.getActors();
+			for (Actor actor : actors) {
+				if(actor.getDm()) {
+					currentActorId = actor.getId();
+					break;
+				}
+			}
+			nextTurnSession = partidaSocket.findByActorId(currentActorId);
+		}
+		
 		OutcomingMessage<DefaultActionDTO> broadcast = new OutcomingMessage<DefaultActionDTO>("COMBAT_RESPONSE");
 		TextMessage broadcastMessage = broadcast.textMessage(combatDTO);
 		try {

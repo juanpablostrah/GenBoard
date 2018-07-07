@@ -34,6 +34,7 @@ public class Initiative {
 	}
 	
 	public Throw currentThrow() {
+		this.order();
 		return initiativeThrow.get(turn);
 	}
 

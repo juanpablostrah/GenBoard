@@ -1,6 +1,7 @@
 package org.genboard.websocket.flow;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.genboard.model.Actor;
 import org.genboard.model.GameSet;
@@ -54,11 +55,24 @@ public class InitiativeSocketFlowHandler extends SocketFlowHandler {
 			}
 		}
 		Actor nextTurnActor = partida.getActors().get(1);
-		WebSocketSession nextTurnSession = partidaSocket.findByActorId(nextTurnActor.getId());
+		initiativeDTO.setActorId(nextTurnActor.getId());
+		WebSocketSession nextSession = partidaSocket.findByActorId(nextTurnActor.getId());
+		
+		if(nextSession == null) {
+			List<Actor> actors = partida.getActors();
+			for (Actor actor : actors) {
+				if(actor.getDm()) {
+					nextTurnActor = actor;
+					break;
+				}
+			}
+			nextSession = partidaSocket.findByActorId(nextTurnActor.getId());
+		}
+		
 		OutcomingMessage<DefaultActionDTO> broadcast = new OutcomingMessage<DefaultActionDTO>("INITIATIVE_RESPONSE");
 		TextMessage broadcastMessage = broadcast.textMessage(initiativeDTO);
 		try {
-			nextTurnSession.sendMessage(broadcastMessage);
+			nextSession.sendMessage(broadcastMessage);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
