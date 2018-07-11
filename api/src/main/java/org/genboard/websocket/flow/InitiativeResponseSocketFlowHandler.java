@@ -84,7 +84,6 @@ public class InitiativeResponseSocketFlowHandler extends SocketFlowHandler {
 		currentThrow.setResult(result20Dice);
 		throwRepository.save(currentThrow);
 		
-				
 		initiativeRepository.save(initiative);
 		
 		
@@ -134,8 +133,6 @@ public class InitiativeResponseSocketFlowHandler extends SocketFlowHandler {
 				}
 				nextSession = partidaSocket.findByActorId(nextActorId);
 				
-				//aca vos estas notificando solo al siguiente user que es el siguiente
-				//deberias mandarle al resto un mesaje de que cambio el turno y listo
 			}
 			
 			try {

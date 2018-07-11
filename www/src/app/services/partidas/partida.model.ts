@@ -10,4 +10,5 @@ export interface Partida {
     actors: Actor[];
     cantPlayersMax: number;
     owner : any;
+    initiative : any;
 }

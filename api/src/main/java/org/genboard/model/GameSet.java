@@ -176,7 +176,13 @@ public class GameSet {
 		return coords;
 	}
 	
+	public Actor getActorById(Long actorId){
+		for (Actor actor : actors) {
+			if(actorId == actor.getId()){
+				return actor;
+			}
+		}
+		return null;
+	}
 	
-	
-
 }

@@ -46,18 +46,17 @@ import { DmDialogDeleteTokenComponent } from './dm-dialog-delete-token/dm-dialog
     MapComponent,
     DmPanelComponent,
     DmDialogComponent,
-
     ActorListComponent,
-
     DmDialogTokenComponent,
-
     DmDialogDeleteTokenComponent
   ],
   providers: [
-
   ],
-  entryComponents: [DmDialogComponent,
-  DmDialogTokenComponent]
+  entryComponents: [
+    DmDialogComponent,
+    DmDialogTokenComponent,
+    DmDialogDeleteTokenComponent
+  ]
 })
 export class PlayModule {
 

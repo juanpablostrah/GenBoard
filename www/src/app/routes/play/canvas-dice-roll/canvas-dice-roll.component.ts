@@ -94,6 +94,7 @@ export class CanvasDiceRollComponent implements AfterViewInit {
     reader.onload = (evnt :any) => {
       var content : string = evnt.target.result
       var texturePainting1 : any = THREE.ImageUtils.loadTexture(content );
+      texturePainting1.flipY = false;
       this.floorMaterial.map = texturePainting1;
     }
     console.log("mapita");

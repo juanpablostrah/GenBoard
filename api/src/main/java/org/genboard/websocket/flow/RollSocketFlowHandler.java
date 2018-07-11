@@ -22,7 +22,8 @@ public class RollSocketFlowHandler extends SocketFlowHandler {
 
 	public void handle(IncomingMessage messageDTO, GameSetSocket partidaSocket) throws JSONException {
 		JSONObject data = new JSONObject(messageDTO.getData());
-		String actorId = (String) data.get("actorId");
+		Integer actorIdInt = data.getInt("actorId");
+		String actorId = String.valueOf(actorIdInt);
 		JSONObject dataSetNew = (JSONObject) data.get("dataSet");
 		
 		ThrowDice throwDice = new ThrowDice();

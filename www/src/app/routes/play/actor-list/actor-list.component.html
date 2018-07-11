@@ -4,7 +4,7 @@
       Personajes
     </mat-expansion-panel-header>
     <ng-template ngFor let-index="index" let-actor [ngForOf]="actorList">
-      <p> {{ actor.name }} </p>
+      <p> {{ actor.name }} {{actor.id}}</p>
     </ng-template>
     <!-- <mat-chip-list>
       <mat-chip>One fish</mat-chip>

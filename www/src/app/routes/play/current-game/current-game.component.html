@@ -3,6 +3,7 @@
       <app-dm-panel #dmPanel
         [hidden]="!isDM"
         (onHandleNewPersonaje)="handleNewPersonaje()"
+        (onHandleDeletePersonaje)="handleDeletePersonaje($event)"
         (onHistoryMode)="handleHistoryMode()"
         (onCombatMode)="handleCombatMode($event)"
         (onSetActors)="handleSetActors($event)"
@@ -12,6 +13,7 @@
       <app-roller-control #rollerControl
         [dataSet]="dataSet"
         (onCombatMode)="handleCombatMode($event)"
+        (onFinishTurn)="handleFinishTurn()"
         (onThrowInitiative)="doThrowInitiative()"
         (onRoll)="doRoll()">
       </app-roller-control>

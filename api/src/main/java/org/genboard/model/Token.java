@@ -31,6 +31,8 @@ public class Token {
     @ManyToOne
     private Actor secondActor;
     
+    private String color;
+    
 	public Token() {
 		super();
 	}
@@ -79,7 +81,15 @@ public class Token {
 	public void setSecondActor(Actor secondActor) {
 		this.secondActor = secondActor;
 	}
-    
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
 	
     
 

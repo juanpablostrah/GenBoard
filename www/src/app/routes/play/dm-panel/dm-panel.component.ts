@@ -11,6 +11,7 @@ import { Actor } from 'app/routes/actor/actor';
 import { EventEmitter } from '@angular/core';
 import { DmDialogTokenComponent } from 'app/routes/play/dm-dialog-token/dm-dialog-token.component';
 import { DmDialogDeleteTokenComponent } from 'app/routes/play/dm-dialog-delete-token/dm-dialog-delete-token.component';
+import { ActorService } from 'app/services/actor/actor.service';
 
 @Component({
   selector: 'app-dm-panel',
@@ -48,6 +49,9 @@ export class DmPanelComponent implements OnInit {
   @Output()
   onHandleNewPersonaje: EventEmitter<any>
 
+  @Output()
+  onHandleDeletePersonaje: EventEmitter<any>
+
   maps : File[];
   selectedFile: File;
 
@@ -70,6 +74,7 @@ export class DmPanelComponent implements OnInit {
     this.onCombatMode = new EventEmitter();
     this.onHistoryMode = new EventEmitter();
     this.onHandleNewPersonaje = new EventEmitter();
+    this.onHandleDeletePersonaje = new EventEmitter();
     this.maps = [];
     this.yourTurn = false;
   }
@@ -78,6 +83,10 @@ export class DmPanelComponent implements OnInit {
     let dialogRef = this.dialog.open(DmDialogDeleteTokenComponent, {
       width: '500px',
       data: { actors: this.actors }
+    });
+    const sub = dialogRef.componentInstance.onDeleteActor.subscribe((data:any) => {
+      console.log("DELETE_DIALOG",data)
+      this.onHandleDeletePersonaje.emit(data);
     });
     dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
@@ -100,8 +109,8 @@ export class DmPanelComponent implements OnInit {
       data: { actors: this.actors }
     });
     const sub = dialogRef.componentInstance.onNewActor.subscribe((data:any) => {
-     console.log(data)
-     this.onHandleNewPersonaje.emit();
+      console.log(data)
+      this.onHandleNewPersonaje.emit();
     });
     dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
@@ -164,7 +173,14 @@ export class DmPanelComponent implements OnInit {
   }
 
   combatMode(){
-    this.onCombatMode.emit(this.actors[0].id)
+    this.subscription = this.route.params
+    .subscribe(params => {
+      var partidaId = params['partidaId'];
+      this.partidasService.get(partidaId).then(partida => {
+        console.log("INITIATIVE", partida.initiative)
+        this.onCombatMode.emit(this.actors[0].id)
+      })
+     })
   }
 
   enabledTurn(){

@@ -69,6 +69,24 @@ export class PlayComponent implements OnInit, OnDestroy {
     this.client.sendMessage(message.tag, message.data);
   }
 
+  doHandleDeletePersonaje(data:any){
+    this.subscription = this.route.params
+    .subscribe(params => {
+        var actorId = this.currentGame.currentActorId;
+        console.log("ACTOR_ID_DELETE", actorId)
+        var partidaId = params['partidaId'];
+        this.message = {
+          tag: 'HANDLE_DELETE_PERSONAJE',
+          data: {actorId : actorId,
+                 partidaId: partidaId}
+        }
+        console.log("personaje eliminado")
+
+        this.send(this.message)
+     })
+  }
+
+
   doHandleNewPersonaje(){
     this.subscription = this.route.params
     .subscribe(params => {
@@ -85,6 +103,22 @@ export class PlayComponent implements OnInit, OnDestroy {
      })
   }
 
+  doFinishTurn(){
+    console.log("FINALIZO TURNO")
+    this.subscription = this.route.params
+    .subscribe(params => {
+      var actorId = this.currentGame.currentActorId;
+      var partidaId = params['partidaId'];
+      this.message = {
+        tag: 'FINISH_TURN',
+        data: {actorId : actorId,
+          partidaId: partidaId}
+        }
+        console.log("Finalizo Turno",)
+
+        this.send(this.message)
+      })
+  }
 
   doInitiative(){
     this.subscription = this.route.params
@@ -183,9 +217,10 @@ export class PlayComponent implements OnInit, OnDestroy {
   }
 
   doRoll(data : any){
+
     this.subscription = this.route.params
     .subscribe(params => {
-        var actorId = params['actorId'];//esta mal tengo que enviar id del moustruo
+        var actorId = this.currentGame.currentActorId
         this.message = {
           tag: 'ROLL_REQUEST',
           data: {dataSet : data, actorId : actorId}
@@ -231,7 +266,7 @@ export class PlayComponent implements OnInit, OnDestroy {
     switch(tag) {
       case "ROLL_RESPONSE": {
             console.log("ROLL_RESPONSE",data)
-            //this.doSetCurrentActor(data)
+            //this.currentGame.currentActorId = data.actorId
             this.currentGame.roll(data.dataSet.result.dataSet);
             this.currentGame.log(data);
           break;
@@ -248,7 +283,8 @@ export class PlayComponent implements OnInit, OnDestroy {
        case "INITIATIVE_RESPONSE": {
             console.log("ENTRANDO A MI TURNO",data)
             this.currentGame.currentActorId = data.actorId
-            this.currentGame.changeShow()
+            this.currentGame.changeShowThrow(false)
+            this.currentGame.changeCombatMode(false)
             this.currentGame.notifyActor()
           break;
        }
@@ -269,7 +305,9 @@ export class PlayComponent implements OnInit, OnDestroy {
        }
        case "COMBAT_RESPONSE": {
             console.log("tu turno de combatir")
-            this.currentGame.changeShow()
+            this.currentGame.currentActorId = data.actorId
+            this.currentGame.changeShowThrow(true)
+            this.currentGame.changeCombatMode(true)
             this.currentGame.notifyActor()
           break;
        }
@@ -281,6 +319,13 @@ export class PlayComponent implements OnInit, OnDestroy {
        case "CURRENT_ACTOR_RESPONSE": {
             console.log("seteo actor actual")
             this.currentGame.currentActorId = data.actorId
+          break;
+       }
+       case "FINISH_TURN_RESPONSE": {
+            this.currentGame.currentActorId = data.actorId
+            this.currentGame.changeShowThrow(true)
+            this.currentGame.changeCombatMode(true)
+            this.currentGame.notifyActor()
           break;
        }
 

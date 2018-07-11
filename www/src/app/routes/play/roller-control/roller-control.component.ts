@@ -25,6 +25,9 @@ export class RollerControlComponent implements OnInit {
   @Output()
   onCombatMode: EventEmitter<any>
 
+  @Output()
+  onFinishTurn: EventEmitter<any>
+
   @ViewChild(NgForm)
   form:NgForm
 
@@ -36,13 +39,17 @@ export class RollerControlComponent implements OnInit {
 
   isFinishTurn : boolean;
 
+  combatMode   : boolean;
+
   constructor() {
     this.onRoll = new EventEmitter();
     this.onThrowInitiative = new EventEmitter();
     this.onCombatMode = new EventEmitter();
+    this.onFinishTurn = new EventEmitter();
     this.yourTurn = false;
     this.showThrow = true;
     this.isFinishTurn = false;
+    this.combatMode = false;
   }
 
   ngOnInit(){
@@ -70,7 +77,7 @@ export class RollerControlComponent implements OnInit {
 
   finishTurn(){
     this.isFinishTurn = true;
-    this.onCombatMode.emit()
+    this.onFinishTurn.emit()
     this.disabledTurn()
   }
 
@@ -83,8 +90,17 @@ export class RollerControlComponent implements OnInit {
   }
 
   changeShow(){
-    this.showThrow = !this.showThrow
+    this.changeShowThrow(!this.showThrow)
     console.log("HABILITO SHOW", this.showThrow)
+  }
+
+  changeShowThrow(show:boolean){
+    this.showThrow = show
+  }
+
+  changeCombatMode(show:boolean){
+    console.log("COMBAT MODE", show)
+    this.combatMode = show
   }
 
 }

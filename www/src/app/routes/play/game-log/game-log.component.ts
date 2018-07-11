@@ -28,7 +28,7 @@ export class GameLogComponent implements OnInit {
   @Output()
   onDoChat: EventEmitter<any>
 
-  currentActorName: Actor;
+  currentActor: Actor;
 
   chat: String
 
@@ -80,8 +80,10 @@ export class GameLogComponent implements OnInit {
     log = log.slice(0, -1);
     log += '= '+sum
     console.log(log)
-    this.currentActorName = this.actorListNew.find(actor => actor.id == data.actorId);
-    this.log.push(this.currentActorName.name + " : " + log)
+    console.log(this.actorListNew)
+    console.log(data)    
+    this.currentActor = this.actorListNew.find(actor => actor.id == data.actorId);
+    this.log.push(this.currentActor.name + " : " + log)
   }
 
 }

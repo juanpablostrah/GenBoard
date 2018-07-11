@@ -24,6 +24,8 @@ export class CurrentGameComponent implements OnInit {
 
   currentActorId: string;
 
+  currentActor: Actor;
+
   actors: Actor[];
 
   client: any;
@@ -32,6 +34,12 @@ export class CurrentGameComponent implements OnInit {
   dataSet: [{value,descriptor,modifier,results}]
 
   map: File;
+
+  @Output()
+  onHandleFinishTurnToParent: EventEmitter<any>
+
+  @Output()
+  onHandleDeletePersonajeToParent: EventEmitter<any>
 
   @Output()
   onHandleNewPersonajeToParent: EventEmitter<any>
@@ -105,6 +113,8 @@ export class CurrentGameComponent implements OnInit {
     this.onCombatModeToParent = new EventEmitter();
     this.onHistoryModeToParent = new EventEmitter();
     this.onHandleNewPersonajeToParent = new EventEmitter();
+    this.onHandleDeletePersonajeToParent = new EventEmitter();
+    this.onHandleFinishTurnToParent = new EventEmitter();
     this.initiativeList = [];
   }
 
@@ -202,12 +212,23 @@ export class CurrentGameComponent implements OnInit {
   }
 
   notifyActor(){
-    this.snackBar.open('Es tu turno ' + this.currentActorId , '', {duration:10000});
-    this.rollerControl.enabledTurn()
+    this.actorService.get(this.currentActorId).then(actor => {
+      this.snackBar.open('Es tu turno ' + actor.name , '', {duration:10000});
+      this.rollerControl.enabledTurn()
+    })
+
   }
 
   changeShow(){
-    this.rollerControl.changeShow()//VERRRRR!!!
+    this.rollerControl.changeShow()
+  }
+
+  changeShowThrow(show:boolean){
+    this.rollerControl.changeShowThrow(show)
+  }
+
+  changeCombatMode(show:boolean){
+    this.rollerControl.changeCombatMode(show)
   }
 
   historyMode(){
@@ -270,7 +291,7 @@ export class CurrentGameComponent implements OnInit {
   }
 
   log(data : any){
-    data.actorId = this.currentActorId
+    //data.actorId = this.currentActorId
     console.log("LOG",data)
     this.gameLogger.doLog(data);
   }
@@ -288,13 +309,22 @@ export class CurrentGameComponent implements OnInit {
     this.onInitiativeToParent.emit();
   }
 
+  handleFinishTurn(){
+    this.onHandleFinishTurnToParent.emit()
+  }
+
   handleCombatMode($event){
+    this.currentActorId = $event
     this.onCombatModeToParent.emit($event);
   }
 
   handleNewPersonaje(){
-    console.log("HANDLE NEW PERSONAJE")
     this.onHandleNewPersonajeToParent.emit()
+  }
+
+  handleDeletePersonaje(data:any){
+    console.log("HANDLE DELETE PERSONAJE",data)
+    this.onHandleDeletePersonajeToParent.emit(data)
   }
 
   getRandomColor(){

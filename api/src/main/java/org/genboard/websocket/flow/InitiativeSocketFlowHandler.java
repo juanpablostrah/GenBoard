@@ -57,7 +57,7 @@ public class InitiativeSocketFlowHandler extends SocketFlowHandler {
 		Actor nextTurnActor = partida.getActors().get(1);
 		initiativeDTO.setActorId(nextTurnActor.getId());
 		WebSocketSession nextSession = partidaSocket.findByActorId(nextTurnActor.getId());
-		
+		//donde se envia ROLL_RESPONSE?
 		if(nextSession == null) {
 			List<Actor> actors = partida.getActors();
 			for (Actor actor : actors) {

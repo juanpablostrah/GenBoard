@@ -10,6 +10,7 @@ input[type=number]::-webkit-outer-spin-button {
 .rollButtonContainer{
   margin-top: 10px;
   margin-bottom: 10px;
+  width: 125px;
 }
 .paddingForm{
   padding: 5px;
@@ -26,4 +27,9 @@ input[type=number]::-webkit-outer-spin-button {
 .finishButton {
   background-color: #01af27;
   margin-top: 10px;
+  width: 125px;
+}
+
+.clearDiceButton {
+  width: 125px;
 }
