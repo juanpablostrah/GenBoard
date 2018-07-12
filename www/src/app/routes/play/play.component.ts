@@ -72,8 +72,8 @@ export class PlayComponent implements OnInit, OnDestroy {
   doHandleDeletePersonaje(data:any){
     this.subscription = this.route.params
     .subscribe(params => {
-        var actorId = this.currentGame.currentActorId;
-        console.log("ACTOR_ID_DELETE", actorId)
+        var actorId = data;
+        console.log("ACTOR_ID_DELETE", data)
         var partidaId = params['partidaId'];
         this.message = {
           tag: 'HANDLE_DELETE_PERSONAJE',
@@ -272,7 +272,7 @@ export class PlayComponent implements OnInit, OnDestroy {
           break;
        }
        case "CONNECT_ACTOR_RESPONSE": {
-            console.log("se conecto un personaje")
+            console.log("se conecto un personaje", data)
             this.currentGame.populateList(data)
           break;
        }
@@ -326,6 +326,11 @@ export class PlayComponent implements OnInit, OnDestroy {
             this.currentGame.changeShowThrow(true)
             this.currentGame.changeCombatMode(true)
             this.currentGame.notifyActor()
+          break;
+       }
+       case "DELETE_TOKEN_RESPONSE": {
+         console.log("Eliminando una ficha",data)
+         this.currentGame.removeTokenInCanvas(data)
           break;
        }
 

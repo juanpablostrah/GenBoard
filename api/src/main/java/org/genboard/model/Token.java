@@ -1,5 +1,6 @@
 package org.genboard.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,11 +26,8 @@ public class Token {
     @ManyToOne
     private GameSet gameSet;
     
-    @OneToOne
+    @OneToOne(orphanRemoval=true)
     private Actor actor;
-    
-    @ManyToOne
-    private Actor secondActor;
     
     private String color;
     
@@ -72,14 +70,6 @@ public class Token {
 
 	public void setActor(Actor actor) {
 		this.actor = actor;
-	}
-
-	public Actor getSecondActor() {
-		return secondActor;
-	}
-
-	public void setSecondActor(Actor secondActor) {
-		this.secondActor = secondActor;
 	}
 
 	public String getColor() {

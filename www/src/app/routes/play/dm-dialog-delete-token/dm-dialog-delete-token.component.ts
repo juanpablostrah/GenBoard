@@ -25,9 +25,9 @@ export class DmDialogDeleteTokenComponent implements OnInit {
     console.log(this.actors)
   }
 
-  deleteToken(actor:any){
+  deleteToken(event:any, actor:any){
     console.log("DELETE_TOKEN", actor) //ver como tomar la data del dialog
-    this.onDeleteActor.emit(actor)
+    this.onDeleteActor.emit(actor.id)
   }
 
 }

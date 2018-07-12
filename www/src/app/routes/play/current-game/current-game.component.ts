@@ -290,6 +290,10 @@ export class CurrentGameComponent implements OnInit {
     this.diceRoller.setToken(data)
   }
 
+  removeTokenInCanvas(data : any){
+    this.diceRoller.removeToken(data)
+  }
+
   log(data : any){
     //data.actorId = this.currentActorId
     console.log("LOG",data)

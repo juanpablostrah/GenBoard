@@ -1,5 +1,8 @@
 package org.genboard.controller;
 
+import java.util.List;
+
+import org.genboard.model.GameSet;
 import org.genboard.model.Throw;
 import org.genboard.repository.ThrowRepository;
 import org.slf4j.Logger;
@@ -8,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -26,6 +30,15 @@ public class ThrowRestController {
         LOGGER.info("iniciativa creada" );
         return throwRepository.save(throw1);
     }
+	
+	@ResponseBody
+	@RequestMapping(
+			value = "getAll", 
+			method = RequestMethod.GET)
+	    public List<Throw> getAllGameSet() {
+	        LOGGER.info("obteniendo tiradas");
+			return throwRepository.findAll();
+	    }
 	
 }
 

@@ -178,7 +178,7 @@ public class GameSet {
 	
 	public Actor getActorById(Long actorId){
 		for (Actor actor : actors) {
-			if(actorId == actor.getId()){
+			if(actorId.equals(actor.getId())){
 				return actor;
 			}
 		}

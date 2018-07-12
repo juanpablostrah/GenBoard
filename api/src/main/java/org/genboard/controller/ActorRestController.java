@@ -45,7 +45,7 @@ public class ActorRestController {
 			Actor newActor = actorRepository.save(actor);
 			token.setGameSet(actor.getGameSet());
 			token.setActor(newActor);
-			token.setSecondActor(newActor);
+			//token.setSecondActor(newActor);
 			tokenRepository.save(token);
 			return newActor;
 		}else {

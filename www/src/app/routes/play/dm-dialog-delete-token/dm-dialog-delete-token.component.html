@@ -3,7 +3,7 @@
   <mat-dialog-content>
     <ng-template ngFor let-index="index" let-actor [ngForOf]="actors">
       <div class="">
-        <button mat-raised-button (click)="deleteToken($event)" class="btnDeleteActor">{{ actor.name }} </button>
+        <button mat-raised-button (click)="deleteToken($event, actor)" class="btnDeleteActor">{{ actor.name }} </button>
       </div>
     </ng-template>
   </mat-dialog-content>

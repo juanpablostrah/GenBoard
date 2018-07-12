@@ -1,9 +1,6 @@
 package org.genboard.repository;
 
-import java.util.List;
-
 import org.genboard.model.GameSet;
-import org.genboard.model.Player;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.rest.core.annotation.RestResource;

@@ -80,13 +80,17 @@ export class CanvasDiceRollComponent implements AfterViewInit {
   setToken(data : any){
     console.log("MOUSE ",this.onMoveUpMouse)
     console.log("SETEO TOKEN",data.tokens)
-    //this.tokens.map(token => this.scene.remove(token))
     data.tokens.map(token => {
       let found = this.tokens.find((oldtoken)=> token.actorId === oldtoken.actorId)
       if(!found) {
         this.addCylinder(token.x,token.z,token.actorId)
       }
     })
+  }
+
+  removeToken(data : any){
+    let tokenToRemove = this.tokens.find(token => token.actorId === data.token.actorId)
+    this.scene.remove(tokenToRemove)
   }
 
   setMap(map : File){

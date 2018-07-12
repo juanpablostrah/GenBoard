@@ -3,6 +3,7 @@ package org.genboard.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -44,12 +45,8 @@ public class Actor {
     @ManyToOne
     private GameSet gameSet;
     
-    @OneToOne
+    @OneToOne(orphanRemoval=true)
     private Token token;
-    
-    @OneToMany(mappedBy = "secondActor", targetEntity = Token.class)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Token> otherTokens;
     
     private int ultimaIniciativa;
     
@@ -145,16 +142,5 @@ public class Actor {
 	public void setDm(Boolean dm) {
 		this.dm = dm;
 	}
-
-	public List<Token> getOtherTokens() {
-		return otherTokens;
-	}
-
-	public void setOtherTokens(List<Token> otherTokens) {
-		this.otherTokens = otherTokens;
-	}
-	
-	
-	
     
 }

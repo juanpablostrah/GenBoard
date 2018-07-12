@@ -57,7 +57,7 @@
             <!-- <button type="submit" mat-raised-button color="primary" class="rollButtonContainer">Tirar</button>
             <button type="button" (click)="throwInitiative()" mat-raised-button color="primary" class="rollButtonContainer">Tirar iniciativa</button> -->
             <button type="button" (click)="resetDice()" mat-raised-button color="warn" class="clearDiceButton" [disabled]="!yourTurn && !combatMode">Limpiar Dados</button>
-            <button mat-raised-button (click)="finishTurn()" class="finishButton" [disabled]="!yourTurn && combatMode">
+            <button mat-raised-button (click)="finishTurn()" class="finishButton" [disabled]="!yourTurn">
               <!-- <mat-icon>done</mat-icon> -->
                 Finalizar Turno
             </button>
