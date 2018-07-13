@@ -23,7 +23,7 @@ public class CustomWebSocketConfig implements WebSocketConfigurer  {
 		String gameSetPath = basePath + "/socket/gameset";
 		registry.addHandler(gameSetTextWebSocketHandler, gameSetPath)		
 		.setAllowedOrigins("*")
-		.withSockJS();
-		
+		.withSockJS()
+		.setStreamBytesLimit(4 * 1024 * 1024);
 	}
 }

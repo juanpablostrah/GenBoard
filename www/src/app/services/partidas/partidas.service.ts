@@ -21,7 +21,6 @@ export class PartidasService {
 	}
 
   save(partida: Partida): Promise<Response> { //service para crear una partida
-
 		console.log('guardando partida ' + JSON.stringify(partida));
 		console.log(`${this.partidasRestUrl}`)
 		return this.http.post(`${this.partidasRestUrl}`,

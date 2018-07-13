@@ -9,6 +9,7 @@ import { EventEmitter } from '@angular/core';
 import { ActorListComponent } from 'app/routes/play/actor-list/actor-list.component';
 import { Actor } from 'app/routes/actor/actor';
 import { CurrentGameComponent } from 'app/routes/play/current-game/current-game.component';
+import { MapaService } from 'app/services/mapa/mapa.service.component';
 
 @Component({
   selector: 'app-play',
@@ -17,6 +18,10 @@ import { CurrentGameComponent } from 'app/routes/play/current-game/current-game.
 })
 
 export class PlayComponent implements OnInit, OnDestroy {
+  readerResult: void;
+  image: any;
+
+  partidaId: any
 
   private subscription: any;
   private client: any;
@@ -35,6 +40,7 @@ export class PlayComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private partidasSocketSrv: PartidasSocketService,
+    private mapaService: MapaService,
   ) {
 
   }
@@ -44,6 +50,7 @@ export class PlayComponent implements OnInit, OnDestroy {
     .subscribe(params => {
       const partidaIdRaw = params['partidaId'];
       const partidaId = parseInt(partidaIdRaw);
+      this.partidaId = partidaId;
       const actorIdRaw = params['actorId'];
       const actorId = parseInt(actorIdRaw);
       this.partidasSocketSrv
@@ -67,6 +74,32 @@ export class PlayComponent implements OnInit, OnDestroy {
       console.log('trying to send message before connect');
     }
     this.client.sendMessage(message.tag, message.data);
+  }
+
+  readThis(map: any) {
+    var file:File = map;
+    var myReader:FileReader = new FileReader();
+
+    myReader.onloadend = (e) => {
+      this.image = myReader.result;
+    }
+    this.readerResult = myReader.readAsDataURL(file);
+    console.log("READER", this.readerResult)
+  }
+
+  doSetMap(mapa:any){
+    console.log("DO_SET_MAP", mapa);
+    var actorId = this.currentGame.currentActorId;
+    this.message = {
+      tag: 'SET_MAP',
+      data: {
+        actorId : actorId,
+        partidaId: this.partidaId,
+        mapaId: mapa.id
+      }
+    }
+    console.log("envio mapa")
+    this.send(this.message)
   }
 
   doHandleDeletePersonaje(data:any){
@@ -329,8 +362,16 @@ export class PlayComponent implements OnInit, OnDestroy {
           break;
        }
        case "DELETE_TOKEN_RESPONSE": {
-         console.log("Eliminando una ficha",data)
-         this.currentGame.removeTokenInCanvas(data)
+           console.log("Eliminando una ficha",data)
+           this.currentGame.removeTokenInCanvas(data)
+          break;
+       }
+       case "SET_MAP_RESPONSE": {
+           console.log("insertando mapa",data)
+           this.mapaService.get(data.mapaId).then(mapa => {
+              this.currentGame.handleResponseSetMap(mapa)
+           })
+
           break;
        }
 

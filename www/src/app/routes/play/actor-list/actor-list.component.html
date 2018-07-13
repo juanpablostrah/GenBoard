@@ -3,8 +3,10 @@
     <mat-expansion-panel-header color="primary">
       Personajes
     </mat-expansion-panel-header>
-    <ng-template ngFor let-index="index" let-actor [ngForOf]="actorList">
-      <p> {{ actor.name }} {{actor.id}}</p>
+    <ng-template ngFor let-index="index" let-actor [ngForOf]="actorList" >
+      <div class="">
+          <p class="boldActorName"> {{ actor.name }}</p>
+      </div>
     </ng-template>
     <!-- <mat-chip-list>
       <mat-chip>One fish</mat-chip>
@@ -12,9 +14,5 @@
       <mat-chip color="primary" selected="true">Primary fish</mat-chip>
       <mat-chip color="accent" selected="true">Accent fish</mat-chip>
     </mat-chip-list> -->
-
   </mat-expansion-panel>
 </mat-accordion>
-<!-- <ul [dragula]='"bag-items"' [dragulaModel]='items'>
-  <li *ngFor="let item of items"></li>
-</ul> -->

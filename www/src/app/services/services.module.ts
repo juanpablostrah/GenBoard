@@ -6,6 +6,7 @@ import { PartidasSocketService } from './partidas/partidas-socket.service';
 import { ActorService } from './actor/actor.service';
 import { PlayerService } from './player/player.service';
 import { WebSocketService } from './webSocket/webSocket.service';
+import { MapaService } from './mapa/mapa.service.component';
 
 @NgModule({
   imports: [
@@ -19,8 +20,10 @@ import { WebSocketService } from './webSocket/webSocket.service';
     ActorService,
     WebSocketService,
     PartidasSocketService,
-    PlayerService
-  ]
+    PlayerService,
+    MapaService
+  ],
+  declarations: []
 })
 export class ServicesModule {
 

@@ -93,16 +93,10 @@ export class CanvasDiceRollComponent implements AfterViewInit {
     this.scene.remove(tokenToRemove)
   }
 
-  setMap(map : File){
-    var reader = new FileReader();
-    reader.onload = (evnt :any) => {
-      var content : string = evnt.target.result
-      var texturePainting1 : any = THREE.ImageUtils.loadTexture(content );
-      texturePainting1.flipY = false;
-      this.floorMaterial.map = texturePainting1;
-    }
-    console.log("mapita");
-    reader.readAsDataURL(map);
+  setMap(mapa : any){
+    var texturePainting1 : any = THREE.ImageUtils.loadTexture(mapa.base64Data );
+    texturePainting1.flipY = false;
+    this.floorMaterial.map = texturePainting1;
   }
 
   doRoll(dataSet: [any]){

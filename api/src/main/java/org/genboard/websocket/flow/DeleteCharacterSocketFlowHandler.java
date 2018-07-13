@@ -67,12 +67,11 @@ public class DeleteCharacterSocketFlowHandler extends SocketFlowHandler {
 		List<Throw> throws1 = throwRepository.findAll();
 		for (Throw throw1 : throws1) {
 			if(throw1.getActor().getId().equals(actorId)){
-				initiativeRepository.delete(throw1.getInitiative());
+				//initiativeRepository.delete(throw1.getInitiative());
 				throwRepository.delete(throw1);
 			}
 		}
-		
-		
+			
 		Actor actor = partida.getActorById(actorId);
 //		partida.getDmActors().remove(actor);
 //		partida.getActors().remove(actor);

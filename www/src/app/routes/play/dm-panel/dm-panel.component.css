@@ -17,6 +17,8 @@
 }
 
 .btnGiveTurn {
-  background-color: #a9601f;
+  background-color: #576dc1;
   margin-bottom: 5px;
+  width: 150px;
+  color: white;
 }

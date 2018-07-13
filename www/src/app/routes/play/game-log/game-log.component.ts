@@ -51,6 +51,8 @@ export class GameLogComponent implements OnInit {
     this.subscription = this.route.params
     this.actorService.get(actorId).then(actor =>
       this.log.push(actor.name + " : " + chat))
+    this.clearChat();  
+
 
 
         // this.currentActorName = this.actorListNew.find(actor => actor.id == actorId);
@@ -81,7 +83,7 @@ export class GameLogComponent implements OnInit {
     log += '= '+sum
     console.log(log)
     console.log(this.actorListNew)
-    console.log(data)    
+    console.log(data)
     this.currentActor = this.actorListNew.find(actor => actor.id == data.actorId);
     this.log.push(this.currentActor.name + " : " + log)
   }

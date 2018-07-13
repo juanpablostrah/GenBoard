@@ -14,6 +14,7 @@ import { DmPanelComponent } from 'app/routes/play/dm-panel/dm-panel.component';
 import { Partida } from 'app/services/partidas/partida.model';
 import { RollerControlComponent } from 'app/routes/play/roller-control/roller-control.component';
 import {MatSnackBar} from '@angular/material';
+import { MapaService } from 'app/services/mapa/mapa.service.component';
 
 @Component({
   selector: 'app-current-game',
@@ -21,6 +22,8 @@ import {MatSnackBar} from '@angular/material';
   styleUrls: ['./current-game.component.css']
 })
 export class CurrentGameComponent implements OnInit {
+  mapas: any[];
+  image: any;
 
   currentActorId: string;
 
@@ -34,6 +37,9 @@ export class CurrentGameComponent implements OnInit {
   dataSet: [{value,descriptor,modifier,results}]
 
   map: File;
+
+  @Output()
+  onHandleMapToParent: EventEmitter<any>
 
   @Output()
   onHandleFinishTurnToParent: EventEmitter<any>
@@ -101,6 +107,7 @@ export class CurrentGameComponent implements OnInit {
   constructor(private partidasSocketService: PartidasSocketService,
     private partidasService: PartidasService,
     private actorService: ActorService,
+    private mapaService: MapaService,
     private route: ActivatedRoute,
     public snackBar: MatSnackBar) {
     this.localStorage = window.localStorage;
@@ -115,12 +122,20 @@ export class CurrentGameComponent implements OnInit {
     this.onHandleNewPersonajeToParent = new EventEmitter();
     this.onHandleDeletePersonajeToParent = new EventEmitter();
     this.onHandleFinishTurnToParent = new EventEmitter();
+    this.onHandleMapToParent = new EventEmitter();
     this.initiativeList = [];
   }
 
   ngOnInit() {
+
     this.subscription = this.route.params.subscribe(params => {
+
       var actorId = params['actorId']
+      var partidaId = params['partidaId']
+      this.mapaService.findByGameSetId(partidaId).then(mapas => {
+        this.mapas = mapas;
+        this.dmPanel.setMaps(this.mapas)
+      })
       console.log('obteniendo actor: ',actorId);
       this.actorService.get(actorId).then((actor) =>  {
         if(actor.dm){
@@ -132,6 +147,8 @@ export class CurrentGameComponent implements OnInit {
         }
       })
     });
+
+
 
     this.snackBar.open('Conectado a la partida', '', {duration:5000});
     this.dataSet = [{
@@ -172,8 +189,17 @@ export class CurrentGameComponent implements OnInit {
   }
 
   public handleSetMap(map:File){
+    console.log("CURRENT_MAP", map)
+    this.onHandleMapToParent.emit(map)
+  }
+
+  public handleResponseSetMap(map:any){
     this.diceRoller.setMap(map);
   }
+
+  // changeListener($event) : void {
+  //   this.readThis($event.target);
+  // }
 
   // this.dataSet.map( dice => {
   //   dice.results = Array.from(Array(dice.value).keys()).map(val => {
@@ -188,6 +214,10 @@ export class CurrentGameComponent implements OnInit {
       //   dataSet: JSON.stringify(this.dataSet)
       // };
       // this.client.sendMessage('roll', this.data)
+
+  handleSetFile($event:any){
+    this.mapas.push($event)
+  }
 
   handleHistoryMode(){
     this.onHistoryModeToParent.emit()

@@ -16,6 +16,7 @@ import org.genboard.websocket.flow.InitiativeSocketFlowHandler;
 import org.genboard.websocket.flow.MoveTokenSocketFlowHandler;
 import org.genboard.websocket.flow.NewCharacterSocketFlowHandler;
 import org.genboard.websocket.flow.RollSocketFlowHandler;
+import org.genboard.websocket.flow.SetMapSocketFlowHandler;
 import org.genboard.websocket.flow.SocketFlowHandler;
 import org.genboard.websocket.message.IncomingMessage;
 import org.json.JSONException;
@@ -61,6 +62,9 @@ public class GameSetSocketFlowManager {
 	@Autowired
 	private FinishTurnFlowHandler finishTurnSocketFlowHandler;
 	
+	@Autowired
+	private SetMapSocketFlowHandler setMapSocketFlowHandler;
+	
 	
 	@PostConstruct
 	public void initialize() {
@@ -76,6 +80,7 @@ public class GameSetSocketFlowManager {
 		handlers.put("HANDLE_DELETE_PERSONAJE", deleteCharacterSocketFlowHandler);
 		handlers.put("CURRENT_ACTOR", currentActorSocketFlowHandler);
 		handlers.put("FINISH_TURN", finishTurnSocketFlowHandler);
+		handlers.put("SET_MAP", setMapSocketFlowHandler);
 		
 	}
 

@@ -31,6 +31,7 @@
   <include file="classpath:/liquibase/dml/2018_07_04_00001_add_state_type.xml"/>
   <include file="classpath:/liquibase/dml/2018_07_10_00001_add_color_in_token_table.xml"/>
   <include file="classpath:/liquibase/dml/2018_07_11_00001_delete_second_actor.xml"/>
+  <include file="classpath:/liquibase/dml/2018_07_12_00001_create_mapa_table.xml"/>
   
  
 </databaseChangeLog>

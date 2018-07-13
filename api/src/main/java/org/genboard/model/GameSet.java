@@ -70,6 +70,10 @@ public class GameSet {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Token> tokens;
     
+    @OneToMany(mappedBy = "gameSet")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Mapa> mapas;
+    
     //private List<Lob> maps;
     
     public String getName() {

@@ -9,12 +9,12 @@
             <button mat-raised-button (click)="openDialog()"> nombre: {{ actor.name }} </button>
           </div> -->
         </ng-template>
-        <button mat-raised-button (click)="iniciative()" class="btnInitiative">
+        <button mat-raised-button (click)="iniciative()" class="btnGiveTurn">
           <mat-icon>whatshot</mat-icon>
             Iniciativa
         </button>
-        <button mat-raised-button (click)="combatMode()" class="btnPanel">Modo Combate</button>
-        <button mat-raised-button (click)="historyMode()" class="btnHistory">
+        <button mat-raised-button (click)="combatMode()" class="btnGiveTurn">Modo Combate</button>
+        <button mat-raised-button (click)="historyMode()" class="btnGiveTurn">
           <mat-icon>history</mat-icon>
             Historia
         </button>
@@ -30,17 +30,18 @@
         </button>
       	<div id='grand'></div>
         <input style="display: none" type="file" (change)="saveMap($event)" #fileInput>
-        <button mat-raised-button (click)="fileInput.click()" class="btnPanel">
+        <button mat-raised-button (click)="fileInput.click()" class="btnGiveTurn">
           <mat-icon>map</mat-icon>
             Cargar Mapa
           </button>
       </div>
       <div class=""> Mapas :
-        <ng-template ngFor let-index="index" let-map [ngForOf]="maps">
-          <div class="">
-            <a (click)="setMap(map)">{{ map.name }} </a>
-          </div>
-        </ng-template>
+          un texto
+          <ng-template ngFor let-index="index" let-map [ngForOf]="maps">
+            <div class="">
+              <a (click)="setMap(map)">{{ map.name }} </a>
+            </div>
+          </ng-template>
       </div>
     </mat-expansion-panel>
 </mat-accordion>

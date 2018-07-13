@@ -12,6 +12,9 @@ import { EventEmitter } from '@angular/core';
 import { DmDialogTokenComponent } from 'app/routes/play/dm-dialog-token/dm-dialog-token.component';
 import { DmDialogDeleteTokenComponent } from 'app/routes/play/dm-dialog-delete-token/dm-dialog-delete-token.component';
 import { ActorService } from 'app/services/actor/actor.service';
+import { HttpClient } from '@angular/common/http';
+import { MapaService } from 'app/services/mapa/mapa.service.component';
+import { AppConfig } from 'app/config/app.config';
 
 @Component({
   selector: 'app-dm-panel',
@@ -19,6 +22,7 @@ import { ActorService } from 'app/services/actor/actor.service';
   styleUrls: ['./dm-panel.component.css']
 })
 export class DmPanelComponent implements OnInit {
+  localStorage: Storage;
 
   guests : Player[];
 
@@ -38,6 +42,9 @@ export class DmPanelComponent implements OnInit {
   onSetMap: EventEmitter<File>
 
   @Output()
+  onSetFile: EventEmitter<any>
+
+  @Output()
   onInitiative: EventEmitter<any>
 
   @Output()
@@ -52,7 +59,7 @@ export class DmPanelComponent implements OnInit {
   @Output()
   onHandleDeletePersonaje: EventEmitter<any>
 
-  maps : File[];
+  maps : any[];
   selectedFile: File;
 
   yourTurn : boolean;
@@ -64,7 +71,8 @@ export class DmPanelComponent implements OnInit {
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    private mapaService: MapaService
   ) {
     this.guests = [];
     this.actors = [];
@@ -75,8 +83,9 @@ export class DmPanelComponent implements OnInit {
     this.onHistoryMode = new EventEmitter();
     this.onHandleNewPersonaje = new EventEmitter();
     this.onHandleDeletePersonaje = new EventEmitter();
-    this.maps = [];
+    this.onSetFile = new EventEmitter();
     this.yourTurn = false;
+    this.localStorage = window.localStorage;
   }
 
   openDeleteTokenDialog(): void {
@@ -122,7 +131,10 @@ export class DmPanelComponent implements OnInit {
     //this.dmDialog.setActors(actors);
   }
 
+
+
   ngOnInit(): void {
+
     // this.subscription = this.route.params.subscribe(params => {
     // var partidaId = params['partidaId']
     // console.log('obteniendo partida: '+ partidaId);
@@ -133,6 +145,16 @@ export class DmPanelComponent implements OnInit {
     //     //this.dmDialog.setActors(actors);
     //   });
     // });
+  }
+
+  setMaps(maps:any){
+    console.log("MAPAS", maps)
+    this.maps = maps;
+  }
+
+  addMap(map:any){
+    console.log("MAPAS", map)
+    this.maps.push(map)
   }
 
   darTurno(){
@@ -153,9 +175,26 @@ export class DmPanelComponent implements OnInit {
   }
 
   public saveMap(event) {
-      this.selectedFile = event.target.files[0]
-      console.log(this.selectedFile);
-      this.maps.push(this.selectedFile);
+    var file:File = event.target.files[0];
+    console.log("EVENT", event);
+    var myReader:FileReader = new FileReader();
+    myReader.onloadend = (e) => {
+      //this.selectedFile = event.target.files[0]
+      //console.log(this.selectedFile);
+      //this.maps.push(this.selectedFile);
+      var partidaId = this.localStorage.getItem("PARTIDA_ID")
+      let gameSetURI = `${AppConfig.endpoints.api}/gameSet/${partidaId}`
+      this.mapaService.save({
+        base64Data: myReader.result,
+        name: file.name,
+        gameSet: gameSetURI
+      }).then(mapa => {
+        this.onSetFile.emit(mapa)
+      })
+    }
+    myReader.readAsDataURL(file)
+
+    //this.http.post()
   }
 
   public iniciative(){

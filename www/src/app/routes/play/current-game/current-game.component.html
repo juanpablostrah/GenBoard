@@ -8,7 +8,8 @@
         (onCombatMode)="handleCombatMode($event)"
         (onSetActors)="handleSetActors($event)"
         (onSetMap)="handleSetMap($event)"
-        (onInitiative)="handleInitiative()">
+        (onInitiative)="handleInitiative()"
+        (onSetFile)="handleSetFile($event)">
       </app-dm-panel>
       <app-roller-control #rollerControl
         [dataSet]="dataSet"
